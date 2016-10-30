@@ -2,8 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.cerc</groupId>
-	<artifactId>jdb</artifactId>
-	<version>1.2.2</version>
+	<artifactId>summer-db</artifactId>
+	<version>1.0.0</version>
 	<name>java database utils</name>
 	<build>
 		<plugins>
@@ -271,5 +271,5 @@
 		</plugins>
 	</reporting>
 	<description>提供DataSet及派生类，满足内存表与实体表使用需要</description>
-	<url>https://github.com/cn-cerc/jdb</url>
+	<url>https://github.com/cn-cerc/summer-db</url>
 </project>
