@@ -20,6 +20,8 @@ public class QueueConnection implements IConnection {
 	@Override
 	public QueueSession getSession() {
 		init();
+		if (client == null)
+			throw new RuntimeException("MNSClient is null");
 		QueueSession sess = new QueueSession();
 		sess.setClient(client);
 		return sess;
