@@ -19,8 +19,8 @@ public class OssDisk {
 	private String localPath;
 
 	public OssDisk(IHandle handle) {
-		OssSession sess = (OssSession) handle.getProperty(OssSession.sessionId);
-		client = sess.getClient();
+		session = (OssSession) handle.getProperty(OssSession.sessionId);
+		client = session.getClient();
 	}
 
 	// 上传文件流
