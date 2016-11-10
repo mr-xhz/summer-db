@@ -34,6 +34,8 @@ public class OssSession implements ISession {
 	private String bucket;
 
 	public OSSClient getClient() {
+		if(client == null)
+			throw new RuntimeException("OssSession初始化失败: client is null");
 		return client;
 	}
 
