@@ -21,7 +21,7 @@ import cn.cerc.jdb.core.IDataOperator;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Record;
 
-public class MongoQuery extends DataQuery {
+public class MongoDocument extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	// private static final Logger log = Logger.getLogger(MongoDataQuery.class);
 	private IHandle handle;
@@ -33,7 +33,7 @@ public class MongoQuery extends DataQuery {
 	private String _id = null;// mongodb object id
 	private boolean isUpdate = false;
 
-	public MongoQuery(IHandle handle) {
+	public MongoDocument(IHandle handle) {
 		super(handle);
 		this.handle = handle; // 暂时无用
 		session = (MongoSession) this.handle.getProperty(MongoSession.sessionId);

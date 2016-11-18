@@ -13,13 +13,13 @@ import cn.cerc.jdb.core.StubHandle;
 public class MongoQueryProduceTest {
 	private static final Logger log = Logger.getLogger(MongoSession.class);
 
-	private MongoQuery ds;
+	private MongoDocument ds;
 	private StubHandle handle;
 
 	@Before
 	public void setUp() {
 		handle = new StubHandle();
-		ds = new MongoQuery(handle);
+		ds = new MongoDocument(handle);
 	}
 
 	@After

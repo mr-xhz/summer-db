@@ -37,7 +37,6 @@ public class MongoConnection implements IConnection {
 	public void init() {
 		if (MongoConnection.pool == null) {
 			dbname = config.getProperty(MongoSession.mgdb_dbname);
-			MongoClientURI connectionString = null;
 			StringBuffer sb = new StringBuffer();
 			sb.append("mongodb://");
 			// userName
@@ -54,19 +53,12 @@ public class MongoConnection implements IConnection {
 				sb.append("?").append("replicaSet=").append(config.getProperty(MongoSession.mgdb_replicaset));
 				// poolsize
 				sb.append("&").append("maxPoolSize=").append(config.getProperty(MongoSession.mgdb_maxpoolsize));
-
+				log.info("连接到MongoDB分片集群:" + sb.toString());
 				// MongoClientURI connectionString = new MongoClientURI(
 				// "mongodb://ehealth:123456@115.28.67.211:3717,115.28.67.211:13717/ehealth?replicaSet=mgset-2004675");
-				log.info("连接到MongoDB分片集群:" + sb.toString());
-				pool = new MongoClient(new MongoClientURI(sb.toString()));
-			} else {
-				log.info("连接到MongoDB单节点:" + sb.toString());
-				// ECS外测试环境单节点连接
-				// MongoClientURI connectionString = new
-				// MongoClientURI("mongodb://ehealth:123456@115.28.67.211:3717/ehealth");
-				connectionString = new MongoClientURI(sb.toString());
-				pool = new MongoClient(connectionString);
 			}
+			MongoClientURI	connectionString = new MongoClientURI(sb.toString());
+			pool = new MongoClient(connectionString);
 		}
 	}
 }
