@@ -1,14 +1,10 @@
 package cn.cerc.jdb.mongo;
 
 import java.util.Date;
-import java.util.Map;
-import java.util.TreeMap;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.DeleteResult;
@@ -30,7 +26,7 @@ public class MongoOperator implements IDataOperator {
 	@Override
 	public boolean insert(Record record) {
 		MongoCollection<Document> coll = sess.getDatabase().getCollection(this.tableName);
-		Document doc = Document.parse(getValue(record));
+		Document doc = getValue(record);
 		coll.insertOne(doc);
 		return true;
 	}
@@ -38,7 +34,7 @@ public class MongoOperator implements IDataOperator {
 	@Override
 	public boolean update(Record record) {
 		MongoCollection<Document> coll = sess.getDatabase().getCollection(this.tableName);
-		Document doc = Document.parse(getValue(record));
+		Document doc = getValue(record);
 		String uid = record.getString("_id");
 		Object key = "".equals(uid) ? "null" : new ObjectId(uid);
 		UpdateResult res = coll.replaceOne(Filters.eq("_id", key), doc);
@@ -62,21 +58,20 @@ public class MongoOperator implements IDataOperator {
 		this.tableName = tableName;
 	}
 
-	private String getValue(Record record) {
-		Map<String, Object> items = new TreeMap<>();
+	private Document getValue(Record record) {
+		Document doc = new Document();
 		for (int i = 0; i < record.getFieldDefs().size(); i++) {
 			String field = record.getFieldDefs().getFields().get(i);
 			if (field.equals("_id"))
 				continue;
 			Object obj = record.getField(field);
 			if (obj instanceof TDateTime)
-				items.put(field, ((TDateTime) obj).toString());
+				doc.append(field, ((TDateTime) obj).toString());
 			else if (obj instanceof Date)
-				items.put(field, (new TDateTime((Date) obj)).toString());
+				doc.append(field, (new TDateTime((Date) obj)).toString());
 			else
-				items.put(field, obj);
+				doc.append(field, obj);
 		}
-		Gson gson = new GsonBuilder().serializeNulls().create();
-		return gson.toJson(items);
+		return doc;
 	}
 }

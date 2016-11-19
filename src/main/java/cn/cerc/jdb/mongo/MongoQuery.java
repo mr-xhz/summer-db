@@ -2,6 +2,7 @@ package cn.cerc.jdb.mongo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.bson.Document;
 
@@ -9,6 +10,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 
 import cn.cerc.jdb.core.DataQuery;
+import cn.cerc.jdb.core.DataSet;
 import cn.cerc.jdb.core.DataSetState;
 import cn.cerc.jdb.core.IDataOperator;
 import cn.cerc.jdb.core.IHandle;
@@ -152,4 +154,30 @@ public class MongoQuery extends DataQuery {
 		this.operator = operator;
 	}
 
+	// 将通用类型，转成DataSet，方便操作
+	public DataSet getChildDataSet(String field) {
+		Object value = this.getField(field);
+		if (value == null)
+			return null;
+		if (!(value instanceof List<?>))
+			throw new RuntimeException("错误的数据类型！");
+		@SuppressWarnings("unchecked")
+		List<Map<String, Object>> items = (List<Map<String, Object>>) value;
+		DataSet dataSet = new DataSet();
+		for (Map<String, Object> item : items) {
+			Record record = dataSet.append().getCurrent();
+			for (String key : item.keySet())
+				record.setField(key, item.get(key));
+			record.setState(DataSetState.dsNone);
+		}
+		return dataSet;
+	}
+
+	// 将DataSet转成通用类型，方便存入MongoDB
+	public void setChildDataSet(String field, DataSet dataSet) {
+		List<Map<String, Object>> items = new ArrayList<>();
+		for (Record child : dataSet.getRecords())
+			items.add(child.getItems());
+		this.setField(field, items);
+	}
 }

@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import cn.cerc.jdb.core.DataSet;
 import cn.cerc.jdb.core.StubHandle;
 
 public class MongoQueryTest {
@@ -22,21 +23,36 @@ public class MongoQueryTest {
 		ds.add("select * from tmp2");
 		ds.open();
 		System.out.println(ds);
+		while (ds.fetch()) {
+			// 输出子数据表
+			DataSet child = ds.getChildDataSet("data");
+			System.out.println(child);
+		}
 	}
 
 	@Test
 	@Ignore
 	public void test_append() {
+		DataSet data = new DataSet();
+		data.append();
+		data.setField("it", 1);
+		data.setField("month", "201609");
+		data.append();
+		data.setField("it", 2);
+		data.setField("month", "201610");
+		//
 		ds.add("select * from tmp2 where code='a001'");
 		ds.open();
 		ds.append();
 		ds.setField("code", "a001");
 		ds.setField("value", 1);
+		ds.setChildDataSet("data", data);
+		DataSet ds2 = ds.getChildDataSet("data");
+		System.out.println(ds2);
 		ds.post();
 	}
 
 	@Test
-	@Ignore
 	public void test_modify() {
 		ds.add("select * from tmp2");
 		ds.open();
