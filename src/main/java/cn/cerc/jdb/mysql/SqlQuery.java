@@ -234,7 +234,7 @@ public class SqlQuery extends DataQuery {
 	protected IDataOperator getDefaultOperator() {
 		if (operator == null) {
 			SqlOperator def = new SqlOperator(this.handle);
-			String tableName = def.findTableName(this.getCommandText());
+			String tableName = SqlOperator.findTableName(this.getCommandText());
 			def.setTableName(tableName);
 			operator = def;
 		}

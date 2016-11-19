@@ -14,14 +14,14 @@ import cn.cerc.jdb.mysql.SqlQuery;
 public class MongoQueryToMysqlQuery {
 	private static final Logger log = Logger.getLogger(MongoSession.class);
 
-	private MongoQuery mongoDs;
+	private MongoDocument mongoDs;
 	private SqlQuery sqlDs;
 	private StubHandle handle;
 
 	@Before
 	public void setUp() {
 		handle = new StubHandle();
-		mongoDs = new MongoQuery(handle);
+		mongoDs = new MongoDocument(handle);
 		sqlDs = new SqlQuery(handle);
 	}
 

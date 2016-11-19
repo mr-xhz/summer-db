@@ -13,13 +13,13 @@ import cn.cerc.jdb.core.StubHandle;
 public class MongoQueryKVTest {
 	private static final Logger log = Logger.getLogger(MongoSession.class);
 
-	private MongoQuery ds;
+	private MongoDocument ds;
 	private StubHandle handle;
 
 	@Before
 	public void setUp() {
 		handle = new StubHandle();
-		ds = new MongoQuery(handle);
+		ds = new MongoDocument(handle);
 	}
 
 	@After
@@ -34,7 +34,6 @@ public class MongoQueryKVTest {
 	 * @author rick_zhou
 	 */
 	@Test
-	@Ignore
 	public void keyValueAdd() {
 		ds.add("select * from mongoqueryColl.testkey001");
 		ds.open();
