@@ -107,9 +107,8 @@ public class Record implements IRecord, Serializable {
 			map.put(field, value);
 		} else if (value instanceof TDateTime) {
 			map.put(field, ((TDateTime) value).getData());
-		} else {
-			throw DelphiException.createFmt("[TRecord]%s field is not %s", field, value.getClass().getName());
-		}
+		} else
+			map.put(field, value);
 	}
 
 	private boolean compareValue(Object value, Object compareValue) {
