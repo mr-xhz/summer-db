@@ -14,6 +14,7 @@ import cn.cerc.jdb.core.IDataOperator;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.mysql.SqlOperator;
+import cn.cerc.jdb.other.utils;
 
 public class MongoQuery extends DataQuery {
 	private static final long serialVersionUID = -1262005194419604476L;
@@ -35,6 +36,9 @@ public class MongoQuery extends DataQuery {
 		MongoCollection<Document> coll = session.getDatabase().getCollection(table);
 		// Document res = null;
 		BasicDBObject filter = new BasicDBObject();
+		// 增加查询条件
+		addWhereFields(filter, this.getCommandText());
+		// 执行查询
 		ArrayList<Document> list = coll.find(filter).into(new ArrayList<Document>());
 		// 数据不存在,则状态不为更新,并返回一个空数据
 		if (list == null || list.isEmpty())
@@ -49,6 +53,28 @@ public class MongoQuery extends DataQuery {
 		this.first();
 		this.active = true;
 		return this;
+	}
+
+	// 将sql指令查询条件改为MongoDB格式
+	protected void addWhereFields(BasicDBObject filter, String sql) {
+		int offset = sql.toLowerCase().indexOf("where");
+		if (offset > -1) {
+			String[] items = sql.substring(offset + 5).split("and");
+			for (String item : items) {
+				if (item.split("=").length == 2) {
+					String[] tmp = item.split("=");
+					String field = tmp[0].trim();
+					String value = tmp[1].trim();
+					if (value.startsWith("'") && value.endsWith("'"))
+						filter.append(field, value.substring(1, value.length() - 1));
+					else if(utils.isNumeric(value))
+						filter.append(field, Double.parseDouble(value));
+					else
+						filter.append(field, value);
+				} else
+					throw new RuntimeException("暂不支持的查询条件：" + item);
+			}
+		}
 	}
 
 	@Override

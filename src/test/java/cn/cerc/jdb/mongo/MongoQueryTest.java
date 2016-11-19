@@ -19,14 +19,15 @@ public class MongoQueryTest {
 	@Test
 	@Ignore
 	public void test_open() {
-		ds.add("select * from tmp");
+		ds.add("select * from tmp2");
 		ds.open();
 		System.out.println(ds);
 	}
 
 	@Test
+	@Ignore
 	public void test_append() {
-		ds.add("select * from tmp2");
+		ds.add("select * from tmp2 where code='a001'");
 		ds.open();
 		ds.append();
 		ds.setField("code", "a001");
@@ -35,6 +36,7 @@ public class MongoQueryTest {
 	}
 
 	@Test
+	@Ignore
 	public void test_modify() {
 		ds.add("select * from tmp2");
 		ds.open();
@@ -47,8 +49,9 @@ public class MongoQueryTest {
 
 	@Test
 	public void test_delete() {
-		ds.add("select * from tmp2");
+		ds.add("select * from tmp2 where code='a001' and value=3");
 		ds.open();
+		System.out.println(ds);
 		while (!ds.eof())
 			ds.delete();
 	}
