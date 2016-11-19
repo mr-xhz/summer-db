@@ -46,8 +46,13 @@ public class MongoQuery extends DataQuery {
 
 		for (Document doc : list) {
 			Record record = append().getCurrent();
-			for (String field : doc.keySet())
-				record.setField(field, doc.get(field));
+			for (String field : doc.keySet()) {
+				if ("_id".equals(field)) {
+					Object uid = doc.get(field);
+					record.setField(field, uid != null ? uid.toString() : uid);
+				} else
+					record.setField(field, doc.get(field));
+			}
 			record.setState(DataSetState.dsNone);
 		}
 		this.first();
@@ -67,7 +72,7 @@ public class MongoQuery extends DataQuery {
 					String value = tmp[1].trim();
 					if (value.startsWith("'") && value.endsWith("'"))
 						filter.append(field, value.substring(1, value.length() - 1));
-					else if(utils.isNumeric(value))
+					else if (utils.isNumeric(value))
 						filter.append(field, Double.parseDouble(value));
 					else
 						filter.append(field, value);
