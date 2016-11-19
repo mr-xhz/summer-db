@@ -48,6 +48,7 @@ public class MongoQueryTest {
 	}
 
 	@Test
+	@Ignore
 	public void test_delete() {
 		ds.add("select * from tmp2 where code='a001' and value=3");
 		ds.open();

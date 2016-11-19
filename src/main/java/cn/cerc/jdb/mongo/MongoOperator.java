@@ -39,8 +39,8 @@ public class MongoOperator implements IDataOperator {
 	public boolean update(Record record) {
 		MongoCollection<Document> coll = sess.getDatabase().getCollection(this.tableName);
 		Document doc = Document.parse(getValue(record));
-		Object uid = record.getField("_id");
-		Object key = uid != null ? new ObjectId(uid.toString()) : "null";
+		String uid = record.getString("_id");
+		Object key = "".equals(uid) ? "null" : new ObjectId(uid);
 		UpdateResult res = coll.replaceOne(Filters.eq("_id", key), doc);
 		return res.getModifiedCount() == 1;
 	}
@@ -48,8 +48,8 @@ public class MongoOperator implements IDataOperator {
 	@Override
 	public boolean delete(Record record) {
 		MongoCollection<Document> coll = sess.getDatabase().getCollection(this.tableName);
-		Object uid = record.getField("_id");
-		Object key = uid != null ? new ObjectId(uid.toString()) : "null";
+		String uid = record.getString("_id");
+		Object key = "".equals(uid) ? "null" : new ObjectId(uid);
 		DeleteResult res = coll.deleteOne(Filters.eq("_id", key));
 		return res.getDeletedCount() == 1;
 	}
