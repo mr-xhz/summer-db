@@ -36,12 +36,12 @@ public class MongoQuery extends DataQuery {
 		String table = SqlOperator.findTableName(this.getCommandText());
 		// 查找业务ID对应的数据
 		MongoCollection<Document> coll = session.getDatabase().getCollection(table);
-		// Document res = null;
-		BasicDBObject filter = new BasicDBObject();
 		// 增加查询条件
-		addWhereFields(filter, this.getCommandText());
+		BasicDBObject filter = decodeWhere(this.getCommandText());
+		// 增加排序条件
+		BasicDBObject sort = decodeOrder(this.getCommandText());
 		// 执行查询
-		ArrayList<Document> list = coll.find(filter).into(new ArrayList<Document>());
+		ArrayList<Document> list = coll.find(filter).sort(sort).into(new ArrayList<Document>());
 		// 数据不存在,则状态不为更新,并返回一个空数据
 		if (list == null || list.isEmpty())
 			return this;
@@ -63,10 +63,16 @@ public class MongoQuery extends DataQuery {
 	}
 
 	// 将sql指令查询条件改为MongoDB格式
-	protected void addWhereFields(BasicDBObject filter, String sql) {
+	protected BasicDBObject decodeWhere(String sql) {
+		BasicDBObject filter = new BasicDBObject();
 		int offset = sql.toLowerCase().indexOf("where");
 		if (offset > -1) {
-			String[] items = sql.substring(offset + 5).split("and");
+			int endIndex = sql.toLowerCase().indexOf("order");
+			String[] items;
+			if (endIndex > -1)
+				items = sql.substring(offset + 5, endIndex).split("and");
+			else
+				items = sql.substring(offset + 5).split("and");
 			for (String item : items) {
 				if (item.split("=").length == 2) {
 					String[] tmp = item.split("=");
@@ -82,6 +88,30 @@ public class MongoQuery extends DataQuery {
 					throw new RuntimeException("暂不支持的查询条件：" + item);
 			}
 		}
+		return filter;
+	}
+
+	// 将sql指令排序条件改为MongoDB格式
+	protected BasicDBObject decodeOrder(String sql) {
+		BasicDBObject sort = new BasicDBObject();
+		int offset = sql.toLowerCase().indexOf("order");
+		if (offset == -1)
+			return sort;
+		String[] items = sql.substring(offset + 9).split(",");
+		for (String item : items) {
+			String str = item.trim();
+			if (item.split(" ").length == 2) {
+				String[] tmp = item.split(" ");
+				if (tmp[1].equals("ASC"))
+					sort.append(tmp[0], 1);
+				else if (tmp[1].equals("DESC"))
+					sort.append(tmp[0], -1);
+				else
+					throw new RuntimeException("暂不支持的排序条件：" + item);
+			} else
+				sort.append(str, 1);
+		}
+		return sort;
 	}
 
 	@Override
