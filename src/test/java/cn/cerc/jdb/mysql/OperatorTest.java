@@ -82,14 +82,14 @@ public class OperatorTest {
 	@Ignore
 	public void test_findTableName() {
 		String sql = "select * from Dept";
-		assertEquals(obj.findTableName(sql), "Dept");
+		assertEquals(SqlOperator.findTableName(sql), "Dept");
 		sql = "select * from \r\n Dept";
-		assertEquals(obj.findTableName(sql), "Dept");
+		assertEquals(SqlOperator.findTableName(sql), "Dept");
 		sql = "select * from \r\nDept";
-		assertEquals(obj.findTableName(sql), "Dept");
+		assertEquals(SqlOperator.findTableName(sql), "Dept");
 		sql = "select * from\r\n Dept";
-		assertEquals(obj.findTableName(sql), "Dept");
+		assertEquals(SqlOperator.findTableName(sql), "Dept");
 		sql = "select * FROM Dept";
-		assertEquals(obj.findTableName(sql), "Dept");
+		assertEquals(SqlOperator.findTableName(sql), "Dept");
 	}
 }
