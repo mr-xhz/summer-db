@@ -11,14 +11,13 @@ import cn.cerc.jdb.core.StubHandle;
 
 public class OperatorTest {
 	private int maxTest = 50;
-	private SqlOperator obj;
 
 	private StubHandle handle;
 
 	@Before
 	public void setUp() {
 		handle = new StubHandle();
-		obj = new SqlOperator(handle);
+		new SqlOperator(handle);
 	}
 
 	@Test
