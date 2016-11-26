@@ -1,6 +1,7 @@
 package cn.cerc.jdb.mongo;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -214,8 +215,11 @@ public class MongoQuery extends DataQuery {
 	@SuppressWarnings("unchecked")
 	public List<Object> assignList(String field) {
 		Object value = this.getField(field);
-		if (value == null)
-			return null;
+		if (value == null) {
+			List<Object> items = new ArrayList<>();
+			this.setField(field, items);
+			return items;
+		}
 		if (!(value instanceof List<?>))
 			throw new RuntimeException("错误的数据类型！");
 		return (List<Object>) value;
@@ -224,8 +228,11 @@ public class MongoQuery extends DataQuery {
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> assignMap(String field) {
 		Object value = this.getField(field);
-		if (value == null)
-			return null;
+		if (value == null) {
+			Map<String, Object> items = new LinkedHashMap<>();
+			this.setField(field, items);
+			return items;
+		}
 		if (!(value instanceof List<?>))
 			throw new RuntimeException("错误的数据类型！");
 		return (Map<String, Object>) value;
