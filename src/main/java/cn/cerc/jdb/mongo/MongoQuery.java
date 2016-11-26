@@ -210,4 +210,24 @@ public class MongoQuery extends DataQuery {
 			items.add(child.getItems());
 		this.setField(field, items);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Object> assignList(String field) {
+		Object value = this.getField(field);
+		if (value == null)
+			return null;
+		if (!(value instanceof List<?>))
+			throw new RuntimeException("错误的数据类型！");
+		return (List<Object>) value;
+	}
+
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> assignMap(String field) {
+		Object value = this.getField(field);
+		if (value == null)
+			return null;
+		if (!(value instanceof List<?>))
+			throw new RuntimeException("错误的数据类型！");
+		return (Map<String, Object>) value;
+	}
 }
