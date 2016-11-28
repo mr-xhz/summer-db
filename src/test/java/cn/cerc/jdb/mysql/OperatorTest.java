@@ -11,14 +11,13 @@ import cn.cerc.jdb.core.StubHandle;
 
 public class OperatorTest {
 	private int maxTest = 50;
-	private SqlOperator obj;
 
 	private StubHandle handle;
 
 	@Before
 	public void setUp() {
 		handle = new StubHandle();
-		obj = new SqlOperator(handle);
+		new SqlOperator(handle);
 	}
 
 	@Test
@@ -82,14 +81,14 @@ public class OperatorTest {
 	@Ignore
 	public void test_findTableName() {
 		String sql = "select * from Dept";
-		assertEquals(obj.findTableName(sql), "Dept");
+		assertEquals(SqlOperator.findTableName(sql), "Dept");
 		sql = "select * from \r\n Dept";
-		assertEquals(obj.findTableName(sql), "Dept");
+		assertEquals(SqlOperator.findTableName(sql), "Dept");
 		sql = "select * from \r\nDept";
-		assertEquals(obj.findTableName(sql), "Dept");
+		assertEquals(SqlOperator.findTableName(sql), "Dept");
 		sql = "select * from\r\n Dept";
-		assertEquals(obj.findTableName(sql), "Dept");
+		assertEquals(SqlOperator.findTableName(sql), "Dept");
 		sql = "select * FROM Dept";
-		assertEquals(obj.findTableName(sql), "Dept");
+		assertEquals(SqlOperator.findTableName(sql), "Dept");
 	}
 }

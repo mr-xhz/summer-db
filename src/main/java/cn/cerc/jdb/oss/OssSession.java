@@ -32,8 +32,11 @@ public class OssSession implements ISession {
 	public static final String sessionId = "ossSession";
 	private OSSClient client;
 	private String bucket;
+	private String site;
 
 	public OSSClient getClient() {
+		if (client == null)
+			throw new RuntimeException("OssSession初始化失败: client is null");
 		return client;
 	}
 
@@ -95,5 +98,43 @@ public class OssSession implements ISession {
 		} catch (OSSException | IOException e) {
 			return null;
 		}
+	}
+
+	/**
+	 * 判断指定的文件名是否存在
+	 * 
+	 * @param fileName
+	 *            带完整路径的文件名
+	 * @return 若存在则返回true
+	 */
+	public boolean existsFile(String fileName) {
+		try {
+			OSSObject obj = client.getObject(getBucket(), fileName);
+			return obj.getObjectMetadata().getContentLength() > 0;
+		} catch (OSSException e) {
+			return false;
+		}
+	}
+
+	/**
+	 * 返回可用的文件名称
+	 * 
+	 * @param fileName
+	 *            带完整路径的文件名
+	 * @return 若存在则返回路径，否则返回默认值
+	 */
+	public String getFileUrl(String fileName, String def) {
+		if (existsFile(fileName))
+			return String.format("%s/%s", site, fileName);
+		else
+			return def;
+	}
+
+	public String getSite() {
+		return site;
+	}
+
+	public void setSite(String site) {
+		this.site = site;
 	}
 }

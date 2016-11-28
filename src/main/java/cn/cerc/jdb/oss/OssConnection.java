@@ -32,6 +32,7 @@ public class OssConnection implements IConnection {
 		OssSession sess = new OssSession();
 		sess.setClient(client);
 		sess.setBucket(bucket);
+		sess.setSite(config.getProperty(OssSession.oss_site));
 		return sess;
 	}
 

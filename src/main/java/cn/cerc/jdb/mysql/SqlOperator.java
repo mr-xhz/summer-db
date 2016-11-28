@@ -320,7 +320,7 @@ public class SqlOperator implements IDataOperator {
 	}
 
 	// 根据 sql 获取数据库表名
-	public String findTableName(String sql) {
+	public static String findTableName(String sql) {
 		String result = null;
 		String[] items = sql.split("[ \r\n]");
 		for (int i = 0; i < items.length; i++) {
