@@ -1,5 +1,7 @@
 package cn.cerc.jdb.core;
 
+import cn.cerc.jdb.jiguang.JiguangConnection;
+import cn.cerc.jdb.jiguang.JiguangSession;
 import cn.cerc.jdb.mongo.MongoConnection;
 import cn.cerc.jdb.mongo.MongoSession;
 import cn.cerc.jdb.mysql.SqlConnection;
@@ -11,9 +13,10 @@ import cn.cerc.jdb.queue.QueueSession;
 
 public class StubHandle implements IHandle {
 	private SqlSession mysqlSession;
-	private MongoSession mgSession;
-	private QueueSession queueSession;
-	private OssSession ossSession;
+	private MongoConnection mgConn;
+	private QueueConnection queConn;
+	private OssConnection ossConn;
+	private JiguangConnection pushConn;
 
 	public StubHandle() {
 		super();
@@ -25,19 +28,20 @@ public class StubHandle implements IHandle {
 		mysqlSession = conn.getSession();
 
 		// mongodb
-		MongoConnection mgconn = new MongoConnection();
-		mgconn.setConfig(config);
-		mgSession = mgconn.getSession();
+		mgConn = new MongoConnection();
+		mgConn.setConfig(config);
 
 		// aliyun mq
-		QueueConnection queconn = new QueueConnection();
-		queconn.setConfig(config);
-		queueSession = queconn.getSession();
+		queConn = new QueueConnection();
+		queConn.setConfig(config);
 
 		// oss
-		OssConnection ossConn = new OssConnection();
+		ossConn = new OssConnection();
 		ossConn.setConfig(config);
-		ossSession = ossConn.getSession();
+
+		// Jiguang
+		pushConn = new JiguangConnection();
+		pushConn.setConfig(config);
 	}
 
 	@Override
@@ -55,20 +59,19 @@ public class StubHandle implements IHandle {
 		if (SqlSession.sessionId.equals(key))
 			return mysqlSession;
 		if (MongoSession.sessionId.equals(key))
-			return mgSession;
+			return mgConn.getSession();
 		if (QueueSession.sessionId.equals(key))
-			return queueSession;
+			return queConn.getSession();
 		if (OssSession.sessionId.equals(key))
-			return ossSession;
+			return ossConn.getSession();
+		if (JiguangSession.sessionId.equals(key))
+			return pushConn.getSession();
 		return null;
 	}
 
 	// 关闭资源
 	public void closeConnections() {
 		mysqlSession.closeSession();
-		queueSession.closeSession();
-		mgSession.closeSession();
-		ossSession.closeSession();
 	}
 
 	public void close() {
