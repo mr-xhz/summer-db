@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cn.cerc.jdb.core.StubHandle;
-import cn.cerc.jdb.field.StringField;
+import cn.cerc.jdb.field.StringDefine;
 
 public class SqlQueryTest_open {
 	private SqlQuery ds;
@@ -20,8 +20,8 @@ public class SqlQueryTest_open {
 
 	@Test(expected = RuntimeException.class)
 	public void test_locked() {
-		ds.getFieldDefs().add("CorpNo_", new StringField(10));
-		ds.getFieldDefs().add("CWCode_", new StringField(10));
+		ds.getFieldDefs().add("CorpNo_", new StringDefine(10));
+		ds.getFieldDefs().add("CWCode_", new StringDefine(10));
 		// 仅定义了2个字段即锁定
 		ds.getFieldDefs().setLocked(true);
 		ds.open();

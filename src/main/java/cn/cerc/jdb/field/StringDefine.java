@@ -1,13 +1,13 @@
 package cn.cerc.jdb.field;
 
-public class StringField extends CustomField {
+public class StringDefine extends AbstractDefine {
 	private int length;
 
-	public StringField() {
+	public StringDefine() {
 		this.setWidth(6);
 	}
 
-	public StringField(int length) {
+	public StringDefine(int length) {
 		this.length = length;
 	}
 

@@ -1,8 +1,8 @@
 package cn.cerc.jdb.field;
 
-public class IntegerField extends CustomField {
+public class IntegerDefine extends AbstractDefine {
 
-	public IntegerField() {
+	public IntegerDefine() {
 		this.setWidth(4);
 	}
 

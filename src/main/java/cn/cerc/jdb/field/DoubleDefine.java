@@ -2,17 +2,17 @@ package cn.cerc.jdb.field;
 
 import java.math.BigDecimal;
 
-public class DoubleField extends CustomField {
+public class DoubleDefine extends AbstractDefine {
 	// 数值长度，仅适用于数值型
 	private int precision = 18;
 	// 小数位数，仅适用于数值型
 	private int scale = 6;
 
-	public DoubleField() {
+	public DoubleDefine() {
 		this.setWidth(4);
 	}
 
-	public DoubleField(int precision, int scale) {
+	public DoubleDefine(int precision, int scale) {
 		this.setWidth(4);
 		this.precision = precision;
 		this.scale = scale;
