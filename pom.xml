@@ -177,6 +177,18 @@
 			<version>2.1.0</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>cn.jpush.api</groupId>
+			<artifactId>jpush-client</artifactId>
+			<version>3.2.11</version>
+			<scope>provided</scope>
+		</dependency>
+	<!-- <dependency> -->
+	<!-- <groupId>org.codehaus.plexus</groupId> -->
+	<!-- <artifactId>plexus-interpolation</artifactId> -->
+	<!-- <version>1.14</version> -->
+	<!-- <scope>provided</scope> -->
+	<!-- </dependency> -->
 	</dependencies>
 	<repositories>
 		<repository>
