@@ -2,8 +2,8 @@ package cn.cerc.jdb.field;
 
 import cn.cerc.jdb.core.TDateTime;
 
-public class TDateTimeField extends CustomField {
-	public TDateTimeField() {
+public class TDateTimeDefine extends AbstractDefine {
+	public TDateTimeDefine() {
 		this.setWidth(9);
 	}
 

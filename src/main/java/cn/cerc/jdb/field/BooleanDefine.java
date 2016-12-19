@@ -1,7 +1,7 @@
 package cn.cerc.jdb.field;
 
-public class BooleanField extends CustomField {
-	public BooleanField() {
+public class BooleanDefine extends AbstractDefine {
+	public BooleanDefine() {
 		this.setWidth(2);
 	}
 
