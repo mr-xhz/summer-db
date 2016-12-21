@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -28,7 +29,7 @@ public class Record implements IRecord, Serializable {
 	private static final long serialVersionUID = 4454304132898734723L;
 	private DataSetState state = DataSetState.dsNone;
 	private FieldDefs defs = null;
-	private Map<String, Object> items = new HashMap<String, Object>();
+	private Map<String, Object> items = new LinkedHashMap<String, Object>();
 	private Map<String, Object> delta = new HashMap<String, Object>();
 	private CustomDataSet dataSet;
 
