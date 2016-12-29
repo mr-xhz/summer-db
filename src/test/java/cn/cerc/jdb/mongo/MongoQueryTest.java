@@ -43,9 +43,18 @@ public class MongoQueryTest {
 		//
 		ds.add("select * from tmp2 where code='a001'");
 		ds.open();
+		for(int i = 1;i < 20 ;i++){
+			ds.append();
+			ds.setField("code", "a001");
+			ds.setField("value", i);
+			ds.setChildDataSet("data", data);
+			DataSet ds2 = ds.getChildDataSet("data");
+			System.out.println(ds2);
+			ds.post();
+		}
 		ds.append();
-		ds.setField("code", "a001");
-		ds.setField("value", 1);
+		ds.setField("code", "a001QQ");
+		ds.setField("value", 30);
 		ds.setChildDataSet("data", data);
 		DataSet ds2 = ds.getChildDataSet("data");
 		System.out.println(ds2);
@@ -53,6 +62,7 @@ public class MongoQueryTest {
 	}
 
 	@Test
+	@Ignore
 	public void test_modify() {
 		ds.add("select * from tmp2");
 		ds.open();
@@ -63,6 +73,29 @@ public class MongoQueryTest {
 		}
 	}
 
+	@Test
+	public void test_select() {
+		ds.add("select * from tmp2");
+		ds.add("where value<>3 and value<5");
+		ds.open();
+		System.out.println(ds);
+	}
+	
+	@Test
+	public void test_select2() {
+		ds.add("select * from tmp2");
+		ds.add("where value<>3 and value<5 and code=a001");
+		ds.open();
+		System.out.println(ds);
+	}
+	@Test
+	public void test_select3() {
+		ds.add("select * from tmp2");
+		ds.add("where code like 'QQ'");
+		ds.open();
+		System.out.println(ds);
+	}
+	
 	@Test
 	@Ignore
 	public void test_delete() {
