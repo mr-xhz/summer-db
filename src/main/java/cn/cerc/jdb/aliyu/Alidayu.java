@@ -15,14 +15,13 @@ import com.taobao.api.response.AlibabaAliqinFcSmsNumSendResponse;
 import cn.cerc.jdb.core.IConfig;
 
 public class Alidayu {
+	private static final Logger log = Logger.getLogger(Alidayu.class);
+	// 常量
 	public static final String AppName = "appName";
 	public static final String ServerUrl = "dayu.serverUrl";
 	public static final String AppKey = "dayu.appKey";
 	public static final String AppSecret = "dayu.appSecret";
 	public static final String SingName = "dayu.singName";
-	private static final Logger log = Logger.getLogger(Alidayu.class);
-	private static Map<String, String> tpl = new HashMap<>();
-	private String message;
 	// 各类设置
 	private String serverUrl;
 	private String appKey;
@@ -33,8 +32,11 @@ public class Alidayu {
 	private String mobileNo;
 	// 简讯模版编号
 	private String templateNo;
+	// 执行结果
+	private String message;
 
-	// 系统内置模版
+	// 系统模版列表
+	private static Map<String, String> tpl = new HashMap<>();
 	static {
 		tpl.put("SMS_1190001", "系统信息变更验证码"); // 验证码${code}，您正在尝试变更${product}重要信息，请妥善保管账户信息。
 		tpl.put("SMS_1190002", "系统修改密码验证码"); // 验证码${code}，您正在尝试修改${product}登录密码，请妥善保管账户信息。
