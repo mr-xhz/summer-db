@@ -14,7 +14,7 @@ public class JiguangSession implements ISession {
 
 	@Override
 	public void closeSession() {
-		client = null;
+	//	client = null;
 	}
 
 	public JPushClient getClient() {
