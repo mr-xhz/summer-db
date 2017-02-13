@@ -21,18 +21,8 @@ public class CacheQuery implements IRecord {
 	private IMemcache cache;
 	private boolean connected;
 
-	public CacheQuery(String key) {
-		this.setKey(key);
-	}
-
-	public CacheQuery(Object... keys) {
-		StringBuffer str = new StringBuffer();
-		for (int i = 0; i < keys.length; i++) {
-			if (i > 0)
-				str.append(".");
-			str.append(keys[i]);
-		}
-		setKey(str.toString());
+	public CacheQuery(IMemcache cache) {
+		this.cache = cache;
 	}
 
 	public CacheQuery setKey(String key) {
@@ -69,11 +59,6 @@ public class CacheQuery implements IRecord {
 			}
 		}
 
-	}
-
-	@Deprecated // 请改使用post函数
-	public final void update() {
-		post();
 	}
 
 	public boolean isNull() {
