@@ -13,6 +13,7 @@ import cn.jpush.api.push.model.Platform;
 import cn.jpush.api.push.model.PushPayload;
 import cn.jpush.api.push.model.PushPayload.Builder;
 import cn.jpush.api.push.model.audience.Audience;
+import cn.jpush.api.push.model.notification.IosNotification;
 import cn.jpush.api.push.model.notification.Notification;
 
 public class JiguangPush {
@@ -35,7 +36,9 @@ public class JiguangPush {
 		this.session = (JiguangSession) handle.getProperty(JiguangSession.sessionId);
 	}
 
-	// 发送给所有设备
+	/**
+	 * 发送给所有设备
+	 */
 	public void send() {
 		// 发送给安卓
 		send(ClientType.Android, null);
@@ -43,7 +46,14 @@ public class JiguangPush {
 		send(ClientType.IOS, null);
 	}
 
-	// 发送给指定设备
+	/**
+	 * 发送给指定设备
+	 * 
+	 * @param clientType
+	 *            设备类型
+	 * @param clientId
+	 *            设备id
+	 */
 	public void send(ClientType clientType, String clientId) {
 		if (msgId == null)
 			throw new RuntimeException("msgId is null");
@@ -64,13 +74,20 @@ public class JiguangPush {
 			sendMessage(builder.build());
 		} else if (clientType == ClientType.IOS) {
 			builder.setPlatform(Platform.ios());
-			builder.setNotification(Notification.ios(message, params));
+			// builder.setNotification(Notification.ios(message, params));
+			builder.setNotification(Notification.newBuilder().addPlatformNotification(
+					IosNotification.newBuilder().setAlert(message).addExtras(params).setSound("default").build())
+					.build());
 			sendMessage(builder.build());
 		} else
 			throw new RuntimeException("暂不支持的设备类别：" + clientType.ordinal());
 	}
 
-	// 发送一条讯息
+	/**
+	 * 发送一条讯息
+	 * 
+	 * @param payload
+	 */
 	private void sendMessage(PushPayload payload) {
 		try {
 			PushResult result = session.getClient().sendPush(payload);
@@ -89,7 +106,9 @@ public class JiguangPush {
 		}
 	}
 
-	// 增加附加参数
+	/**
+	 * 增加附加参数到 extras
+	 */
 	public void addParam(String key, String value) {
 		params.put(key, value);
 	}
@@ -109,6 +128,11 @@ public class JiguangPush {
 
 	public JiguangPush setTitle(String title) {
 		this.title = title;
+		return this;
+	}
+
+	public JiguangPush setTitle(String format, Object... args) {
+		this.title = String.format(format, args);
 		return this;
 	}
 
