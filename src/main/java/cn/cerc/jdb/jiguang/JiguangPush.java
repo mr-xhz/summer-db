@@ -29,7 +29,6 @@ public class JiguangPush {
 	private Map<String, String> params = new LinkedHashMap<>();
 
 	public JiguangPush() {
-
 	}
 
 	public JiguangPush(IHandle handle) {
@@ -94,11 +93,9 @@ public class JiguangPush {
 			log.info("Got result - " + result);
 
 		} catch (APIConnectionException e) {
-			// Connection error, should retry later
 			log.error("Connection error, should retry later", e);
 
 		} catch (APIRequestException e) {
-			// Should review the error, and fix the request
 			log.error("Should review the error, and fix the request", e);
 			log.info("HTTP Status: " + e.getStatus());
 			log.info("Error Code: " + e.getErrorCode());
