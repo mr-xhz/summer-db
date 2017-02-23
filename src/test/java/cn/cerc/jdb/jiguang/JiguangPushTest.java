@@ -22,7 +22,7 @@ public class JiguangPushTest {
 		push.setMsgId("3707");
 
 		// 发送给指定的设备Id
-		push.send(ClientType.IOS, "i_0A4F181C36C84BA09E90B63DC720037B");
+		push.send(ClientType.IOS, "i_FE590CDAAAFD48E3BDB4B6FCC31E1F15");
 
 		// 发送给指定的设备类型
 		// push.send(ClientType.IOS, null);
