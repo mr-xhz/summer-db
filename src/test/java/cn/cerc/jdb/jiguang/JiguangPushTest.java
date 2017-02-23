@@ -18,12 +18,15 @@ public class JiguangPushTest {
 		JiguangPush push = new JiguangPush(handle);
 		// 消息标题，仅安卓机型有效，IOS设备忽略
 		push.setTitle("新在线订单：东江渔具店");
-		push.setMessage("订货单金额为4500元，请您及时接收并确认发货，谢谢！");
-		push.setMsgId("16");
+		push.setMessage("【研发测试】向您发送了一条测试消息，如有打扰，请您忽略，谢谢！");
+		push.setMsgId("3707");
+
 		// 发送给指定的设备Id
-		// push.send(ClientType.Android, "869159025472386");
+		push.send(ClientType.IOS, "i_0A4F181C36C84BA09E90B63DC720037B");
+
 		// 发送给指定的设备类型
-		push.send(ClientType.Android, null);
+		// push.send(ClientType.IOS, null);
+
 		// 发送给所有的用户
 		// push.send();
 	}
