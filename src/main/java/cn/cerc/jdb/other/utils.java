@@ -3,6 +3,8 @@ package cn.cerc.jdb.other;
 import java.text.DecimalFormat;
 import java.util.UUID;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 public class utils {
 	public static final String vbCrLf = "\r\n";
 
@@ -69,7 +71,7 @@ public class utils {
 	}
 
 	public static String safeString(String value) {
-		return value == null ? "" : value.replaceAll("'", "");
+		return value == null ? "" : StringEscapeUtils.escapeSql(value);
 	}
 
 	public static String copy(String text, int iStart, int iLength) {
