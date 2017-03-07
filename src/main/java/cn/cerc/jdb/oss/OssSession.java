@@ -121,8 +121,6 @@ public class OssSession implements ISession {
 	 * 
 	 * @param fileName
 	 *            带完整路径的文件名
-	 * @param def
-	 *            默认值
 	 * @return 若存在则返回路径，否则返回默认值
 	 */
 	public String getFileUrl(String fileName, String def) {

@@ -69,7 +69,7 @@ public class utils {
 	}
 
 	public static String safeString(String value) {
-		return value == null ? "" : value.replaceAll("'", "");
+		return value == null ? "" : value.replaceAll("'", "''");
 	}
 
 	public static String copy(String text, int iStart, int iLength) {
