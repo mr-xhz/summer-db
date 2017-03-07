@@ -1,11 +1,9 @@
 package cn.cerc.jdb.mongo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import org.bson.Document;
 
@@ -77,61 +75,21 @@ public class MongoQuery extends DataQuery {
 			else
 				items = sql.substring(offset + 5).split("and");
 			for (String item : items) {
-				if (item.split(">=").length == 2)
-					setCondition(filter, item, ">=");
-				else if (item.split("<=").length == 2)
-					setCondition(filter, item, "<=");
-				else if (item.split("<>").length == 2)
-					setCondition(filter, item, "<>");
-				else if (item.split("=").length == 2)
-					setCondition(filter, item, "=");
-				else if (item.split(">").length == 2)
-					setCondition(filter, item, ">");
-				else if (item.split("<").length == 2)
-					setCondition(filter, item, "<");
-				else if (item.split("like").length == 2) {
-					String[] tmp = item.split("like");
+				if (item.split("=").length == 2) {
+					String[] tmp = item.split("=");
 					String field = tmp[0].trim();
 					String value = tmp[1].trim();
-					if (value.startsWith("'") && value.endsWith("'")){
-						//不区分大小写的模糊搜索
-						Pattern queryPattern = Pattern.compile(value.substring(1, value.length() - 1), Pattern.CASE_INSENSITIVE);
-						filter.append(field, queryPattern);
-					} else
-						throw new RuntimeException(String.format("模糊查询条件：%s 必须为字符串", item));
+					if (value.startsWith("'") && value.endsWith("'"))
+						filter.append(field, value.substring(1, value.length() - 1));
+					else if (utils.isNumeric(value))
+						filter.append(field, Double.parseDouble(value));
+					else
+						filter.append(field, value);
 				} else
 					throw new RuntimeException("暂不支持的查询条件：" + item);
 			}
 		}
 		return filter;
-	}
-
-	private void setCondition(BasicDBObject filter, String item, String symbol) {
-		Map<String, String> compare = new HashMap<>();
-		compare.put("=", "$eq");
-		compare.put("<>", "$ne");
-		compare.put(">", "$gt");
-		compare.put(">=", "$gte");
-		compare.put("<", "$lt");
-		compare.put("<=", "$lte");
-		String[] tmp = item.split(symbol);
-		String field = tmp[0].trim();
-		String value = tmp[1].trim();
-		if (filter.get(field) != null) {
-			if (value.startsWith("'") && value.endsWith("'"))
-				((BasicDBObject) filter.get(field)).append(compare.get(symbol), value.substring(1, value.length() - 1));
-			else if (utils.isNumeric(value))
-				((BasicDBObject) filter.get(field)).append(compare.get(symbol), Double.parseDouble(value));
-			else
-				((BasicDBObject) filter.get(field)).append(compare.get(symbol), value);
-		} else {
-			if (value.startsWith("'") && value.endsWith("'"))
-				filter.put(field, new BasicDBObject(compare.get(symbol), value.substring(1, value.length() - 1)));
-			else if (utils.isNumeric(value))
-				filter.put(field, new BasicDBObject(compare.get(symbol), Double.parseDouble(value)));
-			else
-				filter.put(field, new BasicDBObject(compare.get(symbol), value));
-		}
 	}
 
 	// 将sql指令排序条件改为MongoDB格式
