@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -19,8 +20,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
 
-import cn.cerc.jdb.field.DoubleField;
-import cn.cerc.jdb.field.IField;
+import cn.cerc.jdb.field.AbstractDefine;
+import cn.cerc.jdb.field.DoubleDefine;
 import cn.cerc.jdb.other.DelphiException;
 import cn.cerc.jdb.other.utils;
 
@@ -28,7 +29,7 @@ public class Record implements IRecord, Serializable {
 	private static final long serialVersionUID = 4454304132898734723L;
 	private DataSetState state = DataSetState.dsNone;
 	private FieldDefs defs = null;
-	private Map<String, Object> items = new HashMap<String, Object>();
+	private Map<String, Object> items = new LinkedHashMap<String, Object>();
 	private Map<String, Object> delta = new HashMap<String, Object>();
 	private CustomDataSet dataSet;
 
@@ -63,12 +64,12 @@ public class Record implements IRecord, Serializable {
 		if (!defs.exists(field))
 			defs.add(field);
 
-		IField define = defs.getDefine(field);
+		AbstractDefine define = defs.getDefine(field);
 		if (define != null) {
 			if (!define.validate(value))
 				throw new RuntimeException(
 						String.format("[%s]%s:%s validate error!", define.getClass().getName(), field, value));
-			if (define instanceof DoubleField)
+			if (define instanceof DoubleDefine)
 				value = utils.roundTo((double) value, -define.getScale());
 		}
 

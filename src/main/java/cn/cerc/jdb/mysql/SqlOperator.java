@@ -15,7 +15,7 @@ import cn.cerc.jdb.core.FieldDefs;
 import cn.cerc.jdb.core.IDataOperator;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.field.IField;
+import cn.cerc.jdb.field.AbstractDefine;
 
 public class SqlOperator implements IDataOperator {
 	private static final Logger log = Logger.getLogger(SqlOperator.class);
@@ -45,7 +45,7 @@ public class SqlOperator implements IDataOperator {
 			int i = 0;
 			for (String field : record.getItems().keySet()) {
 				if (!CONST_UID.equals(field)) {
-					IField define = defs.getDefine(field);
+					AbstractDefine define = defs.getDefine(field);
 					if (define == null || !define.isCalculated()) {
 						i++;
 						if (i > 1)
@@ -58,7 +58,7 @@ public class SqlOperator implements IDataOperator {
 			i = 0;
 			for (String field : record.getItems().keySet()) {
 				if (!CONST_UID.equals(field)) {
-					IField define = defs.getDefine(field);
+					AbstractDefine define = defs.getDefine(field);
 					if (define == null || !define.isCalculated()) {
 						i++;
 						if (i == 1)
@@ -114,7 +114,7 @@ public class SqlOperator implements IDataOperator {
 			// 加入set条件
 			int i = 0;
 			for (String field : delta.keySet()) {
-				IField define = defs.getDefine(field);
+				AbstractDefine define = defs.getDefine(field);
 				if (define == null || !define.isCalculated()) {
 					if (!CONST_UID.equals(field)) {
 						i++;
@@ -143,7 +143,7 @@ public class SqlOperator implements IDataOperator {
 				throw new RuntimeException("primary keys value not exists");
 			for (String field : delta.keySet()) {
 				if (!primaryKeys.contains(field)) {
-					IField define = defs.getDefine(field);
+					AbstractDefine define = defs.getDefine(field);
 					if (define == null || !define.isCalculated()) {
 						i++;
 						bs.append(i == 1 ? " where " : " and ").append(field);
