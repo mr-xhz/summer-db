@@ -17,12 +17,12 @@ import cn.cerc.jdb.core.FieldDefs;
 import cn.cerc.jdb.core.IDataOperator;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.field.BooleanField;
-import cn.cerc.jdb.field.DoubleField;
-import cn.cerc.jdb.field.IField;
-import cn.cerc.jdb.field.IntegerField;
-import cn.cerc.jdb.field.StringField;
-import cn.cerc.jdb.field.TDateTimeField;
+import cn.cerc.jdb.field.BooleanDefine;
+import cn.cerc.jdb.field.AbstractDefine;
+import cn.cerc.jdb.field.DoubleDefine;
+import cn.cerc.jdb.field.IntegerDefine;
+import cn.cerc.jdb.field.StringDefine;
+import cn.cerc.jdb.field.TDateTimeDefine;
 
 public class SqlQuery extends DataQuery {
 	private static final Logger log = Logger.getLogger(SqlQuery.class);
@@ -120,18 +120,18 @@ public class SqlQuery extends DataQuery {
 				String field = meta.getColumnLabel(i);
 				if (!defs.exists(field)) {
 					if (defs.isStrict()) {
-						IField define = null;
+						AbstractDefine define = null;
 						String type = meta.getColumnTypeName(i);
 						if ("VARCHAR".equals(type))
-							define = new StringField(meta.getColumnDisplaySize(i));
+							define = new StringDefine(meta.getColumnDisplaySize(i));
 						else if ("DECIMAL".equals(type) || "BIGINT".equals(type) || "INT UNSIGNED".equals(type))
-							define = new DoubleField(meta.getPrecision(i), meta.getScale(i));
+							define = new DoubleDefine(meta.getPrecision(i), meta.getScale(i));
 						else if ("INT".equals(type))
-							define = new IntegerField();
+							define = new IntegerDefine();
 						else if ("BIT".equals(type))
-							define = new BooleanField();
+							define = new BooleanDefine();
 						else if ("DATETIME".equals(type))
-							define = new TDateTimeField();
+							define = new TDateTimeDefine();
 						else
 							throw new RuntimeException("not support type: " + type);
 						defs.add(field, define);
