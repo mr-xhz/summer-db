@@ -336,6 +336,14 @@ public class Record implements IRecord, Serializable {
 		return result;
 	}
 
+	/**
+	 * 防止注入攻击
+	 * 
+	 * @param field
+	 *            字段名
+	 * @return 返回安全的字符串
+	 */
+	@Deprecated
 	public String getSafeString(String field) {
 		return safeString(getString(field));
 	}

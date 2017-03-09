@@ -6,7 +6,6 @@ import static cn.cerc.jdb.other.utils.copy;
 import static cn.cerc.jdb.other.utils.floatToStr;
 import static cn.cerc.jdb.other.utils.isNumeric;
 import static cn.cerc.jdb.other.utils.roundTo;
-import static cn.cerc.jdb.other.utils.safeString;
 import static cn.cerc.jdb.other.utils.strToFloatDef;
 import static cn.cerc.jdb.other.utils.trunc;
 import static org.hamcrest.CoreMatchers.is;
@@ -15,6 +14,8 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import cn.cerc.jdb.core.Utils;
 
 public class utilsTest {
 	@Test
@@ -45,8 +46,8 @@ public class utilsTest {
 	@Test
 	public void test_safeString() {
 		String str = "' and '='1";
-		String result = " and =1";
-		assertThat(safeString(str), is(result));
+		String result = "'' and ''=''1";
+		assertThat(Utils.safeString(str), is(result));
 	}
 
 	@Test
