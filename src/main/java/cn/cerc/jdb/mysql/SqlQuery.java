@@ -17,8 +17,8 @@ import cn.cerc.jdb.core.FieldDefs;
 import cn.cerc.jdb.core.IDataOperator;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.field.BooleanDefine;
 import cn.cerc.jdb.field.AbstractDefine;
+import cn.cerc.jdb.field.BooleanDefine;
 import cn.cerc.jdb.field.DoubleDefine;
 import cn.cerc.jdb.field.IntegerDefine;
 import cn.cerc.jdb.field.StringDefine;
@@ -174,6 +174,7 @@ public class SqlQuery extends DataQuery {
 		return this;
 	}
 
+	@Override
 	public boolean getActive() {
 		return active;
 	}
@@ -250,6 +251,7 @@ public class SqlQuery extends DataQuery {
 		this.operator = operator;
 	}
 
+	@Override
 	public String toString() {
 		StringBuffer sl = new StringBuffer();
 		sl.append(String.format("[%s]%n", this.getClass().getName()));
@@ -311,7 +313,7 @@ public class SqlQuery extends DataQuery {
 
 	public void clear() {
 		close();
-		this.setCommandText(null);
+		this.add(null);
 	}
 
 	public boolean isStrict() {
