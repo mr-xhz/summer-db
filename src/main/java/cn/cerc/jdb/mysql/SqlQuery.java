@@ -313,7 +313,7 @@ public class SqlQuery extends DataQuery {
 
 	public void clear() {
 		close();
-		this.add(null);
+		this.emptyCommand();
 	}
 
 	public boolean isStrict() {
