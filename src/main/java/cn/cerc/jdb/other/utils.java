@@ -68,6 +68,15 @@ public class utils {
 		return '{' + uuid.toString() + '}';
 	}
 
+	/**
+	 * 保障查询安全，防范注入攻击 (已停用，请改使用cn.cerc.jdb.core.Utils.safeString)
+	 * 
+	 * @param value
+	 *            用户输入值
+	 * 
+	 * @return 经过处理后的值
+	 */
+	@Deprecated
 	public static String safeString(String value) {
 		return value == null ? "" : value.replaceAll("'", "");
 	}
