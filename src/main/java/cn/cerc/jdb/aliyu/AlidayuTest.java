@@ -28,7 +28,7 @@ public class AlidayuTest {
 		});
 		sms.setMobileNo("13912345678");
 		sms.setTemplateNo("SMS_1190006");
-		boolean ok = sms.send("000000", this);
+		boolean ok = sms.send("000000", "");
 		System.out.println(sms.getMessage());
 		assertTrue(ok);
 	}
