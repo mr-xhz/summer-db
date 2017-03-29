@@ -188,7 +188,7 @@
 		<dependency>
 			<groupId>taobao</groupId>
 			<artifactId>sdk-java</artifactId>
-			<version>auto_1447355351010-20151113</version>
+			<version>auto_1455552377940-20160607</version>
 		</dependency>
 	<!-- <dependency> -->
 	<!-- <groupId>org.codehaus.plexus</groupId> -->

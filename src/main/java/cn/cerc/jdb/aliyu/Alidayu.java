@@ -55,10 +55,8 @@ public class Alidayu {
 		this.signName = conf.getProperty(SingName, "地藤");
 	}
 
-	public boolean send(String corpNo, Object data) {
+	public boolean send(String corpNo, String json) {
 		AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
-		req.setRecNum(mobileNo);
-		req.setSmsTemplateCode(this.templateNo);
 		String serverUrl = this.serverUrl;
 		String appKey = this.appKey;
 		String appSecret = this.appSecret;
@@ -81,8 +79,12 @@ public class Alidayu {
 		req.setExtend(corpNo);
 		req.setSmsType("normal");
 		req.setSmsFreeSignName(this.signName);
+
 		// 活动验证, 变更验证，登录验证，注册验证，身份验证
-		req.setSmsParam(data);
+		req.setSmsParamString(json);// 短信模版变量
+
+		req.setRecNum(mobileNo);
+		req.setSmsTemplateCode(this.templateNo);
 		AlibabaAliqinFcSmsNumSendResponse rsp;
 
 		try {
