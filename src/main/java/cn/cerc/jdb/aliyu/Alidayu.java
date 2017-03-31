@@ -99,6 +99,7 @@ public class Alidayu {
 					return false;
 				}
 			} else {
+				log.info(rsp.getBody());
 				message = "Alidayu error: rsp.getResult is null, app host: " + appName;
 				return false;
 			}
