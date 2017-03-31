@@ -30,9 +30,9 @@ public class AlidayuTest {
 		});
 
 		sms.setMobileNo("18566767108");
-		sms.setTemplateNo("SMS_1190006");
+		sms.setTemplateNo("SMS_1190007");
 
-		String smsParam = "{code:'785456',product:'阿里大于'}";
+		String smsParam = "{code:'785456',product:'地藤系统'}";
 		boolean ok = sms.send("911001", smsParam);
 		System.out.println(sms.getMessage());
 		assertTrue(ok);
