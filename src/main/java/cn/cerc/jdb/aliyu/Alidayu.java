@@ -56,7 +56,6 @@ public class Alidayu {
 	}
 
 	public boolean send(String corpNo, String smsParam) {
-
 		String serverUrl = this.serverUrl;
 		String appKey = this.appKey;
 		String appSecret = this.appSecret;
@@ -79,13 +78,12 @@ public class Alidayu {
 		req.setExtend(corpNo);
 		req.setSmsType("normal");
 		req.setSmsFreeSignName(this.signName);
-
-		req.setSmsParamString(smsParam);
-		// req.setSmsParamString("{code:'785456',product:'阿里大于'}");
-
+		req.setSmsParamString(smsParam.toString());
 		req.setRecNum(mobileNo);
 		req.setSmsTemplateCode(this.templateNo);
 		AlibabaAliqinFcSmsNumSendResponse rsp;
+
+		log.info(req.getTextParams());
 
 		try {
 			rsp = client.execute(req);
