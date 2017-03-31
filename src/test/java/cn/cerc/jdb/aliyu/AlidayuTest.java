@@ -32,8 +32,8 @@ public class AlidayuTest {
 		sms.setMobileNo("18566767108");
 		sms.setTemplateNo("SMS_1190006");
 
-		String json = "{\"code\":\"123\",\"product\":\"567\"}";
-		boolean ok = sms.send("911001", json);
+		String smsParam = "{code:'785456',product:'阿里大于'}";
+		boolean ok = sms.send("911001", smsParam);
 		System.out.println(sms.getMessage());
 		assertTrue(ok);
 	}
