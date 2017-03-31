@@ -16,13 +16,13 @@ public class AlidayuTest {
 			public String getProperty(String key, String def) {
 
 				if (Alidayu.AppName.equals(key))
-					return "地藤";
+					return "serverName";
 				if (Alidayu.ServerUrl.equals(key))
 					return "http://gw.api.taobao.com/router/rest";
 				if (Alidayu.AppKey.equals(key))
-					return "23256148";
+					return "appKey";
 				if (Alidayu.AppSecret.equals(key))
-					return "8f8a19b62ac55b11ed3b7a0c241f218d";
+					return "appSecret";
 				if (Alidayu.SingName.equals(key))
 					return "地藤";
 				return null;
