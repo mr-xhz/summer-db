@@ -98,7 +98,7 @@ public class Alidayu {
 				}
 			} else {
 				log.info(rsp.getBody());
-				message = "Alidayu error: rsp.getResult is null, app host: " + appName;
+				message = appName + rsp.getSubMsg();
 				return false;
 			}
 		} catch (ApiException e) {
