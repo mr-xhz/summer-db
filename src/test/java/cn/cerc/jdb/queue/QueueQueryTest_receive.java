@@ -7,30 +7,29 @@ import org.junit.Test;
 import cn.cerc.jdb.core.StubHandle;
 
 public class QueueQueryTest_receive {
-
-	private QueueQuery ds = null;
+	private QueueQuery dataSet;
 	private StubHandle handle;
 
 	@Before
 	public void setUp() {
 		handle = new StubHandle();
-		ds = new QueueQuery(handle);
+		dataSet = new QueueQuery(handle);
 	}
 
 	@After
 	public void closeSession() {
-		ds.sessionClose();
+		dataSet.sessionClose();
 	}
 
 	@Test
 	public void test() {
-		ds.setQueueMode(QueueMode.recevie);
-		ds.add("select * from %s", "test");
-		ds.open();
+		dataSet.setQueueMode(QueueMode.recevie);
+		dataSet.add("select * from %s", "test");
+		dataSet.open();
 
-		System.out.println(ds.getActive());
-		System.out.println(ds.getJSON());
+		System.out.println(dataSet.getActive());
+		System.out.println(dataSet.getJSON());
 		// do something
-		ds.remove();
+		dataSet.remove();
 	}
 }

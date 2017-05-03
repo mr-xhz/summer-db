@@ -12,18 +12,18 @@ import cn.cerc.jdb.mongo.MongoSession;
 public class QueueQueryTest {
 	private static final Logger log = Logger.getLogger(MongoSession.class);
 
-	private static QueueQuery ds;
+	private static QueueQuery dataSet;
 	private static StubHandle handle;
 
 	@BeforeClass
 	public static void setUp() {
 		handle = new StubHandle();
-		ds = new QueueQuery(handle);
+		dataSet = new QueueQuery(handle);
 	}
 
 	@AfterClass
 	public static void closeSession() {
-		ds.sessionClose();
+		dataSet.sessionClose();
 	}
 
 	/**
@@ -35,22 +35,24 @@ public class QueueQueryTest {
 	@Test
 	public void sendMsg() {
 		// ds.add("select * from %s", appdb.get(handle, appdb.MQ_TOPIC_NAME));
-		ds.add("select * from test");
-		ds.open();
-		// save dataset head data
-		ds.getHead().setField("queueHeadData1", "queueHeadData1");
-		ds.getHead().setField("queueHeadData2", "queueHeadData2");
-		ds.getHead().setField("queueHeadData3", "queueHeadData3");
-		ds.getHead().setField("queueHeadData4", "queueHeadData4");
-		// save dataset body data
-		ds.append();
-		ds.setField("queueBodyData1", "queueBodyData1");
-		ds.setField("queueBodyData2", "queueBodyData2");
-		ds.setField("queueBodyData3", "queueBodyData3");
-		ds.setField("queueBodyData4", "queueBodyData4");
-		ds.setField("queueBodyData5", "queueBodyData5");
-		ds.setQueueMode(QueueMode.append);
-		ds.save();
+		dataSet.add("select * from test");
+		dataSet.open();
+
+		// append head
+		dataSet.getHead().setField("queueHeadData1", "queueHeadData1");
+		dataSet.getHead().setField("queueHeadData2", "queueHeadData2");
+		dataSet.getHead().setField("queueHeadData3", "queueHeadData3");
+		dataSet.getHead().setField("queueHeadData4", "queueHeadData4");
+
+		// append body
+		dataSet.append();
+		dataSet.setField("queueBodyData1", "queueBodyData1");
+		dataSet.setField("queueBodyData2", "queueBodyData2");
+		dataSet.setField("queueBodyData3", "queueBodyData3");
+		dataSet.setField("queueBodyData4", "queueBodyData4");
+		dataSet.setField("queueBodyData5", "queueBodyData5");
+		dataSet.setQueueMode(QueueMode.append);
+		dataSet.save();
 	}
 
 	/**
@@ -62,21 +64,24 @@ public class QueueQueryTest {
 	@Test
 	public void query() {
 		// ds.add("select * from %s", appdb.get(handle, appdb.MQ_TOPIC_NAME));
-		ds.add("select * from test");
-		ds.setQueueMode(QueueMode.recevie);
-		ds.open();// 获取消息
+		dataSet.add("select * from test");
+		dataSet.setQueueMode(QueueMode.recevie);
+		dataSet.open();// 获取消息
 
 		// 获取消息中DataSet的head内容
 		log.info(StringUtils.center("heand data", 70, "=="));
-		log.info(ds.getHead().getField("queueHeadData1"));
-		log.info(ds.getHead().getField("queueHeadData2"));
-		log.info(ds.getHead().getField("queueHeadData3"));
-		log.info(ds.getHead().getField("queueHeadData4"));
+		log.info(dataSet.getHead().getField("queueHeadData1"));
+		log.info(dataSet.getHead().getField("queueHeadData2"));
+		log.info(dataSet.getHead().getField("queueHeadData3"));
+		log.info(dataSet.getHead().getField("queueHeadData4"));
+
 		log.info(StringUtils.center("body data", 70, "=="));
-		log.info(ds.getField("queueBodyData1"));
-		log.info(ds.getField("queueBodyData2"));
-		log.info(ds.getField("queueBodyData3"));
-		log.info(ds.getField("queueBodyData4"));
+		log.info(dataSet.getField("queueBodyData1"));
+		log.info(dataSet.getField("queueBodyData2"));
+		log.info(dataSet.getField("queueBodyData3"));
+		log.info(dataSet.getField("queueBodyData4"));
+
+		dataSet.remove();
 	}
 
 }
