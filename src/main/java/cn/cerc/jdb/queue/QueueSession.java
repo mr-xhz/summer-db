@@ -21,7 +21,7 @@ public class QueueSession implements ISession {
 	// 默认不可见时间
 	private static int visibilityTimeout = 50;
 	// 默认消息队列
-	public static final String defaultQueue = "summer";
+	public static final String defaultQueue = QueueDB.SUMMER;
 	// 连接客户端
 	private MNSClient client;
 

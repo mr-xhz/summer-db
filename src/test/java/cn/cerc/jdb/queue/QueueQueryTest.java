@@ -35,7 +35,7 @@ public class QueueQueryTest {
 	@Test
 	public void sendMsg() {
 		// ds.add("select * from %s", appdb.get(handle, appdb.MQ_TOPIC_NAME));
-		dataSet.add("select * from test");
+		dataSet.add("select * from %s", QueueDB.TEST);
 		dataSet.open();
 
 		// append head
@@ -64,7 +64,7 @@ public class QueueQueryTest {
 	@Test
 	public void query() {
 		// ds.add("select * from %s", appdb.get(handle, appdb.MQ_TOPIC_NAME));
-		dataSet.add("select * from test");
+		dataSet.add("select * from %s", QueueDB.TEST);
 		dataSet.setQueueMode(QueueMode.recevie);
 		dataSet.open();// 获取消息
 

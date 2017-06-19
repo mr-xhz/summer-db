@@ -25,7 +25,7 @@ public class QueueQueryTest_append {
 	public void test() {
 		// 增加模式
 		dataSet.setQueueMode(QueueMode.append);
-		dataSet.add("select * from %s", "test");
+		dataSet.add("select * from %s", QueueDB.TEST);
 		dataSet.open();
 		System.out.println(dataSet.getActive());
 
