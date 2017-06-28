@@ -101,6 +101,7 @@ public class JiguangPush {
 			log.info("HTTP Status: " + e.getStatus());
 			log.info("Error Code: " + e.getErrorCode());
 			log.info("Error Message: " + e.getErrorMessage());
+			log.info("PushPayload Message: " + payload);
 		}
 	}
 
