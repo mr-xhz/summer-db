@@ -22,4 +22,5 @@ public class QueueDB {
 
 	/** 测试队列 **/
 	public static final String TEST = "test";
+
 }
