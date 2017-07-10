@@ -98,7 +98,11 @@ public class Alidayu {
 				}
 			} else {
 				log.info(rsp.getBody());
-				message = appName + rsp.getSubMsg();
+				if (rsp.getSubCode().equals("isv.BUSINESS_LIMIT_CONTROL"))
+					message = "您的操作频率过高，请稍后再尝试操作";
+				else
+					message = appName + rsp.getSubMsg();
+				log.info(message);
 				return false;
 			}
 		} catch (ApiException e) {
