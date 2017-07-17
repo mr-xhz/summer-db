@@ -16,7 +16,7 @@ public class QueueQuery extends DataQuery {
 	private String queueCode;
 	private QueueSession sess;
 	private CloudQueue queue;
-	private String msgId;
+	private String receiptHandle;
 	private QueueMode queueMode = QueueMode.append;
 
 	public QueueQuery(IHandle handle) {
@@ -38,11 +38,11 @@ public class QueueQuery extends DataQuery {
 
 		// 当maximum设置为1时，读取消息
 		if (this.queueMode == QueueMode.recevie) {
-			Message msg = sess.receive(queue);
-			if (msg != null) {
+			Message message = sess.receive(queue);
+			if (message != null) {
 				try {
-					this.setJSON(msg.getMessageBody());
-					msgId = msg.getReceiptHandle();
+					this.setJSON(message.getMessageBody());
+					receiptHandle = message.getReceiptHandle();
 					this.setActive(true);
 				} catch (JsonSyntaxException e) {
 					log.error(e.getMessage(), e);
@@ -65,10 +65,10 @@ public class QueueQuery extends DataQuery {
 	 * @return 移除消息队列
 	 */
 	public boolean remove() {
-		if (msgId == null)
+		if (receiptHandle == null)
 			return false;
-		sess.delete(queue, msgId);
-		msgId = null;
+		sess.delete(queue, receiptHandle);
+		receiptHandle = null;
 		return true;
 	}
 

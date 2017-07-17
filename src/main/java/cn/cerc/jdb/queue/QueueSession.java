@@ -19,10 +19,10 @@ public class QueueSession implements ISession {
 	// IHandle中识别码
 	public static String sessionId = "aliyunQueueSession";
 	// 默认不可见时间
-	private static int VisibilityTimeout = 50;
+	private static int visibilityTimeout = 50;
 	// 默认消息队列
-	public static final String defaultQueue = "summer";
-	//连接客户端
+	public static final String defaultQueue = QueueDB.SUMMER;
+	// 连接客户端
 	private MNSClient client;
 
 	public MNSClient getClient() {
@@ -42,6 +42,7 @@ public class QueueSession implements ISession {
 	}
 
 	/**
+	 * 根据队列的URL创建CloudQueue对象，后于后续对改对象的创建、查询等
 	 * 
 	 * @param queueCode
 	 *            队列代码
@@ -52,6 +53,7 @@ public class QueueSession implements ISession {
 	}
 
 	/**
+	 * 创建队列
 	 * 
 	 * @param queueCode
 	 *            队列代码
@@ -66,12 +68,12 @@ public class QueueSession implements ISession {
 	}
 
 	/**
+	 * 发送消息
 	 * 
 	 * @param queue
 	 *            消息队列
 	 * @param content
 	 *            消息内容
-	 * @return 发送消息
 	 */
 	public boolean append(CloudQueue queue, String content) {
 		Message message = new Message();
@@ -81,21 +83,21 @@ public class QueueSession implements ISession {
 	}
 
 	/**
+	 * 获取队列中的消息
 	 * 
 	 * @param queue
 	 *            消息队列
-	 * @return 请求接受消息
 	 */
 	public Message receive(CloudQueue queue) {
-		Message msg = queue.popMessage();
-		if (msg != null) {
-			log.debug("消息内容：" + msg.getMessageBodyAsString());
-			log.debug("消息编号：" + msg.getMessageId());
-			log.debug("访问代码：" + msg.getReceiptHandle());
+		Message message = queue.popMessage();
+		if (message != null) {
+			log.debug("消息内容：" + message.getMessageBodyAsString());
+			log.debug("消息编号：" + message.getMessageId());
+			log.debug("访问代码：" + message.getReceiptHandle());
 		} else {
 			log.debug("msg is null");
 		}
-		return msg;
+		return message;
 	}
 
 	/**
@@ -103,18 +105,18 @@ public class QueueSession implements ISession {
 	 * 
 	 * @param queue
 	 *            队列
-	 * @param msgId
-	 *            消息Id
+	 * @param receiptHandle
+	 *            消息句柄
 	 */
-	public void delete(CloudQueue queue, String msgId) {
-		queue.deleteMessage(msgId);
+	public void delete(CloudQueue queue, String receiptHandle) {
+		queue.deleteMessage(receiptHandle);
 	}
 
 	/**
+	 * 查看队列消息
 	 * 
 	 * @param queue
 	 *            队列
-	 * @return 检查消息
 	 */
 	public Message peek(CloudQueue queue) {
 		return queue.peekMessage();
@@ -125,13 +127,13 @@ public class QueueSession implements ISession {
 	 * 
 	 * @param queue
 	 *            队列
-	 * @param msgId
-	 *            消息Id
+	 * @param receiptHandle
+	 *            消息句柄
 	 */
-	public void changeVisibility(CloudQueue queue, String msgId) {
+	public void changeVisibility(CloudQueue queue, String receiptHandle) {
 		// 第一个参数为旧的ReceiptHandle值，第二个参数为新的不可见时间（VisibilityTimeout）
-		String newId = queue.changeMessageVisibilityTimeout(msgId, VisibilityTimeout);
-		log.debug("新的 msgId: " + newId);
+		String newReceiptHandle = queue.changeMessageVisibilityTimeout(receiptHandle, visibilityTimeout);
+		log.debug("新的消息句柄: " + newReceiptHandle);
 	}
 
 }
