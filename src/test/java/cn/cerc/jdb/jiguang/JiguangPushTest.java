@@ -15,15 +15,26 @@ public class JiguangPushTest {
 
 	@Test
 	public void test() {
+		// 初始化极光推送
 		JiguangPush push = new JiguangPush(handle);
+
 		// 消息标题，仅安卓机型有效，IOS设备忽略
-		push.setTitle("新在线订单：东江渔具店");
-		push.setMessage("订货单金额为4500元，请您及时接收并确认发货，谢谢！");
-		push.setMsgId("16");
+		push.setTitle("消息推送测试");
+
+		// 通知栏消息内容
+		push.setMessage("这是系统向您发送的测试消息，如有打扰，请您忽略，谢谢！");
+
+		// 附加的消息id
+		push.setMsgId("3707");
+
 		// 发送给指定的设备Id
-		// push.send(ClientType.Android, "869159025472386");
+		push.send(ClientType.IOS, "i_929CF048A6C14F2A9EEFB90B59A5EDCA");
+		push.send(ClientType.Android, "n_862806034034048");
+
 		// 发送给指定的设备类型
-		push.send(ClientType.Android, null);
+		// push.send(ClientType.IOS, null);
+		// push.send(ClientType.Android, null);
+
 		// 发送给所有的用户
 		// push.send();
 	}

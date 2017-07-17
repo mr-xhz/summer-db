@@ -55,10 +55,7 @@ public class Alidayu {
 		this.signName = conf.getProperty(SingName, "地藤");
 	}
 
-	public boolean send(String corpNo, Object data) {
-		AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
-		req.setRecNum(mobileNo);
-		req.setSmsTemplateCode(this.templateNo);
+	public boolean send(String corpNo, String smsParam) {
 		String serverUrl = this.serverUrl;
 		String appKey = this.appKey;
 		String appSecret = this.appSecret;
@@ -76,17 +73,20 @@ public class Alidayu {
 			return false;
 		}
 
-		String sessionKey = "";
 		TaobaoClient client = new DefaultTaobaoClient(serverUrl, appKey, appSecret);
+		AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
 		req.setExtend(corpNo);
 		req.setSmsType("normal");
 		req.setSmsFreeSignName(this.signName);
-		// 活动验证, 变更验证，登录验证，注册验证，身份验证
-		req.setSmsParam(data);
+		req.setSmsParamString(smsParam.toString());
+		req.setRecNum(mobileNo);
+		req.setSmsTemplateCode(this.templateNo);
 		AlibabaAliqinFcSmsNumSendResponse rsp;
 
+		log.info(req.getTextParams());
+
 		try {
-			rsp = client.execute(req, sessionKey);
+			rsp = client.execute(req);
 			BizResult result = rsp.getResult();
 			if (result != null) {
 				if (result.getSuccess()) {
@@ -97,7 +97,12 @@ public class Alidayu {
 					return false;
 				}
 			} else {
-				message = "Alidayu error: rsp.getResult is null, app host: " + appName;
+				log.info(rsp.getBody());
+				if (rsp.getSubCode().equals("isv.BUSINESS_LIMIT_CONTROL"))
+					message = "您的操作频率过高，请稍后再尝试操作";
+				else
+					message = appName + rsp.getSubMsg();
+				log.info(message);
 				return false;
 			}
 		} catch (ApiException e) {

@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.cerc</groupId>
 	<artifactId>summer-db</artifactId>
-	<version>1.2.0</version>
+	<version>1.2.1</version>
 	<name>java database utils</name>
 	<build>
 		<plugins>
@@ -168,14 +168,13 @@
 		<dependency>
 			<groupId>com.aliyun.mns</groupId>
 			<artifactId>aliyun-sdk-mns</artifactId>
-			<version>1.1.0</version>
+			<version>1.1.8</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.aliyun.oss</groupId>
 			<artifactId>aliyun-sdk-oss</artifactId>
-			<version>2.1.0</version>
-			<scope>provided</scope>
+			<version>2.6.0</version>
 		</dependency>
 		<!-- 极光推送 -->
 		<dependency>
@@ -188,7 +187,7 @@
 		<dependency>
 			<groupId>taobao</groupId>
 			<artifactId>sdk-java</artifactId>
-			<version>auto_1447355351010-20151113</version>
+			<version>auto_1455552377940-20170331</version>
 		</dependency>
 	<!-- <dependency> -->
 	<!-- <groupId>org.codehaus.plexus</groupId> -->

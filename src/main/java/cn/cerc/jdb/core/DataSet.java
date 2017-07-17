@@ -49,7 +49,6 @@ public class DataSet extends CustomDataSet implements Serializable {
 	}
 
 	public String getJSON(int beginLine, int endLine) {
-
 		StringBuffer buffer = new StringBuffer();
 
 		buffer.append("{");
@@ -109,15 +108,16 @@ public class DataSet extends CustomDataSet implements Serializable {
 		// }
 
 		Gson gson = new GsonBuilder().serializeNulls().create();
-		Map<String, Object> jsonobj = gson.fromJson(json, new TypeToken<Map<String, Object>>() {
+		Map<String, Object> jsonmap = gson.fromJson(json, new TypeToken<Map<String, Object>>() {
 		}.getType());
-		if (jsonobj.containsKey("head")) {
-			this.getHead().setJSON(jsonobj.get("head"));
+
+		if (jsonmap.containsKey("head")) {
+			this.getHead().setJSON(jsonmap.get("head"));
 		}
 
-		if (jsonobj.containsKey("dataset")) {
+		if (jsonmap.containsKey("dataset")) {
 			@SuppressWarnings("rawtypes")
-			ArrayList dataset = (ArrayList) jsonobj.get("dataset");
+			ArrayList dataset = (ArrayList) jsonmap.get("dataset");
 			if (dataset != null && dataset.size() > 1) {
 				@SuppressWarnings("rawtypes")
 				ArrayList fields = (ArrayList) dataset.get(0);

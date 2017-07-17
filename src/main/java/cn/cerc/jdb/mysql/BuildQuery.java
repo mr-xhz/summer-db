@@ -1,5 +1,7 @@
 package cn.cerc.jdb.mysql;
 
+import static cn.cerc.jdb.core.Utils.safeString;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.List;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.TDateTime;
+import cn.cerc.jdb.core.Utils;
 
 /**
  * 用于组合生成select指令，便于多条件查询编写
@@ -34,6 +37,11 @@ public class BuildQuery {
 		this.handle = handle;
 	}
 
+	/**
+	 * 增加自定义查询条件，须自行解决注入攻击！
+	 * @param param 要加入的查询条件
+	 * @return 返回自身
+	 */
 	public BuildQuery byParam(String param) {
 		if (!"".equals(param))
 			sqlWhere.add("(" + param + ")");
@@ -44,7 +52,7 @@ public class BuildQuery {
 		if (value == null || "".equals(value))
 			return this;
 		String str = "";
-		String s1 = "%" + value.replaceAll("\\*", "") + "%";
+		String s1 = "%" + safeString(value).replaceAll("\\*", "") + "%";
 		for (String sql : fields) {
 			str = str + String.format("%s like '%s'", sql, s1);
 			str = str + " or ";
@@ -61,7 +69,7 @@ public class BuildQuery {
 	}
 
 	public BuildQuery byField(String field, String text) {
-		String value = cn.cerc.jdb.other.utils.safeString(text);
+		String value = safeString(text);
 		if ("".equals(value))
 			return this;
 		if ("*".equals(value))
@@ -116,7 +124,7 @@ public class BuildQuery {
 	}
 
 	public BuildQuery byBetween(String field, String value1, String value2) {
-		sqlWhere.add(String.format("%s between '%s' and '%s'", field, value1, value2));
+		sqlWhere.add(String.format("%s between '%s' and '%s'", field, safeString(value1), safeString(value2)));
 		return this;
 	}
 
@@ -141,8 +149,8 @@ public class BuildQuery {
 		// where code_ in ("aa","Bb")
 		if (values.length > 0) {
 			String s = field + " in (";
-			for (String sql : values) {
-				s = s + "'" + sql + "',";
+			for (String val : values) {
+				s = s + "'" + safeString(val) + "',";
 			}
 			s = s.substring(0, s.length() - 1) + ")";
 			sqlWhere.add(s);
@@ -183,7 +191,15 @@ public class BuildQuery {
 	}
 
 	public BuildQuery add(String fmtText, Object... args) {
-		sqlText.add(String.format(fmtText, args));
+		ArrayList<Object> items = new ArrayList<>();
+		for (Object arg : args) {
+			if (arg instanceof String) {
+				items.add(Utils.safeString((String) arg));
+			} else {
+				items.add(arg);
+			}
+		}
+		sqlText.add(String.format(fmtText, items.toArray()));
 		return this;
 	}
 
@@ -233,7 +249,7 @@ public class BuildQuery {
 
 	public SqlQuery open() {
 		SqlQuery ds = getDataSet();
-		ds.setCommandText(this.getSelectCommand());
+		ds.emptyCommand().add(this.getSelectCommand());
 		ds.open();
 		return ds;
 	}
@@ -242,7 +258,7 @@ public class BuildQuery {
 		SqlQuery ds = getDataSet();
 		if (head.exists("__offset__"))
 			this.setOffset(head.getInt("__offset__"));
-		ds.setCommandText(this.getSelectCommand());
+		ds.emptyCommand().add(this.getSelectCommand());
 		ds.open();
 		if (foot != null)
 			foot.setField("__finish__", ds.getFetchFinish());

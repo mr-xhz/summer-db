@@ -94,15 +94,14 @@ public class JiguangPush {
 		try {
 			PushResult result = session.getClient().sendPush(payload);
 			log.info("Got result - " + result);
-
 		} catch (APIConnectionException e) {
 			log.error("Connection error, should retry later", e);
-
 		} catch (APIRequestException e) {
 			log.error("Should review the error, and fix the request", e);
 			log.info("HTTP Status: " + e.getStatus());
 			log.info("Error Code: " + e.getErrorCode());
 			log.info("Error Message: " + e.getErrorMessage());
+			log.info("PushPayload Message: " + payload);
 		}
 	}
 

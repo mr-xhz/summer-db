@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import org.bson.Document;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 
@@ -73,9 +74,9 @@ public class MongoQuery extends DataQuery {
 			int endIndex = sql.toLowerCase().indexOf("order");
 			String[] items;
 			if (endIndex > -1)
-				items = sql.substring(offset + 5, endIndex).split("and");
+				items = sql.substring(offset + 5, endIndex).split(" and ");
 			else
-				items = sql.substring(offset + 5).split("and");
+				items = sql.substring(offset + 5).split(" and ");
 			for (String item : items) {
 				if (item.split(">=").length == 2)
 					setCondition(filter, item, ">=");
@@ -93,12 +94,28 @@ public class MongoQuery extends DataQuery {
 					String[] tmp = item.split("like");
 					String field = tmp[0].trim();
 					String value = tmp[1].trim();
-					if (value.startsWith("'") && value.endsWith("'")){
-						//不区分大小写的模糊搜索
-						Pattern queryPattern = Pattern.compile(value.substring(1, value.length() - 1), Pattern.CASE_INSENSITIVE);
+					if (value.startsWith("'") && value.endsWith("'")) {
+						// 不区分大小写的模糊搜索
+						Pattern queryPattern = Pattern.compile(value.substring(1, value.length() - 1),
+								Pattern.CASE_INSENSITIVE);
 						filter.append(field, queryPattern);
 					} else
 						throw new RuntimeException(String.format("模糊查询条件：%s 必须为字符串", item));
+				} else if (item.split("in").length == 2) {
+					String[] tmp = item.split("in");
+					String field = tmp[0].trim();
+					String value = tmp[1].trim();
+					if (value.startsWith("(") && value.endsWith(")")) {
+						BasicDBList values = new BasicDBList();
+						for (String str : value.substring(1, value.length() - 1).split(",")){
+							if (str.startsWith("'") && str.endsWith("'"))
+								values.add(str.substring(1, str.length() - 1));
+							else
+								values.add(str);
+						}
+						filter.put(field, new BasicDBObject("$in", values));
+					} else
+						throw new RuntimeException(String.format("in查询条件：%s 必须有带有()", item));
 				} else
 					throw new RuntimeException("暂不支持的查询条件：" + item);
 			}
