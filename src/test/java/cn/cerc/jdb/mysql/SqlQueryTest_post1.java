@@ -7,7 +7,6 @@ import org.junit.Test;
 import cn.cerc.jdb.core.PostFieldException;
 import cn.cerc.jdb.core.StubHandle;
 import cn.cerc.jdb.core.TDateTime;
-import cn.cerc.jdb.field.StringDefine;
 
 public class SqlQueryTest_post1 {
 	private SqlQuery ds;
@@ -38,7 +37,6 @@ public class SqlQueryTest_post1 {
 		ds.setOnBeforePost(ds -> {
 			System.out.println("before post");
 		});
-		ds.getFieldDefs().add("Test", new StringDefine(0).setCalculated(true));
 		ds.edit();
 		ds.setField("Test", "aOK");
 		ds.setField("UpdateDate_", TDateTime.Now().incDay(-1));

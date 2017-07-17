@@ -106,11 +106,12 @@ public class JiguangPush {
 	}
 
 	/**
-	 * 增加附加参数到 extras
+	 * /** 增加附加参数到 extras
 	 * 
 	 * @param key
 	 *            增加附加参数到 extras
 	 * @param value
+	 *            无返回值
 	 */
 	public void addParam(String key, String value) {
 		params.put(key, value);

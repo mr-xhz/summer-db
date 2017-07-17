@@ -46,7 +46,7 @@ public class QueueSession implements ISession {
 	 * 
 	 * @param queueCode
 	 *            队列代码
-	 * @return 返回具体的消息队列
+	 * @return value 返回具体的消息队列
 	 */
 	public CloudQueue openQueue(String queueCode) {
 		return client.getQueueRef(queueCode);
@@ -57,7 +57,7 @@ public class QueueSession implements ISession {
 	 * 
 	 * @param queueCode
 	 *            队列代码
-	 * @return 返回创建的队列
+	 * @return value 返回创建的队列
 	 */
 	public CloudQueue createQueue(String queueCode) {
 		QueueMeta meta = new QueueMeta();
@@ -74,6 +74,7 @@ public class QueueSession implements ISession {
 	 *            消息队列
 	 * @param content
 	 *            消息内容
+	 * @return value 返回值，当前均为true
 	 */
 	public boolean append(CloudQueue queue, String content) {
 		Message message = new Message();
@@ -87,6 +88,7 @@ public class QueueSession implements ISession {
 	 * 
 	 * @param queue
 	 *            消息队列
+	 * @return value 返回请求的删除，可为null
 	 */
 	public Message receive(CloudQueue queue) {
 		Message message = queue.popMessage();
@@ -117,6 +119,7 @@ public class QueueSession implements ISession {
 	 * 
 	 * @param queue
 	 *            队列
+	 * @return value 返回取得的消息体
 	 */
 	public Message peek(CloudQueue queue) {
 		return queue.peekMessage();
