@@ -22,7 +22,7 @@ public class RedisQuery extends DataQuery {
 	@Override
 	public void save() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

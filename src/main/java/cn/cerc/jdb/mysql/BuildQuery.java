@@ -39,7 +39,9 @@ public class BuildQuery {
 
 	/**
 	 * 增加自定义查询条件，须自行解决注入攻击！
-	 * @param param 要加入的查询条件
+	 * 
+	 * @param param
+	 *            要加入的查询条件
 	 * @return 返回自身
 	 */
 	public BuildQuery byParam(String param) {

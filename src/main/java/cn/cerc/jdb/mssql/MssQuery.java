@@ -4,7 +4,7 @@ import cn.cerc.jdb.core.DataQuery;
 import cn.cerc.jdb.core.IDataOperator;
 import cn.cerc.jdb.core.IHandle;
 
-public class MssQuery extends DataQuery{
+public class MssQuery extends DataQuery {
 	private static final long serialVersionUID = 889285738942368226L;
 
 	public MssQuery(IHandle handle) {
@@ -20,7 +20,7 @@ public class MssQuery extends DataQuery{
 	@Override
 	public void save() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

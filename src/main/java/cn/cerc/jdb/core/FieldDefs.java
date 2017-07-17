@@ -78,10 +78,12 @@ public class FieldDefs implements Serializable, Iterable<String> {
 		return fields.size();
 	}
 
+	@Deprecated
 	public boolean isStrict() {
 		return strict;
 	}
 
+	@Deprecated
 	public void setStrict(boolean strict) {
 		if (strict && fields.size() > 0)
 			throw new RuntimeException("fields not is null");

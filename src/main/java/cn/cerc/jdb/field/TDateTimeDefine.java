@@ -2,6 +2,7 @@ package cn.cerc.jdb.field;
 
 import cn.cerc.jdb.core.TDateTime;
 
+@Deprecated
 public class TDateTimeDefine extends AbstractDefine {
 	public TDateTimeDefine() {
 		this.setWidth(9);

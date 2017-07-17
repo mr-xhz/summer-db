@@ -107,7 +107,7 @@ public class MongoQuery extends DataQuery {
 					String value = tmp[1].trim();
 					if (value.startsWith("(") && value.endsWith(")")) {
 						BasicDBList values = new BasicDBList();
-						for (String str : value.substring(1, value.length() - 1).split(",")){
+						for (String str : value.substring(1, value.length() - 1).split(",")) {
 							if (str.startsWith("'") && str.endsWith("'"))
 								values.add(str.substring(1, str.length() - 1));
 							else

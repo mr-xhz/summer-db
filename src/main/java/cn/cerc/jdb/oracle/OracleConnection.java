@@ -8,13 +8,13 @@ public class OracleConnection implements IConnection {
 	@Override
 	public void setConfig(IConfig config) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

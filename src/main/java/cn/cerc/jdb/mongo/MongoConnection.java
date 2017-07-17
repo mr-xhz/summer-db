@@ -57,7 +57,7 @@ public class MongoConnection implements IConnection {
 				// MongoClientURI connectionString = new MongoClientURI(
 				// "mongodb://ehealth:123456@115.28.67.211:3717,115.28.67.211:13717/ehealth?replicaSet=mgset-2004675");
 			}
-			MongoClientURI	connectionString = new MongoClientURI(sb.toString());
+			MongoClientURI connectionString = new MongoClientURI(sb.toString());
 			pool = new MongoClient(connectionString);
 		}
 	}

@@ -1,5 +1,6 @@
 package cn.cerc.jdb.field;
 
+@Deprecated
 public class BooleanDefine extends AbstractDefine {
 	public BooleanDefine() {
 		this.setWidth(2);

@@ -2,6 +2,7 @@ package cn.cerc.jdb.field;
 
 import java.math.BigDecimal;
 
+@Deprecated
 public class DoubleDefine extends AbstractDefine {
 	// 数值长度，仅适用于数值型
 	private int precision = 18;

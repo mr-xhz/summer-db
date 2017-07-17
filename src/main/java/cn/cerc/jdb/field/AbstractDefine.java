@@ -1,5 +1,6 @@
 package cn.cerc.jdb.field;
 
+@Deprecated
 public abstract class AbstractDefine {
 	private String code;
 	private String name;

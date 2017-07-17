@@ -1,5 +1,5 @@
 /**
- * MS sql server 数据库支持
+ * Mssql server 数据库支持
  * 
  * @author 张弓
  *

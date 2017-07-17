@@ -1,5 +1,6 @@
 package cn.cerc.jdb.field;
 
+@Deprecated
 public class StringDefine extends AbstractDefine {
 	private int length;
 
