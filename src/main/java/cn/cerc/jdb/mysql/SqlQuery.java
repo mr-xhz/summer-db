@@ -17,12 +17,6 @@ import cn.cerc.jdb.core.FieldDefs;
 import cn.cerc.jdb.core.IDataOperator;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Record;
-import cn.cerc.jdb.field.AbstractDefine;
-import cn.cerc.jdb.field.BooleanDefine;
-import cn.cerc.jdb.field.DoubleDefine;
-import cn.cerc.jdb.field.IntegerDefine;
-import cn.cerc.jdb.field.StringDefine;
-import cn.cerc.jdb.field.TDateTimeDefine;
 
 public class SqlQuery extends DataQuery {
 	private static final Logger log = Logger.getLogger(SqlQuery.class);
@@ -118,26 +112,8 @@ public class SqlQuery extends DataQuery {
 			FieldDefs defs = this.getFieldDefs();
 			for (int i = 1; i <= meta.getColumnCount(); i++) {
 				String field = meta.getColumnLabel(i);
-				if (!defs.exists(field)) {
-					if (defs.isStrict()) {
-						AbstractDefine define = null;
-						String type = meta.getColumnTypeName(i);
-						if ("VARCHAR".equals(type))
-							define = new StringDefine(meta.getColumnDisplaySize(i));
-						else if ("DECIMAL".equals(type) || "BIGINT".equals(type) || "INT UNSIGNED".equals(type))
-							define = new DoubleDefine(meta.getPrecision(i), meta.getScale(i));
-						else if ("INT".equals(type))
-							define = new IntegerDefine();
-						else if ("BIT".equals(type))
-							define = new BooleanDefine();
-						else if ("DATETIME".equals(type))
-							define = new TDateTimeDefine();
-						else
-							throw new RuntimeException("not support type: " + type);
-						defs.add(field, define);
-					} else
-						defs.add(field);
-				}
+				if (!defs.exists(field)) 
+					defs.add(field);
 			}
 			// 取得所有数据
 			if (rs.first()) {
@@ -314,13 +290,5 @@ public class SqlQuery extends DataQuery {
 	public void clear() {
 		close();
 		this.emptyCommand();
-	}
-
-	public boolean isStrict() {
-		return this.getFieldDefs().isStrict();
-	}
-
-	public void setStrict(boolean strict) {
-		this.getFieldDefs().setStrict(strict);
 	}
 }
