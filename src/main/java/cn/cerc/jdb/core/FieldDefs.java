@@ -4,21 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
-import cn.cerc.jdb.field.AbstractDefine;
 
 public class FieldDefs implements Serializable, Iterable<String> {
 	private static final long serialVersionUID = 7478897050846245325L;
-	private Map<String, AbstractDefine> fields = new TreeMap<>();
+	private List<String> fields = new ArrayList<>();
 	// 设置字段为强类型，必须预先定义，默认为弱类型
 	private boolean strict = false;
 	// 设置是否不再允许添加字段，默认为可随时添加
 	private boolean locked = false;
 
 	public boolean exists(String field) {
-		return fields.containsKey(field);
+		return fields.contains(field);
 	}
 
 	@Override
@@ -27,10 +23,7 @@ public class FieldDefs implements Serializable, Iterable<String> {
 	}
 
 	public List<String> getFields() {
-		List<String> result = new ArrayList<>();
-		for (String field : fields.keySet())
-			result.add(field);
-		return result;
+		return fields;
 	}
 
 	public FieldDefs add(String field) {
@@ -40,28 +33,9 @@ public class FieldDefs implements Serializable, Iterable<String> {
 			throw new RuntimeException("strict is true");
 		if (field == null || "".equals(field))
 			throw new RuntimeException("field is null!");
-		if (!fields.containsKey(field))
-			fields.put(field, null);
+		if (!fields.contains(field))
+			fields.add(field);
 		return this;
-	}
-
-	public FieldDefs add(String field, AbstractDefine fieldDefine) {
-		if (this.locked)
-			throw new RuntimeException("locked is true");
-		if (this.strict && fieldDefine == null)
-			throw new RuntimeException("fieldDefine is null");
-		if (field == null || "".equals(field))
-			throw new RuntimeException("field is null!");
-		if (!fields.containsKey(field)) {
-			if (fieldDefine != null)
-				fieldDefine.setCode(field);
-			fields.put(field, fieldDefine);
-		}
-		return this;
-	}
-
-	public AbstractDefine getDefine(String field) {
-		return fields.get(field);
 	}
 
 	public void add(String... strs) {
@@ -76,18 +50,6 @@ public class FieldDefs implements Serializable, Iterable<String> {
 
 	public int size() {
 		return fields.size();
-	}
-
-	@Deprecated
-	public boolean isStrict() {
-		return strict;
-	}
-
-	@Deprecated
-	public void setStrict(boolean strict) {
-		if (strict && fields.size() > 0)
-			throw new RuntimeException("fields not is null");
-		this.strict = strict;
 	}
 
 	@Override
