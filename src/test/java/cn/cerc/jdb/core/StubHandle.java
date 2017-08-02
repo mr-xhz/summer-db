@@ -70,6 +70,7 @@ public class StubHandle implements IHandle {
 	}
 
 	// 关闭资源
+	@Override
 	public void closeConnections() {
 		mysqlSession.closeSession();
 	}
