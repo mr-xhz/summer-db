@@ -28,8 +28,9 @@ public class JiguangPushTest {
 		push.setMsgId("3707");
 
 		// 发送给指定的设备Id
-		push.send(ClientType.IOS, "i_929CF048A6C14F2A9EEFB90B59A5EDCA");
-		push.send(ClientType.Android, "n_862806034034048");
+		push.send(ClientType.IOS, "i_0C005500702F4F97AD81C2E992E36108");// ly-iPhone
+		push.send(ClientType.IOS, "i_C6105475373244DE95320D6171A9D183");// icm-iPhone
+		push.send(ClientType.Android, "n_868568025516789");// ly-Android
 
 		// 发送给指定的设备类型
 		// push.send(ClientType.IOS, null);
