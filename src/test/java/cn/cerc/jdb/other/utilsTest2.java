@@ -14,24 +14,24 @@ import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
 public class utilsTest2 {
-	// 以下代码请勿删除，此是用于大量数据批次测试的范本
-	@Parameters
-	public static Collection<Object[]> init() {
-		Object[][] objects = { { 1.234, 1.23 }, { 1.235, 1.24 }, { 1.245, 1.25 } };
-		return Arrays.asList(objects);
-	}
+    // 以下代码请勿删除，此是用于大量数据批次测试的范本
+    @Parameters
+    public static Collection<Object[]> init() {
+        Object[][] objects = { { 1.234, 1.23 }, { 1.235, 1.24 }, { 1.245, 1.25 } };
+        return Arrays.asList(objects);
+    }
 
-	private double value;
-	private double expecked;
+    private double value;
+    private double expecked;
 
-	public utilsTest2(double value, double expecked) {
-		this.value = value;
-		this.expecked = expecked;
-	}
+    public utilsTest2(double value, double expecked) {
+        this.value = value;
+        this.expecked = expecked;
+    }
 
-	@Test
-	public void testRoundTo() {
-		double val = roundTo(value, -2);
-		assertThat(val, is(expecked));
-	}
+    @Test
+    public void testRoundTo() {
+        double val = roundTo(value, -2);
+        assertThat(val, is(expecked));
+    }
 }

@@ -5,22 +5,22 @@ package cn.cerc.jdb.queue;
  */
 public class QueueDB {
 
-	/** 自动发送邮件 **/
-	public static final String AUTOMAIL = "automail";
+    /** 自动发送邮件 **/
+    public static final String AUTOMAIL = "automail";
 
-	/** 任务队列 **/
-	public static final String JOBLIST = "joblist";
+    /** 任务队列 **/
+    public static final String JOBLIST = "joblist";
 
-	/** 系统消息 **/
-	public static final String MESSAGE = "message";
+    /** 系统消息 **/
+    public static final String MESSAGE = "message";
 
-	/** 邮件发送 **/
-	public static final String SENDMAIL = "sendmail";
+    /** 邮件发送 **/
+    public static final String SENDMAIL = "sendmail";
 
-	/** 回算队列 **/
-	public static final String SUMMER = "summer";
+    /** 回算队列 **/
+    public static final String SUMMER = "summer";
 
-	/** 测试队列 **/
-	public static final String TEST = "test";
+    /** 测试队列 **/
+    public static final String TEST = "test";
 
 }
