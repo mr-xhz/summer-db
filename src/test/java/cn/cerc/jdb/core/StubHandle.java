@@ -12,70 +12,70 @@ import cn.cerc.jdb.queue.QueueConnection;
 import cn.cerc.jdb.queue.QueueSession;
 
 public class StubHandle implements IHandle {
-	private SqlSession mysqlSession;
-	private MongoConnection mgConn;
-	private QueueConnection queConn;
-	private OssConnection ossConn;
-	private JiguangConnection pushConn;
+    private SqlSession mysqlSession;
+    private MongoConnection mgConn;
+    private QueueConnection queConn;
+    private OssConnection ossConn;
+    private JiguangConnection pushConn;
 
-	public StubHandle() {
-		super();
-		IConfig config = new StubConfig();
+    public StubHandle() {
+        super();
+        IConfig config = new StubConfig();
 
-		// mysql
-		SqlConnection conn = new SqlConnection();
-		conn.setConfig(config);
-		mysqlSession = conn.getSession();
+        // mysql
+        SqlConnection conn = new SqlConnection();
+        conn.setConfig(config);
+        mysqlSession = conn.getSession();
 
-		// mongodb
-		mgConn = new MongoConnection();
-		mgConn.setConfig(config);
+        // mongodb
+        mgConn = new MongoConnection();
+        mgConn.setConfig(config);
 
-		// aliyun mq
-		queConn = new QueueConnection();
-		queConn.setConfig(config);
+        // aliyun mq
+        queConn = new QueueConnection();
+        queConn.setConfig(config);
 
-		// oss
-		ossConn = new OssConnection();
-		ossConn.setConfig(config);
+        // oss
+        ossConn = new OssConnection();
+        ossConn.setConfig(config);
 
-		// Jiguang
-		pushConn = new JiguangConnection();
-		pushConn.setConfig(config);
-	}
+        // Jiguang
+        pushConn = new JiguangConnection();
+        pushConn.setConfig(config);
+    }
 
-	@Override
-	public String getCorpNo() {
-		throw new RuntimeException("corpNo is null");
-	}
+    @Override
+    public String getCorpNo() {
+        throw new RuntimeException("corpNo is null");
+    }
 
-	@Override
-	public String getUserCode() {
-		throw new RuntimeException("userCode is null");
-	}
+    @Override
+    public String getUserCode() {
+        throw new RuntimeException("userCode is null");
+    }
 
-	@Override
-	public Object getProperty(String key) {
-		if (SqlSession.sessionId.equals(key))
-			return mysqlSession;
-		if (MongoSession.sessionId.equals(key))
-			return mgConn.getSession();
-		if (QueueSession.sessionId.equals(key))
-			return queConn.getSession();
-		if (OssSession.sessionId.equals(key))
-			return ossConn.getSession();
-		if (JiguangSession.sessionId.equals(key))
-			return pushConn.getSession();
-		return null;
-	}
+    @Override
+    public Object getProperty(String key) {
+        if (SqlSession.sessionId.equals(key))
+            return mysqlSession;
+        if (MongoSession.sessionId.equals(key))
+            return mgConn.getSession();
+        if (QueueSession.sessionId.equals(key))
+            return queConn.getSession();
+        if (OssSession.sessionId.equals(key))
+            return ossConn.getSession();
+        if (JiguangSession.sessionId.equals(key))
+            return pushConn.getSession();
+        return null;
+    }
 
-	// 关闭资源
-	@Override
-	public void closeConnections() {
-		mysqlSession.closeSession();
-	}
+    // 关闭资源
+    @Override
+    public void closeConnections() {
+        mysqlSession.closeSession();
+    }
 
-	public void close() {
-		closeConnections();
-	}
+    public void close() {
+        closeConnections();
+    }
 }
