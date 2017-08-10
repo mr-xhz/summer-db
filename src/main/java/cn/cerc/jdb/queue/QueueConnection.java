@@ -33,16 +33,16 @@ public class QueueConnection implements IConnection {
 
     @Override
     public void init() {
+        String server = config.getProperty(QueueSession.AccountEndpoint, null);
+        String userCode = config.getProperty(QueueSession.AccessKeyId, null);
+        String password = config.getProperty(QueueSession.AccessKeySecret, null);
+        String token = config.getProperty(QueueSession.SecurityToken, "");
+        if (server == null || userCode == null || password == null || token == null)
+            throw new RuntimeException("propertys.msn 配置为空");
         if (account == null) {
-            String server = config.getProperty(QueueSession.AccountEndpoint, null);
-            String userCode = config.getProperty(QueueSession.AccessKeyId, null);
-            String password = config.getProperty(QueueSession.AccessKeySecret, null);
-            String token = config.getProperty(QueueSession.SecurityToken, "");
-            if (server == null || userCode == null || password == null || token == null)
-                throw new RuntimeException("propertys.msn 配置为空");
             account = new CloudAccount(userCode, password, server, token);
-            client = account.getMNSClient();
         }
+        client = account.getMNSClient();
     }
 
 }
