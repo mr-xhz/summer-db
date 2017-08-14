@@ -1,11 +1,8 @@
 package cn.cerc.jdb.core;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-
-import cn.cerc.jdb.core.TDate;
-import cn.cerc.jdb.core.TDateTime;
 
 public class TDateTest {
 

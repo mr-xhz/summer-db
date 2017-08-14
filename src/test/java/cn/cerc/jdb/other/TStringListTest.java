@@ -1,10 +1,9 @@
 package cn.cerc.jdb.other;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
-
-import cn.cerc.jdb.other.TStringList;
 
 public class TStringListTest {
     private TStringList sl = new TStringList();
