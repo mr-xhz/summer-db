@@ -1,12 +1,10 @@
 package cn.cerc.jdb.core;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import cn.cerc.jdb.core.DataSetState;
-import cn.cerc.jdb.core.FieldDefs;
-import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.other.DelphiException;
 
 public class RecordTest {
