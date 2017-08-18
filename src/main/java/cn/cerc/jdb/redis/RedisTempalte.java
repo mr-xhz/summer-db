@@ -199,7 +199,12 @@ public class RedisTempalte {
             }
         },index, key);
     }
-
+    /**
+     * @Description:String（字符串）获取
+    * @author ouyangxiang 
+     * Date: 2017-08-18
+     * @param key
+     */
     public byte[] getByte(int index,String key) {
         return execute(new RedisCallback<byte[]>() {
             public byte[] call(Jedis jedis, Object parms) {
@@ -230,7 +235,12 @@ public class RedisTempalte {
             }
         }, index,key, value);
     }
-
+    /**@deprecated 存储字符串 设置编码
+     * @author ouyangxiang
+     * @param index
+     * @param key
+     * @param value
+     */
     public void set(int index,String key, byte[] value) {
         execute(new RedisCallback<String>() {
             public String call(Jedis jedis, Object parms) {
@@ -323,7 +333,15 @@ public class RedisTempalte {
             }
         },index, key);
     }
-
+    
+    /**@deprecatedRedis Llen 命令用于返回列表的长度。 如果列表 key 不存在，
+     * 	则 key 被解释为一个空列表，返回 0 。
+     *  如果 key 不是列表类型，返回一个错误。
+     * @author ouyangxiang
+     * @param index
+     * @param key
+     * @return
+     */
     public String llen(int index,String key) {
         return execute(new RedisCallback<String>() {
             public String call(Jedis jedis, Object parms) {
@@ -332,7 +350,13 @@ public class RedisTempalte {
             }
         },index, key);
     }
-
+    
+    /**@deprecated list 新增
+     * @author ouyangxiang
+     * @param index
+     * @param key
+     * @param values
+     */
     public void lpush(int index,String key, String value) {
         execute(new RedisCallback<String>() {
             public String call(Jedis jedis, Object parms) {
@@ -344,6 +368,12 @@ public class RedisTempalte {
         }, index,key, value);
     }
 
+    /**@deprecated list 新增
+     * @author ouyangxiang
+     * @param index
+     * @param key
+     * @param values
+     */
     public void lpushPipeLine(int index,String key, List<String> values) {
         execute(new RedisCallback<String>() {
             @SuppressWarnings("unchecked")
@@ -354,12 +384,19 @@ public class RedisTempalte {
                 for (String value : values) {
                     p.lpush(key, value);
                 }
-                p.sync();
+                p.sync();//同步
                 return null;
             }
         },index, key, values);
     }
-
+	/**@deprecated  jedis操作List 查询
+	 * @author ouyangxiang
+	 * @param index
+	 * @param key
+	 * @param start
+	 * @param end
+	 * @return
+	 */
     public List<String> lrange(int index,String key, long start, long end) {
         return execute(new RedisCallback<List<String>>() {
             public List<String> call(Jedis jedis, Object parms) {
@@ -371,7 +408,11 @@ public class RedisTempalte {
             }
         }, index,key, start, end);
     }
-
+    /**@deprecated  int类型 //进行加1操作
+     * @author ouyangxiang
+     * @param index
+     * @param key
+     */
     public void incr(int index,String key) {
         execute(new RedisCallback<String>() {
             public String call(Jedis jedis, Object parms) {
@@ -381,7 +422,12 @@ public class RedisTempalte {
             }
         },index, key);
     }
-
+    /**@deprecated  jedis操作Set 
+     * @author ouyangxiang
+     * @param index
+     * @param key
+     * @param value
+     */
     public void sadd(int index,String key, String value) {
         execute(new RedisCallback<String>() {
             public String call(Jedis jedis, Object parms) {
@@ -393,6 +439,12 @@ public class RedisTempalte {
         }, index,key, value);
     }
 
+    /**@deprecated  返回key集合所有的元素.
+     * @author ouyangxiang
+     * @param index
+     * @param key
+     * @return
+     */
     public Set<String> smembers(int index,String key) {
         return execute(new RedisCallback<Set<String>>() {
             public Set<String> call(Jedis jedis, Object parms) {
@@ -402,7 +454,12 @@ public class RedisTempalte {
             }
         }, index,key);
     }
-
+    /**@deprecatedRedis Brpop 命令移出并获取列表的最后一个元素(list)
+     * @author ouyangxiang
+     * @param index
+     * @param key
+     * @return
+     */
     public List<String> brpop(int index,String key) {
         return execute(new RedisCallback<List<String>>() {
             public List<String> call(Jedis jedis, Object parms) {
