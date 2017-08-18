@@ -10,6 +10,8 @@ import cn.cerc.jdb.oss.OssConnection;
 import cn.cerc.jdb.oss.OssSession;
 import cn.cerc.jdb.queue.QueueConnection;
 import cn.cerc.jdb.queue.QueueSession;
+import cn.cerc.jdb.redis.RedisConnection;
+import cn.cerc.jdb.redis.RedisSession;
 
 public class StubHandle implements IHandle {
 	private SqlSession mysqlSession;
@@ -17,11 +19,10 @@ public class StubHandle implements IHandle {
 	private QueueConnection queConn;
 	private OssConnection ossConn;
 	private JiguangConnection pushConn;
-
+	private RedisConnection redis;
 	public StubHandle() {
 		super();
 		IConfig config = new StubConfig();
-
 		// mysql
 		SqlConnection conn = new SqlConnection();
 		conn.setConfig(config);
@@ -42,6 +43,10 @@ public class StubHandle implements IHandle {
 		// Jiguang
 		pushConn = new JiguangConnection();
 		pushConn.setConfig(config);
+		
+		//redis
+		redis=new RedisConnection();
+		redis.setConfig(config);
 	}
 
 	@Override
@@ -65,6 +70,8 @@ public class StubHandle implements IHandle {
 		if (OssSession.sessionId.equals(key))
 			return ossConn.getSession();
 		if (JiguangSession.sessionId.equals(key))
+			return pushConn.getSession();
+		if (RedisSession.sessionId.equals(key))
 			return pushConn.getSession();
 		return null;
 	}

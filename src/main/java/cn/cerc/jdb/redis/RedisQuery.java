@@ -7,10 +7,10 @@ import cn.cerc.jdb.core.IHandle;
 public class RedisQuery extends DataQuery {
 
 	private static final long serialVersionUID = 5655647321461069483L;
-
+	public static RedisSession sess;
 	public RedisQuery(IHandle handle) {
 		super(handle);
-		// TODO Auto-generated constructor stub
+		sess = (RedisSession) handle.getProperty(RedisSession.sessionId);
 	}
 
 	@Override
