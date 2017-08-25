@@ -30,9 +30,10 @@ public class SqlConnection implements IConnection {
 	@Override
 	public SqlSession getSession() {
 		init();
+		Connection connection=null;
 		try {
 			log.debug("create connection for mysql: " + host);
-			Connection connection = DriverManager.getConnection(url, user, pwd);
+			 connection = DriverManager.getConnection(url, user, pwd);
 			SqlSession sess = new SqlSession();
 			sess.setConnection(connection);
 			return sess;
