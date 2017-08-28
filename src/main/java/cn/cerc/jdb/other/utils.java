@@ -1,9 +1,29 @@
 package cn.cerc.jdb.other;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Transient;
+
+import org.apache.log4j.Logger;
+
+import cn.cerc.jdb.core.CustomDataSet;
+import cn.cerc.jdb.core.Record;
+import cn.cerc.jdb.core.TDate;
+import cn.cerc.jdb.core.TDateTime;
+
 public class utils {
+    static final Logger log = Logger.getLogger(utils.class);
     public static final String vbCrLf = "\r\n";
 
     public static double roundTo(double val, int scale) {
@@ -159,4 +179,139 @@ public class utils {
         fmt = df.format(value);
         return fmt;
     }
+    
+    // 转成指定类型的对象
+    public static <T> T recordAsObject(Record record, Class<T> clazz) {
+        T obj;
+        try {
+            obj = clazz.newInstance();
+        } catch (InstantiationException | IllegalAccessException e1) {
+            throw new RuntimeException(e1.getMessage());
+        }
+        for (Field method : clazz.getDeclaredFields()) {
+            if (method.getAnnotation(Transient.class) != null)
+                continue;
+            Column column = method.getAnnotation(Column.class);
+            String dbField = method.getName();
+            String field = method.getName().substring(0, 1).toUpperCase() + method.getName().substring(1);
+            if (column != null && !"".equals(column.name()))
+                dbField = column.name();
+            if (record.exists(dbField)) {
+                try {
+                    if (method.getType().equals(Integer.class)) {
+                        Integer value = record.getInt(dbField);
+                        Method set = clazz.getMethod("set" + field, value.getClass());
+                        set.invoke(obj, value);
+                    } else if (method.getType().equals(int.class)) {
+                        int value = record.getInt(dbField);
+                        Method set = clazz.getMethod("set" + field, int.class);
+                        set.invoke(obj, value);
+
+                    } else if ((method.getType().equals(Double.class))) {
+                        Double value = record.getDouble(dbField);
+                        Method set = clazz.getMethod("set" + field, value.getClass());
+                        set.invoke(obj, value);
+                    } else if ((method.getType().equals(double.class))) {
+                        double value = record.getDouble(dbField);
+                        Method set = clazz.getMethod("set" + field, double.class);
+                        set.invoke(obj, value);
+
+                    } else if ((method.getType().equals(Long.class))) {
+                        Double value = record.getDouble(dbField);
+                        Method set = clazz.getMethod("set" + field, value.getClass());
+                        set.invoke(obj, value);
+                    } else if ((method.getType().equals(long.class))) {
+                        long value = (long) record.getDouble(dbField);
+                        Method set = clazz.getMethod("set" + field, long.class);
+                        set.invoke(obj, value);
+
+                    } else if (method.getType().equals(Boolean.class)) {
+                        Boolean value = record.getBoolean(dbField);
+                        Method set = clazz.getMethod("set" + field, value.getClass());
+                        set.invoke(obj, value);
+                    } else if (method.getType().equals(boolean.class)) {
+                        boolean value = record.getBoolean(dbField);
+                        Method set = clazz.getMethod("set" + field, boolean.class);
+                        set.invoke(obj, value);
+
+                    } else if (method.getType().equals(TDateTime.class)) {
+                        TDateTime value = record.getDateTime(dbField);
+                        Method set = clazz.getMethod("set" + field, value.getClass());
+                        set.invoke(obj, value);
+                    } else if (method.getType().equals(TDate.class)) {
+                        TDate value = record.getDate(dbField);
+                        Method set = clazz.getMethod("set" + field, value.getClass());
+                        set.invoke(obj, value);
+                    } else if (method.getType().equals(String.class)) {
+                        String value = record.getString(dbField);
+                        Method set = clazz.getMethod("set" + field, value.getClass());
+                        set.invoke(obj, value);
+                    } else {
+                        log.warn(String.format("field:%s, other type:%s", field, method.getType().getName()));
+                        String value = record.getString(dbField);
+                        Method set = clazz.getMethod("set" + field, value.getClass());
+                        set.invoke(obj, value);
+                    }
+                } catch (NoSuchMethodException | SecurityException | IllegalArgumentException
+                        | InvocationTargetException | IllegalAccessException e) {
+                    log.warn(e.getMessage());
+                }
+            }
+        }
+        return obj;
+    }
+
+    public static <T> void objectAsRecord(Record record, T object) {
+        Class<?> clazz = object.getClass();
+        for (Field method : clazz.getDeclaredFields()) {
+            if (method.getAnnotation(Transient.class) != null)
+                continue;
+            GeneratedValue generatedValue = method.getAnnotation(GeneratedValue.class);
+            if (generatedValue != null && generatedValue.strategy().equals(GenerationType.IDENTITY))
+                continue;
+
+            String field = method.getName();
+            Column column = method.getAnnotation(Column.class);
+            String dbField = field;
+            if (column != null && !"".equals(column.name()))
+                dbField = column.name();
+
+            Method get;
+            try {
+                field = field.substring(0, 1).toUpperCase() + field.substring(1);
+                get = clazz.getMethod("get" + field);
+                Object value = get.invoke(object);
+                record.setField(dbField, value);
+            } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
+                    | InvocationTargetException e) {
+                // e.printStackTrace();
+            }
+        }
+    }
+    
+    
+  // 将内容转成 Map
+  public static <T> Map<String, T> dataSetAsMap(CustomDataSet dataSet, Class<T> clazz, String... keys) {
+      Map<String, T> items = new HashMap<String, T>();
+      for (Record rs : dataSet) {
+          String key = "";
+          for (String field : keys) {
+              if ("".equals(key))
+                  key = rs.getString(field);
+              else
+                  key += ";" + rs.getString(field);
+          }
+          items.put(key, recordAsObject(rs, clazz));
+      }
+      return items;
+  }
+
+  // 将内容转成 List
+  public static <T> List<T> dataSetAsList(CustomDataSet dataSet, Class<T> clazz) {
+      List<T> items = new ArrayList<T>();
+      for (Record rs : dataSet)
+          items.add(recordAsObject(rs, clazz));
+      return items;
+  }
+
 }
