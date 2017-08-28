@@ -2,6 +2,7 @@ package cn.cerc.jdb.other;
 
 import java.io.Serializable;
 
+@Deprecated
 public class DelphiException extends RuntimeException implements Serializable {
     private static final long serialVersionUID = 4284750366499233051L;
 
