@@ -1,7 +1,5 @@
 package cn.cerc.jdb.core;
 
-import static cn.cerc.jdb.core.Utils.safeString;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -331,7 +329,8 @@ public class Record implements IRecord, Serializable {
      */
     @Deprecated
     public String getSafeString(String field) {
-        return safeString(getString(field));
+        String value = getString(field);
+        return value == null ? "" : value.replaceAll("'", "''");
     }
 
     @Override
