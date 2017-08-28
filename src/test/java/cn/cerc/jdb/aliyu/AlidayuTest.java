@@ -27,6 +27,11 @@ public class AlidayuTest {
                     return "地藤";
                 return null;
             }
+
+            @Override
+            public String getProperty(String key) {
+                return this.getProperty(key, null);
+            }
         });
 
         sms.setMobileNo("18566767108");

@@ -5,8 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import cn.cerc.jdb.other.DelphiException;
-
 public class RecordTest {
     private FieldDefs def = new FieldDefs();
     private Record item = new Record(def);
@@ -36,7 +34,7 @@ public class RecordTest {
         assertEquals(value2, (double) item.getField(field2), 0);
     }
 
-    @Test(expected = DelphiException.class)
+    @Test(expected = RuntimeException.class)
     public void test_setField_error1() {
         Record obj = new Record();
         item.setField("object", obj);

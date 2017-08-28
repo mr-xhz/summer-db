@@ -25,6 +25,11 @@ public class MongoConnectionTest {
                     return "admin";
                 return null;
             }
+
+            @Override
+            public String getProperty(String key) {
+                return getProperty(key, null);
+            }
         });
     }
 

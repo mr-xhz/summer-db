@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.CharEncoding;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 import cn.cerc.jdb.core.DataQuery;
 import cn.cerc.jdb.core.IHandle;
@@ -13,6 +14,8 @@ import cn.cerc.jdb.queue.QueueOperator;
 
 public class NasQuery extends DataQuery {
     private static final long serialVersionUID = 1L;
+    private static final Logger log = Logger.getLogger(NasQuery.class);
+    
     @SuppressWarnings("unused")
     private IHandle handle;
     // 文件目录
