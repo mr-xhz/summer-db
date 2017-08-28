@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.cerc.jdb.other.DelphiException;
-
 public class SearchDataSet {
     // private static final Logger log = Logger.getLogger(SearchDataSet.class);
     private CustomDataSet dataSet;
@@ -54,9 +52,9 @@ public class SearchDataSet {
 
     public Record get(Object[] keys) {
         if (keys == null || keys.length == 0)
-            throw new DelphiException("值列表不能为空或者长度不能为0");
+            throw new RuntimeException("值列表不能为空或者长度不能为0");
         if (fields.size() != keys.length)
-            throw new DelphiException("参数名称 与 值列表长度不匹配");
+            throw new RuntimeException("参数名称 与 值列表长度不匹配");
 
         String key = null;
         for (Object obj : keys) {
@@ -82,7 +80,7 @@ public class SearchDataSet {
 
     public void setFields(String keyFields) {
         if (keyFields == null || "".equals(keyFields))
-            throw new DelphiException("参数名称不能为空");
+            throw new RuntimeException("参数名称不能为空");
         if (!keyFields.equals(this.keyFields)) {
             fields.clear();
             for (String key : keyFields.split(";")) {

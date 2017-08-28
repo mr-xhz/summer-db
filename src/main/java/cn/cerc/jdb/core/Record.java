@@ -20,8 +20,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
 
-import cn.cerc.jdb.other.DelphiException;
-
 public class Record implements IRecord, Serializable {
     private static final long serialVersionUID = 4454304132898734723L;
     private DataSetState state = DataSetState.dsNone;
@@ -366,7 +364,7 @@ public class Record implements IRecord, Serializable {
         } else if (obj instanceof Date) {
             return new TDateTime((Date) obj);
         } else {
-            throw DelphiException.createFmt("%s Field not is %s.", field, obj.getClass().getName());
+            throw new RuntimeException(String.format("%s Field not is %s.", field, obj.getClass().getName()));
         }
     }
 

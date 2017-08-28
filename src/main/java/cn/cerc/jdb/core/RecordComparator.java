@@ -2,8 +2,6 @@ package cn.cerc.jdb.core;
 
 import java.util.Comparator;
 
-import cn.cerc.jdb.other.DelphiException;
-
 public class RecordComparator implements Comparator<Record> {
     private String[] fields;
 
@@ -16,7 +14,7 @@ public class RecordComparator implements Comparator<Record> {
         long tmp = 0;
         for (String item : fields) {
             if (item == null || "".equals(item))
-                throw DelphiException.createFmt("排序字段为空");
+                throw new RuntimeException("排序字段为空");
             String[] params = item.split(" ");
             String field = params[0];
             Object v1 = o1.getField(field);
@@ -42,7 +40,7 @@ public class RecordComparator implements Comparator<Record> {
                 else if ("DESC".equals(params[1]))
                     return tmp > 0 ? -1 : 1;
                 else
-                    throw DelphiException.createFmt("不支持【%s】排序模式", params[1]);
+                    throw new RuntimeException(String.format("不支持【%s】排序模式", params[1]));
             }
         }
         return 0;
