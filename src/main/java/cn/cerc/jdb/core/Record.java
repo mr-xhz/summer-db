@@ -1,7 +1,5 @@
 package cn.cerc.jdb.core;
 
-import static cn.cerc.jdb.other.utils.safeString;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -19,8 +17,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
-
-import cn.cerc.jdb.other.DelphiException;
 
 public class Record implements IRecord, Serializable {
     private static final long serialVersionUID = 4454304132898734723L;
@@ -333,7 +329,8 @@ public class Record implements IRecord, Serializable {
      */
     @Deprecated
     public String getSafeString(String field) {
-        return safeString(getString(field));
+        String value = getString(field);
+        return value == null ? "" : value.replaceAll("'", "''");
     }
 
     @Override
@@ -366,7 +363,7 @@ public class Record implements IRecord, Serializable {
         } else if (obj instanceof Date) {
             return new TDateTime((Date) obj);
         } else {
-            throw DelphiException.createFmt("%s Field not is %s.", field, obj.getClass().getName());
+            throw new RuntimeException(String.format("%s Field not is %s.", field, obj.getClass().getName()));
         }
     }
 

@@ -4,8 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import cn.cerc.jdb.other.DelphiException;
-
 /**
  * 日期对象
  * 
@@ -35,7 +33,7 @@ public class TDate extends TDateTime {
             date = sdf.parse(str);
         } catch (ParseException e) {
             e.printStackTrace();
-            throw new DelphiException("日期类型转换错误");
+            throw new RuntimeException("日期类型转换错误");
         }
         return new TDate(date);
     }

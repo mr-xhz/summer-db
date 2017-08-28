@@ -11,8 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import cn.cerc.jdb.other.DelphiException;
-
 /**
  * @author ZhangGong
  * 
@@ -104,9 +102,9 @@ public class CustomDataSet implements IRecord, Iterable<Record> {
 
     public Record getCurrent() {
         if (this.eof()) {
-            throw DelphiException.createFmt("[%s]eof == true", this.getClass().getName());
+            throw new RuntimeException(String.format("[%s]eof == true", this.getClass().getName()));
         } else if (this.bof()) {
-            throw DelphiException.createFmt("[%s]bof == true", this.getClass().getName());
+            throw new RuntimeException(String.format("[%s]bof == true", this.getClass().getName()));
         } else {
             return records.get(recNo - 1);
         }
@@ -118,8 +116,8 @@ public class CustomDataSet implements IRecord, Iterable<Record> {
 
     public void setRecNo(int recNo) {
         if (recNo > this.records.size()) {
-            throw DelphiException.createFmt("[%s]RecNo %d 大于总长度 %d", this.getClass().getName(), recNo,
-                    this.records.size());
+            throw new RuntimeException(
+                    String.format("[%s]RecNo %d 大于总长度 %d", this.getClass().getName(), recNo, this.records.size()));
         } else {
             this.recNo = recNo;
         }
@@ -140,12 +138,12 @@ public class CustomDataSet implements IRecord, Iterable<Record> {
     // 仅用于查找一次时，调用此函数，速度最快
     public boolean locateOnlyOne(String fields, Object... values) {
         if (fields == null || "".equals(fields))
-            throw new DelphiException("参数名称不能为空");
+            throw new RuntimeException("参数名称不能为空");
         if (values == null || values.length == 0)
-            throw new DelphiException("值列表不能为空或者长度不能为0");
+            throw new RuntimeException("值列表不能为空或者长度不能为0");
         String[] fieldslist = fields.split(";");
         if (fieldslist.length != values.length)
-            throw new DelphiException("参数名称 与 值列表长度不匹配");
+            throw new RuntimeException("参数名称 与 值列表长度不匹配");
         Map<String, Object> fieldValueMap = new HashMap<String, Object>();
         for (int i = 0; i < fieldslist.length; i++) {
             fieldValueMap.put(fieldslist[i], values[i]);

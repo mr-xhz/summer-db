@@ -8,9 +8,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.cerc.jdb.other.DelphiException;
-import cn.cerc.jdb.other.Lunar;
-
 public class TDateTime implements Serializable, Comparable<TDateTime>, Cloneable {
     private static final long serialVersionUID = -7395748632907604015L;
     private Date data;
@@ -135,7 +132,7 @@ public class TDateTime implements Serializable, Comparable<TDateTime>, Cloneable
                 count = count + flag;
             }
         } catch (ParseException e) {
-            throw new DelphiException("日期转换格式错误 ：" + e.getMessage());
+            throw new RuntimeException("日期转换格式错误 ：" + e.getMessage());
         }
         return count;
     }
@@ -264,7 +261,7 @@ public class TDateTime implements Serializable, Comparable<TDateTime>, Cloneable
         try {
             sdf = new SimpleDateFormat(map.get(fmt));
         } catch (IllegalArgumentException e) {
-            throw new DelphiException("日期格式不正确");
+            throw new RuntimeException("日期格式不正确");
         }
         return sdf.format(value.getData());
     }
@@ -300,7 +297,7 @@ public class TDateTime implements Serializable, Comparable<TDateTime>, Cloneable
     public static TDateTime StrToDate(String val) {
         String fmt = TDateTime.getFormat(val);
         if (fmt == null)
-            throw new DelphiException("时间格式不正确: value=" + val);
+            throw new RuntimeException("时间格式不正确: value=" + val);
         return new TDateTime(fmt, val);
     }
 
