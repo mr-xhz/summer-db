@@ -1,4 +1,4 @@
-package cn.cerc.jdb.other;
+package cn.cerc.jdb.core;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
