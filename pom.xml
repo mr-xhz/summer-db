@@ -85,6 +85,7 @@
         <org.hibernate.version>4.3.5.Final</org.hibernate.version>
         <org.springframework.version>4.2.6.RELEASE</org.springframework.version>
         <quartz.version>2.2.1</quartz.version>
+        <cn.cerc.summer.version>1.2.1</cn.cerc.summer.version>
     </properties>
     <dependencies>
         <dependency>
@@ -104,6 +105,11 @@
             <artifactId>javax.websocket-api</artifactId>
             <version>1.1</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.cerc</groupId>
+            <artifactId>summer-core</artifactId>
+            <version>${cn.cerc.summer.version}</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
