@@ -100,14 +100,14 @@ public interface IRecord {
                         Method set = clazz.getMethod("set" + field, value.getClass());
                         set.invoke(obj, value);
                     } else {
-                        log.info(String.format("field:%s, other type:%s", field, method.getType().getName()));
+                        log.warn(String.format("field:%s, other type:%s", field, method.getType().getName()));
                         String value = this.getString(dbField);
                         Method set = clazz.getMethod("set" + field, value.getClass());
                         set.invoke(obj, value);
                     }
                 } catch (NoSuchMethodException | SecurityException | IllegalArgumentException
                         | InvocationTargetException | IllegalAccessException e) {
-                    log.info(e.getMessage());
+                    log.warn(e.getMessage());
                 }
             }
         }

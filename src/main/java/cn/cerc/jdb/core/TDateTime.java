@@ -8,8 +8,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.cerc.jdb.other.Lunar;
-
 public class TDateTime implements Serializable, Comparable<TDateTime>, Cloneable {
     private static final long serialVersionUID = -7395748632907604015L;
     private Date data;

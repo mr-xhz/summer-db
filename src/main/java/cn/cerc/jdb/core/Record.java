@@ -1,6 +1,6 @@
 package cn.cerc.jdb.core;
 
-import static cn.cerc.jdb.other.utils.safeString;
+import static cn.cerc.jdb.core.Utils.safeString;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
