@@ -179,7 +179,7 @@ public class utils {
         fmt = df.format(value);
         return fmt;
     }
-    
+
     // 转成指定类型的对象
     public static <T> T recordAsObject(Record record, Class<T> clazz) {
         T obj;
@@ -288,30 +288,29 @@ public class utils {
             }
         }
     }
-    
-    
-  // 将内容转成 Map
-  public static <T> Map<String, T> dataSetAsMap(CustomDataSet dataSet, Class<T> clazz, String... keys) {
-      Map<String, T> items = new HashMap<String, T>();
-      for (Record rs : dataSet) {
-          String key = "";
-          for (String field : keys) {
-              if ("".equals(key))
-                  key = rs.getString(field);
-              else
-                  key += ";" + rs.getString(field);
-          }
-          items.put(key, recordAsObject(rs, clazz));
-      }
-      return items;
-  }
 
-  // 将内容转成 List
-  public static <T> List<T> dataSetAsList(CustomDataSet dataSet, Class<T> clazz) {
-      List<T> items = new ArrayList<T>();
-      for (Record rs : dataSet)
-          items.add(recordAsObject(rs, clazz));
-      return items;
-  }
+    // 将内容转成 Map
+    public static <T> Map<String, T> dataSetAsMap(CustomDataSet dataSet, Class<T> clazz, String... keys) {
+        Map<String, T> items = new HashMap<String, T>();
+        for (Record rs : dataSet) {
+            String key = "";
+            for (String field : keys) {
+                if ("".equals(key))
+                    key = rs.getString(field);
+                else
+                    key += ";" + rs.getString(field);
+            }
+            items.put(key, recordAsObject(rs, clazz));
+        }
+        return items;
+    }
+
+    // 将内容转成 List
+    public static <T> List<T> dataSetAsList(CustomDataSet dataSet, Class<T> clazz) {
+        List<T> items = new ArrayList<T>();
+        for (Record rs : dataSet)
+            items.add(recordAsObject(rs, clazz));
+        return items;
+    }
 
 }
