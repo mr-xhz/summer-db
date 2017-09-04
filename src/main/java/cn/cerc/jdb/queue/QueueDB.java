@@ -20,6 +20,12 @@ public class QueueDB {
     /** 回算队列 **/
     public static final String SUMMER = "summer";
 
+    /** 资料队列 **/
+    public static final String MATERIAL = "material";
+
+    /** 资料测试队列 **/
+    public static final String MATERIAL_TEST = "material-test";
+
     /** 测试队列 **/
     public static final String TEST = "test";
 
