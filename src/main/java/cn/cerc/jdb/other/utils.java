@@ -88,6 +88,20 @@ public class utils {
         return '{' + uuid.toString() + '}';
     }
 
+    /*
+     * 用于多料号查询处理，格式为[料号1,料号2,料号3...]，返回List，使用于BuildQuery中byRange方法
+     */
+    public static List<String> stringAsList(String searchText) {
+        List<String> items = new ArrayList<>();
+        if (searchText.startsWith("[") && searchText.endsWith("]") && searchText.length() > 2) {
+            String[] arr = searchText.replace("[", "").replace("]", "").split(",");
+            for (String code : arr) {
+                items.add(code);
+            }
+        }
+        return items;
+    }
+
     /**
      * 保障查询安全，防范注入攻击 (已停用，请改使用cn.cerc.jdb.core.Utils.safeString)
      * 
