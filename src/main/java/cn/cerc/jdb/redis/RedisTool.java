@@ -21,7 +21,7 @@ import redis.clients.jedis.exceptions.JedisConnectionException;
  * @author 欧阳香
  *
  */
-public class RedisTempalte {
+public class RedisTool {
 
     private static Logger logger = LoggerFactory.getLogger("RedisSimpleTempalte");
 
@@ -29,7 +29,7 @@ public class RedisTempalte {
     public static JedisPool jedisPool;
     public static StubHandle handle;
 
-    public RedisTempalte(IHandle handle) {
+    public RedisTool(IHandle handle) {
         sess = (RedisSession) handle.getProperty(RedisSession.sessionId);
         jedisPool = sess.getJedisPool();
     }
@@ -531,4 +531,8 @@ class RedisKVPO {
         this.value = v;
     }
 
+}
+
+interface RedisCallback<T> {
+    public T call(Jedis jedis, Object params);
 }
