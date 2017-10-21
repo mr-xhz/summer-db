@@ -80,6 +80,24 @@ public class RedisConnection implements IConnection {
         }
     }
 
+    @Override
+    public RedisSession getSession() {
+        init();
+        RedisSession sess = new RedisSession();
+        sess.setJedisPool(jedisPool);
+        return sess;
+    }
+
+    public boolean isConnected() {
+        return getRedis().isConnected();
+    }
+
+    public Jedis getRedis() {
+        Jedis jedis = jedisPool.getResource();
+        jedis.select(0);
+        return jedis;
+    }
+
     public static void main(String[] args) {
         /*
          * Jedis jedis = new Jedis("localhost",6379);
@@ -112,23 +130,4 @@ public class RedisConnection implements IConnection {
          * System.out.println(redis.clientList());
          */
     }
-
-    @Override
-    public RedisSession getSession() {
-        init();
-        RedisSession sess = new RedisSession();
-        sess.setJedisPool(jedisPool);
-        return sess;
-    }
-
-    public boolean isConnected() {
-        return getRedis().isConnected();
-    }
-
-    public Jedis getRedis() {
-        Jedis jedis = jedisPool.getResource();
-        jedis.select(0);
-        return jedis;
-    }
-
 }

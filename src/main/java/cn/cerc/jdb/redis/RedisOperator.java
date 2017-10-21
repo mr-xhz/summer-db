@@ -19,8 +19,8 @@ public class RedisOperator implements IDataOperator {
 
     @Override
     public boolean insert(Record record) {
-
-        return true;
+        // TODO Auto-generated method stub
+        return false;
     }
 
     @Override
