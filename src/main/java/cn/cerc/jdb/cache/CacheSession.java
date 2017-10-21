@@ -40,4 +40,9 @@ public class CacheSession implements ISession, IMemcache {
     public void delete(String key) {
         client.delete(key);
     }
+
+    @Override
+    public void set(String key, Object value) {
+        this.set(key, value, 3600);
+    }
 }

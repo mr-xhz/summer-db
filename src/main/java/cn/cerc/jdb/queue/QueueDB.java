@@ -14,17 +14,26 @@ public class QueueDB {
     /** 系统消息 **/
     public static final String MESSAGE = "message";
 
+    /** 系统消息 测试队列 **/
+    public static final String MESSAGE_TEST = "message-test";
+
     /** 邮件发送 **/
     public static final String SENDMAIL = "sendmail";
 
     /** 回算队列 **/
     public static final String SUMMER = "summer";
 
-    /** 资料队列 **/
+    /** 资料同步 **/
     public static final String MATERIAL = "material";
 
-    /** 资料测试队列 **/
+    /** 资料同步 测试队列 **/
     public static final String MATERIAL_TEST = "material-test";
+
+    /** 网单代发 **/
+    public static final String TRADEMALL = "trademall";
+
+    /** 网单代发 测试队列 **/
+    public static final String TRADEMALL_TEST = "trademall-test";
 
     /** 测试队列 **/
     public static final String TEST = "test";
