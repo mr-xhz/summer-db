@@ -213,6 +213,12 @@
             <artifactId>sdk-java</artifactId>
             <version>auto_1455552377940-20170331</version>
         </dependency>
+        <!-- redis -->
+        <dependency>
+		    <groupId>redis.clients</groupId>
+		    <artifactId>jedis</artifactId>
+		    <version>2.9.0</version>
+		</dependency>
         <!-- <dependency> -->
         <!-- <groupId>org.codehaus.plexus</groupId> -->
         <!-- <artifactId>plexus-interpolation</artifactId> -->
