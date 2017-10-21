@@ -62,7 +62,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @Description:选择DB实例
+     * 选择DB实例
+     * 
      * @author ouyangxiang Date: 2017-08-18
      * @param key
      */
@@ -76,12 +77,13 @@ public class RedisTempalte {
     }
 
     /**
-     * @Description:redis是否连接成功
+     * redis是否连接成功
+     * 
      * @author ouyangxiang
      * @param index
      * @return
      */
-    public Boolean isConnected(int index) {
+    public boolean isConnected(int index) {
         return execute(new RedisCallback<Boolean>() {
             @Override
             public Boolean call(Jedis jedis, Object params) {
@@ -91,7 +93,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @Description:是否存在key
+     * 是否存在key
+     * 
      * @author ouyangxiang
      * @param index
      * @return
@@ -107,7 +110,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @Description:hash是否存在某个属性
+     * hash是否存在某个属性
+     * 
      * @author ouyangxiang
      * @param index
      * @return
@@ -124,7 +128,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @Description: 获取Hashmap（哈希）某个键值
+     * 获取Hashmap（哈希）某个键值
+     * 
      * @author ouyangxiang Date: 2017-08-18
      * @param key
      */
@@ -139,7 +144,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @Description: 获取Hashmap（哈希）某个map
+     * 获取Hashmap（哈希）某个map
+     * 
      * @author ouyangxiang Date: 2017-08-18
      * @param key
      */
@@ -154,7 +160,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @Description: 删除Hashmap（哈希）某个map里面 某个键
+     * 删除Hashmap（哈希）某个map里面 某个键
+     * 
      * @author ouyangxiang Date: 2017-08-18
      * @param key
      */
@@ -170,7 +177,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @Description: Hash（哈希）
+     * Hash（哈希）
+     * 
      * @author ouyangxiang Date: 2017-08-18
      * @param key
      */
@@ -187,7 +195,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @Description:String（字符串）获取
+     * String（字符串）获取
+     * 
      * @author ouyangxiang Date: 2017-08-18
      * @param key
      */
@@ -201,7 +210,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @Description:String（字符串）获取
+     * String（字符串）获取
+     * 
      * @author ouyangxiang Date: 2017-08-18
      * @param key
      */
@@ -220,7 +230,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @Description: String（字符串）赋值
+     * String（字符串）赋值
+     * 
      * @author ouyangxiang Date: 2017-08-18
      * @param key
      */
@@ -236,7 +247,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @deprecated 存储字符串 设置编码
+     * 存储字符串 设置编码
+     * 
      * @author ouyangxiang
      * @param index
      * @param key
@@ -258,7 +270,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @Description:seconds:过期时间（单位：秒）
+     * seconds:过期时间（单位：秒）
+     * 
      * @author ouyangxiang Date: 2017-08-18
      * @param key
      */
@@ -275,7 +288,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @Description:设置db实例过期时间
+     * 设置db实例过期时间
+     * 
      * @author ouyangxiang Date: 2017-08-18
      * @param key
      */
@@ -296,7 +310,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @Description: 批量Set
+     * 批量Set
+     * 
      * @author ouyangxiang Date: 2017-08-18
      * @param key
      */
@@ -316,7 +331,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @Description: 根据key删除
+     * 根据key删除
+     * 
      * @author ouyangxiang Date: 2017-08-18
      * @param key
      */
@@ -331,8 +347,9 @@ public class RedisTempalte {
     }
 
     /**
-     * @deprecatedRedis Llen 命令用于返回列表的长度。 如果列表 key 不存在， 则 key 被解释为一个空列表，返回 0 。
-     *                  如果 key 不是列表类型，返回一个错误。
+     * Redis Llen 命令用于返回列表的长度。 如果列表 key 不存在， 则 key 被解释为一个空列表，返回 0 。 如果 key
+     * 不是列表类型，返回一个错误。
+     * 
      * @author ouyangxiang
      * @param index
      * @param key
@@ -348,7 +365,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @deprecated list 新增
+     * list 新增
+     * 
      * @author ouyangxiang
      * @param index
      * @param key
@@ -366,7 +384,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @deprecated list 新增
+     * list 新增
+     * 
      * @author ouyangxiang
      * @param index
      * @param key
@@ -389,7 +408,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @deprecated jedis操作List 查询
+     * jedis操作List 查询
+     * 
      * @author ouyangxiang
      * @param index
      * @param key
@@ -410,7 +430,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @deprecated int类型 //进行加1操作
+     * int类型 //进行加1操作
+     * 
      * @author ouyangxiang
      * @param index
      * @param key
@@ -426,7 +447,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @deprecated jedis操作Set
+     * jedis操作Set
+     * 
      * @author ouyangxiang
      * @param index
      * @param key
@@ -444,7 +466,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @deprecated 返回key集合所有的元素.
+     * 返回key集合所有的元素.
+     * 
      * @author ouyangxiang
      * @param index
      * @param key
@@ -461,7 +484,8 @@ public class RedisTempalte {
     }
 
     /**
-     * @deprecatedRedis Brpop 命令移出并获取列表的最后一个元素(list)
+     * Redis Brpop 命令移出并获取列表的最后一个元素(list)
+     * 
      * @author ouyangxiang
      * @param index
      * @param key
@@ -475,6 +499,36 @@ public class RedisTempalte {
                 return jedis.brpop(0, key);
             }
         }, index, key);
+    }
+
+}
+
+class RedisKVPO {
+    private String key;
+    private String value;
+
+    public RedisKVPO() {
+    }
+
+    public RedisKVPO(String k, String v) {
+        this.key = k;
+        this.value = v;
+    }
+
+    public String getK() {
+        return key;
+    }
+
+    public void setK(String k) {
+        this.key = k;
+    }
+
+    public String getV() {
+        return value;
+    }
+
+    public void setV(String v) {
+        this.value = v;
     }
 
 }
