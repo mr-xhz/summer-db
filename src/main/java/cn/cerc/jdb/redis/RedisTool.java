@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.StubHandle;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.Pipeline;
@@ -27,7 +26,6 @@ public class RedisTool {
 
     public static RedisSession sess;
     public static JedisPool jedisPool;
-    public static StubHandle handle;
 
     public RedisTool(IHandle handle) {
         sess = (RedisSession) handle.getProperty(RedisSession.sessionId);
@@ -65,7 +63,6 @@ public class RedisTool {
      * 选择DB实例
      * 
      * @author ouyangxiang Date: 2017-08-18
-     * @param key
      */
     public void select(int index) {
         execute(new RedisCallback<String>() {
@@ -80,8 +77,6 @@ public class RedisTool {
      * redis是否连接成功
      * 
      * @author ouyangxiang
-     * @param index
-     * @return
      */
     public boolean isConnected(int index) {
         return execute(new RedisCallback<Boolean>() {
@@ -96,8 +91,6 @@ public class RedisTool {
      * 是否存在key
      * 
      * @author ouyangxiang
-     * @param index
-     * @return
      */
     public Boolean exists(int index, String key) {
         return execute(new RedisCallback<Boolean>() {
@@ -113,8 +106,6 @@ public class RedisTool {
      * hash是否存在某个属性
      * 
      * @author ouyangxiang
-     * @param index
-     * @return
      */
     public Boolean hexists(int index, String mapKey, String attributeKey) {
         return execute(new RedisCallback<Boolean>() {
@@ -131,7 +122,6 @@ public class RedisTool {
      * 获取Hashmap（哈希）某个键值
      * 
      * @author ouyangxiang Date: 2017-08-18
-     * @param key
      */
     public String hget(int index, String key, String field) {
         return execute(new RedisCallback<String>() {
@@ -147,7 +137,6 @@ public class RedisTool {
      * 获取Hashmap（哈希）某个map
      * 
      * @author ouyangxiang Date: 2017-08-18
-     * @param key
      */
     public Map<String, String> hgetAll(int index, String key) {
         return execute(new RedisCallback<Map<String, String>>() {
@@ -163,7 +152,6 @@ public class RedisTool {
      * 删除Hashmap（哈希）某个map里面 某个键
      * 
      * @author ouyangxiang Date: 2017-08-18
-     * @param key
      */
     public Long hdel(int index, String mapKey, String attributeKey) {
         return execute(new RedisCallback<Long>() {
@@ -180,7 +168,6 @@ public class RedisTool {
      * Hash（哈希）
      * 
      * @author ouyangxiang Date: 2017-08-18
-     * @param key
      */
     public void hset(int index, String key, String field, String value) {
         execute(new RedisCallback<String>() {
@@ -198,7 +185,6 @@ public class RedisTool {
      * String（字符串）获取
      * 
      * @author ouyangxiang Date: 2017-08-18
-     * @param key
      */
     public String get(int index, String key) {
         return execute(new RedisCallback<String>() {
@@ -213,7 +199,6 @@ public class RedisTool {
      * String（字符串）获取
      * 
      * @author ouyangxiang Date: 2017-08-18
-     * @param key
      */
     public byte[] getByte(int index, String key) {
         return execute(new RedisCallback<byte[]>() {
@@ -233,7 +218,6 @@ public class RedisTool {
      * String（字符串）赋值
      * 
      * @author ouyangxiang Date: 2017-08-18
-     * @param key
      */
     public void set(int index, String key, String value) {
         execute(new RedisCallback<String>() {
@@ -250,9 +234,6 @@ public class RedisTool {
      * 存储字符串 设置编码
      * 
      * @author ouyangxiang
-     * @param index
-     * @param key
-     * @param value
      */
     public void set(int index, String key, byte[] value) {
         execute(new RedisCallback<String>() {
@@ -273,7 +254,6 @@ public class RedisTool {
      * seconds:过期时间（单位：秒）
      * 
      * @author ouyangxiang Date: 2017-08-18
-     * @param key
      */
     public void set(int index, String key, String value, int seconds) {
         execute(new RedisCallback<String>() {
@@ -291,7 +271,6 @@ public class RedisTool {
      * 设置db实例过期时间
      * 
      * @author ouyangxiang Date: 2017-08-18
-     * @param key
      */
     public void set(int index, String key, byte[] value, int seconds) {
         execute(new RedisCallback<String>() {
@@ -313,7 +292,6 @@ public class RedisTool {
      * 批量Set
      * 
      * @author ouyangxiang Date: 2017-08-18
-     * @param key
      */
     public void setPipeLine(int index, List<RedisKVPO> list) {
         execute(new RedisCallback<String>() {
@@ -334,7 +312,6 @@ public class RedisTool {
      * 根据key删除
      * 
      * @author ouyangxiang Date: 2017-08-18
-     * @param key
      */
     public void del(int index, String key) {
         execute(new RedisCallback<String>() {
@@ -351,9 +328,6 @@ public class RedisTool {
      * 不是列表类型，返回一个错误。
      * 
      * @author ouyangxiang
-     * @param index
-     * @param key
-     * @return
      */
     public String llen(int index, String key) {
         return execute(new RedisCallback<String>() {
@@ -368,9 +342,6 @@ public class RedisTool {
      * list 新增
      * 
      * @author ouyangxiang
-     * @param index
-     * @param key
-     * @param values
      */
     public void lpush(int index, String key, String value) {
         execute(new RedisCallback<String>() {
@@ -387,9 +358,6 @@ public class RedisTool {
      * list 新增
      * 
      * @author ouyangxiang
-     * @param index
-     * @param key
-     * @param values
      */
     public void lpushPipeLine(int index, String key, List<String> values) {
         execute(new RedisCallback<String>() {
@@ -411,11 +379,6 @@ public class RedisTool {
      * jedis操作List 查询
      * 
      * @author ouyangxiang
-     * @param index
-     * @param key
-     * @param start
-     * @param end
-     * @return
      */
     public List<String> lrange(int index, String key, long start, long end) {
         return execute(new RedisCallback<List<String>>() {
@@ -433,8 +396,6 @@ public class RedisTool {
      * int类型 //进行加1操作
      * 
      * @author ouyangxiang
-     * @param index
-     * @param key
      */
     public void incr(int index, String key) {
         execute(new RedisCallback<String>() {
@@ -450,9 +411,6 @@ public class RedisTool {
      * jedis操作Set
      * 
      * @author ouyangxiang
-     * @param index
-     * @param key
-     * @param value
      */
     public void sadd(int index, String key, String value) {
         execute(new RedisCallback<String>() {
@@ -469,9 +427,6 @@ public class RedisTool {
      * 返回key集合所有的元素.
      * 
      * @author ouyangxiang
-     * @param index
-     * @param key
-     * @return
      */
     public Set<String> smembers(int index, String key) {
         return execute(new RedisCallback<Set<String>>() {
@@ -487,9 +442,6 @@ public class RedisTool {
      * Redis Brpop 命令移出并获取列表的最后一个元素(list)
      * 
      * @author ouyangxiang
-     * @param index
-     * @param key
-     * @return
      */
     public List<String> brpop(int index, String key) {
         return execute(new RedisCallback<List<String>>() {
