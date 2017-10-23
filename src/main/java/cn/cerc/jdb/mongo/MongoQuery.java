@@ -157,17 +157,17 @@ public class MongoQuery extends DataQuery {
         int offset = sql.toLowerCase().indexOf("order");
         if (offset == -1)
             return sort;
-        String[] items = sql.substring(offset + 9).split(",");
+        String[] items = sql.substring(offset + 5).split(",");
         for (String item : items) {
             String str = item.trim();
-            if (item.split(" ").length == 2) {
-                String[] tmp = item.split(" ");
+            if (str.split(" ").length == 2) {
+                String[] tmp = str.split(" ");
                 if (tmp[1].equals("ASC"))
                     sort.append(tmp[0], 1);
                 else if (tmp[1].equals("DESC"))
                     sort.append(tmp[0], -1);
                 else
-                    throw new RuntimeException("暂不支持的排序条件：" + item);
+                    throw new RuntimeException("暂不支持的排序条件：" + str);
             } else
                 sort.append(str, 1);
         }
