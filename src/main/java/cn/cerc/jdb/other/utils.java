@@ -198,9 +198,10 @@ public class utils {
     public static <T> T recordAsObject(Record record, Class<T> clazz) {
         T obj;
         try {
-            obj = clazz.newInstance();
-        } catch (InstantiationException | IllegalAccessException e1) {
-            throw new RuntimeException(e1.getMessage());
+            obj = clazz.getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+                | NoSuchMethodException | SecurityException e) {
+            throw new RuntimeException(e.getMessage());
         }
         for (Field method : clazz.getDeclaredFields()) {
             if (method.getAnnotation(Transient.class) != null)
