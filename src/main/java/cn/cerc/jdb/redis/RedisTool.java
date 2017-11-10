@@ -16,9 +16,6 @@ import redis.clients.jedis.exceptions.JedisConnectionException;
 
 /**
  * 该类主要是做 redis 链接测试 以及所有的数据查询新增
- * 
- * @author 欧阳香
- *
  */
 public class RedisTool {
 
@@ -36,7 +33,7 @@ public class RedisTool {
     protected <T> T execute(RedisCallback<T> callback, Object... args) {
         Jedis jedis = null;
         try {
-            Object index = ((Object[]) args)[0];
+            Object index = args[0];
             System.err.println("-------------------index ------------" + index);
             if (null != index && Integer.parseInt(index.toString()) > 0 && Integer.parseInt(index.toString()) < 16) {
                 jedis = sess.getRedis(Integer.parseInt(index.toString()));
@@ -59,13 +56,9 @@ public class RedisTool {
         return null;
     }
 
-    /**
-     * 选择DB实例
-     * 
-     * @author ouyangxiang Date: 2017-08-18
-     */
     public void select(int index) {
         execute(new RedisCallback<String>() {
+            @Override
             public String call(Jedis jedis, Object parms) {
                 int index = Integer.parseInt(((Object[]) parms)[0].toString());
                 return jedis.select(index);
@@ -73,11 +66,6 @@ public class RedisTool {
         }, index);
     }
 
-    /**
-     * redis是否连接成功
-     * 
-     * @author ouyangxiang
-     */
     public boolean isConnected(int index) {
         return execute(new RedisCallback<Boolean>() {
             @Override
@@ -87,11 +75,6 @@ public class RedisTool {
         }, index);
     }
 
-    /**
-     * 是否存在key
-     * 
-     * @author ouyangxiang
-     */
     public Boolean exists(int index, String key) {
         return execute(new RedisCallback<Boolean>() {
             @Override
@@ -102,11 +85,6 @@ public class RedisTool {
         }, index, key);
     }
 
-    /**
-     * hash是否存在某个属性
-     * 
-     * @author ouyangxiang
-     */
     public Boolean hexists(int index, String mapKey, String attributeKey) {
         return execute(new RedisCallback<Boolean>() {
             @Override
@@ -118,13 +96,9 @@ public class RedisTool {
         }, index, mapKey, attributeKey);
     }
 
-    /**
-     * 获取Hashmap（哈希）某个键值
-     * 
-     * @author ouyangxiang Date: 2017-08-18
-     */
     public String hget(int index, String key, String field) {
         return execute(new RedisCallback<String>() {
+            @Override
             public String call(Jedis jedis, Object parms) {
                 String key = ((Object[]) parms)[1].toString();
                 String field = ((Object[]) parms)[2].toString();
@@ -133,11 +107,6 @@ public class RedisTool {
         }, index, key, field);
     }
 
-    /**
-     * 获取Hashmap（哈希）某个map
-     * 
-     * @author ouyangxiang Date: 2017-08-18
-     */
     public Map<String, String> hgetAll(int index, String key) {
         return execute(new RedisCallback<Map<String, String>>() {
             @Override
@@ -148,11 +117,6 @@ public class RedisTool {
         }, index, key);
     }
 
-    /**
-     * 删除Hashmap（哈希）某个map里面 某个键
-     * 
-     * @author ouyangxiang Date: 2017-08-18
-     */
     public Long hdel(int index, String mapKey, String attributeKey) {
         return execute(new RedisCallback<Long>() {
             @Override
@@ -164,13 +128,9 @@ public class RedisTool {
         }, index, mapKey, attributeKey);
     }
 
-    /**
-     * Hash（哈希）
-     * 
-     * @author ouyangxiang Date: 2017-08-18
-     */
     public void hset(int index, String key, String field, String value) {
         execute(new RedisCallback<String>() {
+            @Override
             public String call(Jedis jedis, Object parms) {
                 String key = ((Object[]) parms)[1].toString();
                 String field = ((Object[]) parms)[2].toString();
@@ -181,13 +141,9 @@ public class RedisTool {
         }, key, field, value);
     }
 
-    /**
-     * String（字符串）获取
-     * 
-     * @author ouyangxiang Date: 2017-08-18
-     */
     public String get(int index, String key) {
         return execute(new RedisCallback<String>() {
+            @Override
             public String call(Jedis jedis, Object parms) {
                 String key = ((Object[]) parms)[1].toString();
                 return jedis.get(key);
@@ -195,13 +151,9 @@ public class RedisTool {
         }, index, key);
     }
 
-    /**
-     * String（字符串）获取
-     * 
-     * @author ouyangxiang Date: 2017-08-18
-     */
     public byte[] getByte(int index, String key) {
         return execute(new RedisCallback<byte[]>() {
+            @Override
             public byte[] call(Jedis jedis, Object parms) {
                 String key = ((Object[]) parms)[1].toString();
                 try {
@@ -214,13 +166,9 @@ public class RedisTool {
         }, index, key);
     }
 
-    /**
-     * String（字符串）赋值
-     * 
-     * @author ouyangxiang Date: 2017-08-18
-     */
     public void set(int index, String key, String value) {
         execute(new RedisCallback<String>() {
+            @Override
             public String call(Jedis jedis, Object parms) {
                 String key = ((Object[]) parms)[1].toString();
                 String value = ((Object[]) parms)[2].toString();
@@ -230,13 +178,9 @@ public class RedisTool {
         }, index, key, value);
     }
 
-    /**
-     * 存储字符串 设置编码
-     * 
-     * @author ouyangxiang
-     */
     public void set(int index, String key, byte[] value) {
         execute(new RedisCallback<String>() {
+            @Override
             public String call(Jedis jedis, Object parms) {
                 String key = ((Object[]) parms)[1].toString();
                 byte[] value = (byte[]) ((Object[]) parms)[2];
@@ -250,13 +194,9 @@ public class RedisTool {
         }, index, key, value);
     }
 
-    /**
-     * seconds:过期时间（单位：秒）
-     * 
-     * @author ouyangxiang Date: 2017-08-18
-     */
     public void set(int index, String key, String value, int seconds) {
         execute(new RedisCallback<String>() {
+            @Override
             public String call(Jedis jedis, Object parms) {
                 String key = ((Object[]) parms)[1].toString();
                 String value = ((Object[]) parms)[2].toString();
@@ -267,13 +207,9 @@ public class RedisTool {
         }, index, key, value, seconds);
     }
 
-    /**
-     * 设置db实例过期时间
-     * 
-     * @author ouyangxiang Date: 2017-08-18
-     */
     public void set(int index, String key, byte[] value, int seconds) {
         execute(new RedisCallback<String>() {
+            @Override
             public String call(Jedis jedis, Object parms) {
                 String key = ((Object[]) parms)[1].toString();
                 byte[] value = (byte[]) ((Object[]) parms)[2];
@@ -288,13 +224,9 @@ public class RedisTool {
         }, index, key, value, seconds);
     }
 
-    /**
-     * 批量Set
-     * 
-     * @author ouyangxiang Date: 2017-08-18
-     */
     public void setPipeLine(int index, List<RedisKVPO> list) {
         execute(new RedisCallback<String>() {
+            @Override
             public String call(Jedis jedis, Object parms) {
                 Pipeline p = jedis.pipelined();
                 @SuppressWarnings("unchecked")
@@ -308,13 +240,9 @@ public class RedisTool {
         }, index, list);
     }
 
-    /**
-     * 根据key删除
-     * 
-     * @author ouyangxiang Date: 2017-08-18
-     */
     public void del(int index, String key) {
         execute(new RedisCallback<String>() {
+            @Override
             public String call(Jedis jedis, Object parms) {
                 String key = ((Object[]) parms)[1].toString();
                 jedis.del(key);
@@ -323,14 +251,9 @@ public class RedisTool {
         }, index, key);
     }
 
-    /**
-     * Redis Llen 命令用于返回列表的长度。 如果列表 key 不存在， 则 key 被解释为一个空列表，返回 0 。 如果 key
-     * 不是列表类型，返回一个错误。
-     * 
-     * @author ouyangxiang
-     */
     public String llen(int index, String key) {
         return execute(new RedisCallback<String>() {
+            @Override
             public String call(Jedis jedis, Object parms) {
                 String key = ((Object[]) parms)[1].toString();
                 return jedis.llen(key) + "";
@@ -338,13 +261,9 @@ public class RedisTool {
         }, index, key);
     }
 
-    /**
-     * list 新增
-     * 
-     * @author ouyangxiang
-     */
     public void lpush(int index, String key, String value) {
         execute(new RedisCallback<String>() {
+            @Override
             public String call(Jedis jedis, Object parms) {
                 String key = ((Object[]) parms)[1].toString();
                 String value = ((Object[]) parms)[2].toString();
@@ -354,13 +273,9 @@ public class RedisTool {
         }, index, key, value);
     }
 
-    /**
-     * list 新增
-     * 
-     * @author ouyangxiang
-     */
     public void lpushPipeLine(int index, String key, List<String> values) {
         execute(new RedisCallback<String>() {
+            @Override
             @SuppressWarnings("unchecked")
             public String call(Jedis jedis, Object parms) {
                 String key = ((Object[]) parms)[1].toString();
@@ -375,13 +290,9 @@ public class RedisTool {
         }, index, key, values);
     }
 
-    /**
-     * jedis操作List 查询
-     * 
-     * @author ouyangxiang
-     */
     public List<String> lrange(int index, String key, long start, long end) {
         return execute(new RedisCallback<List<String>>() {
+            @Override
             public List<String> call(Jedis jedis, Object parms) {
                 Object[] ps = ((Object[]) parms);
                 String key = ps[1].toString();
@@ -392,13 +303,9 @@ public class RedisTool {
         }, index, key, start, end);
     }
 
-    /**
-     * int类型 //进行加1操作
-     * 
-     * @author ouyangxiang
-     */
     public void incr(int index, String key) {
         execute(new RedisCallback<String>() {
+            @Override
             public String call(Jedis jedis, Object parms) {
                 String key = ((Object[]) parms)[1].toString();
                 jedis.incr(key);
@@ -407,13 +314,9 @@ public class RedisTool {
         }, index, key);
     }
 
-    /**
-     * jedis操作Set
-     * 
-     * @author ouyangxiang
-     */
     public void sadd(int index, String key, String value) {
         execute(new RedisCallback<String>() {
+            @Override
             public String call(Jedis jedis, Object parms) {
                 String key = ((Object[]) parms)[1].toString();
                 String value = ((Object[]) parms)[2].toString();
@@ -423,13 +326,9 @@ public class RedisTool {
         }, index, key, value);
     }
 
-    /**
-     * 返回key集合所有的元素.
-     * 
-     * @author ouyangxiang
-     */
     public Set<String> smembers(int index, String key) {
         return execute(new RedisCallback<Set<String>>() {
+            @Override
             public Set<String> call(Jedis jedis, Object parms) {
                 Object[] ps = ((Object[]) parms);
                 String key = ps[1].toString();
@@ -438,13 +337,9 @@ public class RedisTool {
         }, index, key);
     }
 
-    /**
-     * Redis Brpop 命令移出并获取列表的最后一个元素(list)
-     * 
-     * @author ouyangxiang
-     */
     public List<String> brpop(int index, String key) {
         return execute(new RedisCallback<List<String>>() {
+            @Override
             public List<String> call(Jedis jedis, Object parms) {
                 Object[] ps = ((Object[]) parms);
                 String key = ps[1].toString();
@@ -452,7 +347,6 @@ public class RedisTool {
             }
         }, index, key);
     }
-
 }
 
 class RedisKVPO {
