@@ -100,33 +100,30 @@ public class RedisConnection implements IConnection {
 
     public static void main(String[] args) {
         /*
-         * Jedis jedis = new Jedis("localhost",6379);
-         * jedis.auth("123456");//设置密码 System.out.println(
-         * "Connection to server sucessfully"); //check whether server is
-         * running or not System.out.println("Server is running: "
+         * Jedis jedis = new Jedis("localhost",6379); jedis.auth("123456");//设置密码
+         * System.out.println( "Connection to server sucessfully"); //check whether
+         * server is running or not System.out.println("Server is running: "
          * +jedis.ping());
          */
         /*
          * JedisPoolConfig jconfig = new JedisPoolConfig();
          * jconfig.setMaxTotal(MAX_ACTIVE); jconfig.setMaxIdle(MAX_IDLE);
-         * jconfig.setMaxWaitMillis(MAX_WAIT);
-         * jconfig.setTestOnBorrow(TEST_ON_BORROW); jedisPool = new
-         * JedisPool(jconfig, ADDR, PORT, TIMEOUT, AUTH);
+         * jconfig.setMaxWaitMillis(MAX_WAIT); jconfig.setTestOnBorrow(TEST_ON_BORROW);
+         * jedisPool = new JedisPool(jconfig, ADDR, PORT, TIMEOUT, AUTH);
          */
         /*
-         * JedisPoolConfig config = new JedisPoolConfig();
-         * config.setMaxTotal(200); config.setMaxIdle(50);
-         * config.setMinIdle(8);//设置最小空闲数 config.setMaxWaitMillis(10000);
-         * config.setTestOnBorrow(true); config.setTestOnReturn(true);
-         * //Idle时进行连接扫描 config.setTestWhileIdle(true); //表示idle object
-         * evitor两次扫描之间要sleep的毫秒数
+         * JedisPoolConfig config = new JedisPoolConfig(); config.setMaxTotal(200);
+         * config.setMaxIdle(50); config.setMinIdle(8);//设置最小空闲数
+         * config.setMaxWaitMillis(10000); config.setTestOnBorrow(true);
+         * config.setTestOnReturn(true); //Idle时进行连接扫描 config.setTestWhileIdle(true);
+         * //表示idle object evitor两次扫描之间要sleep的毫秒数
          * config.setTimeBetweenEvictionRunsMillis(30000); //表示idle object
          * evitor每次扫描的最多的对象数 config.setNumTestsPerEvictionRun(10);
          * //表示一个对象至少停留在idle状态的最短时间，然后才能被idle object
          * evitor扫描并驱逐；这一项只有在timeBetweenEvictionRunsMillis大于0时才有意义
          * config.setMinEvictableIdleTimeMillis(60000); jedisPool = new
-         * JedisPool(config, "127.0.0.1", 6379, TIMEOUT, "123456");
-         * log.info("连接到redis:" +ADDR); Jedis redis = jedisPool.getResource();
+         * JedisPool(config, "127.0.0.1", 6379, TIMEOUT, "123456"); log.info("连接到redis:"
+         * +ADDR); Jedis redis = jedisPool.getResource();
          * System.out.println(redis.clientList());
          */
     }
