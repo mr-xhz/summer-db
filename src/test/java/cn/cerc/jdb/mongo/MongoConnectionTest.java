@@ -1,6 +1,7 @@
 package cn.cerc.jdb.mongo;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.mongodb.client.MongoDatabase;
@@ -34,6 +35,7 @@ public class MongoConnectionTest {
     }
 
     @Test
+    @Ignore
     public void test() {
         conn.init();
         MongoSession sess = conn.getSession();
