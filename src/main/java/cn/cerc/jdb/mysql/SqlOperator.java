@@ -1,5 +1,6 @@
 package cn.cerc.jdb.mysql;
 
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -72,7 +73,7 @@ public class SqlOperator implements IDataOperator {
             int result = ps.executeUpdate();
 
             if (primaryKeys.contains(CONST_UID)) {
-                int uidvalue = findAutoUid(conn);
+                BigInteger uidvalue = findAutoUid(conn);
                 log.debug("自增列uid value：" + uidvalue);
                 record.setField(CONST_UID, uidvalue);
             }
@@ -222,8 +223,8 @@ public class SqlOperator implements IDataOperator {
         }
     }
 
-    private int findAutoUid(Connection conn) {
-        Integer result = null;
+    private BigInteger findAutoUid(Connection conn) {
+        BigInteger result = null;
         String sql = "SELECT LAST_INSERT_ID() ";
         Statement stmt = null;
         ResultSet rs = null;
@@ -231,7 +232,11 @@ public class SqlOperator implements IDataOperator {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             if (rs.next()) {
-                result = rs.getInt(1);
+                Object obj = rs.getObject(1);
+                if (obj instanceof BigInteger)
+                    result = (BigInteger) obj;
+                else
+                    result = BigInteger.valueOf(rs.getInt(1));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -257,7 +262,7 @@ public class SqlOperator implements IDataOperator {
         if (result == null) {
             throw new RuntimeException("未获取UID");
         }
-        return result.intValue();
+        return result;
     }
 
     private String getKeyByDB(Connection conn, String tableName) throws SQLException {
