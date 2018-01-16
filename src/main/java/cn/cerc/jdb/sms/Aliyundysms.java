@@ -90,16 +90,15 @@ public class Aliyundysms {
 
             SendSmsResponse response = acsClient.getAcsResponse(request);
             this.message = response.getMessage();
-
             log.info("短信接口返回的数据----------------");
             log.info("Code=" + response.getCode());
             log.info("Message=" + response.getMessage());
             log.info("RequestId=" + response.getRequestId());
             log.info("BizId=" + response.getBizId());
         } catch (ServerException e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
         } catch (ClientException e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
         }
         return true;
     }
