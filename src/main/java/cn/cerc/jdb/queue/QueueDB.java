@@ -29,12 +29,6 @@ public class QueueDB {
     /** 资料同步 测试队列 **/
     public static final String MATERIAL_TEST = "material-test";
 
-    /** 网单代发 **/
-    public static final String TRADEMALL = "trademall";
-
-    /** 网单代发 测试队列 **/
-    public static final String TRADEMALL_TEST = "trademall-test";
-
     /** 测试队列 **/
     public static final String TEST = "test";
 
