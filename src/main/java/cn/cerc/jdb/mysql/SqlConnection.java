@@ -47,7 +47,7 @@ public class SqlConnection implements IConnection {
             try {
                 host = config.getProperty(SqlSession.rds_site, "127.0.0.1:3306");
                 db = config.getProperty(SqlSession.rds_database, "appdb");
-                url = String.format("jdbc:mysql://%s/%s", host, db);
+                url = String.format("jdbc:mysql://%s/%s?useSSL=false", host, db);
                 user = config.getProperty(SqlSession.rds_username, "appdb_user");
                 pwd = config.getProperty(SqlSession.rds_password, "appdb_password");
                 Class.forName("com.mysql.jdbc.Driver");
