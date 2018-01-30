@@ -82,6 +82,10 @@ public class CacheQuery implements IRecord {
         record.getFieldDefs().clear();
     }
 
+    public boolean hasValue(String field) {
+        return !isNull() && getString(field) != null && !"".equals(getString(field)) && !"{}".equals(getString(field));
+    }
+
     public int getExpires() {
         return expires;
     }
@@ -129,6 +133,10 @@ public class CacheQuery implements IRecord {
         this.modified = true;
         record.setField(field, value);
         return this;
+    }
+
+    public void setNull(String field) {
+        setField(field, null);
     }
 
     @Override
