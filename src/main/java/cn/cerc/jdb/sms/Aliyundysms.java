@@ -45,7 +45,7 @@ public class Aliyundysms {
         this.accessSecret = conf.getProperty(aliyun_accessSecret);
     }
 
-    public boolean send(String corpNo, String templateParam) {
+    public boolean send(String outId, String templateParam) {
         // 设置超时时间
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
         System.setProperty("sun.net.client.defaultReadTimeout", "10000");
@@ -86,7 +86,7 @@ public class Aliyundysms {
             request.setPhoneNumbers(phoneNumbers);
             request.setTemplateCode(templateCode);
             request.setTemplateParam(templateParam);
-            request.setOutId(corpNo);
+            request.setOutId(outId);
 
             SendSmsResponse response = acsClient.getAcsResponse(request);
             this.message = response.getMessage();
