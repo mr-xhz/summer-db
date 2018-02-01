@@ -328,4 +328,19 @@ public class utils {
         return items;
     }
 
+    /**
+     * 混淆字符串指定位置
+     */
+    public static String confused(String mobile, int fromLength, int endLength) {
+        int length = mobile.length();
+        if (length < (fromLength + endLength)) {
+            throw new RuntimeException("字符串长度不符合要求");
+        }
+        int len = mobile.length() - fromLength - endLength;
+        String star = "";
+        for (int i = 0; i < len; i++) {
+            star += "*";
+        }
+        return mobile.substring(0, fromLength) + star + mobile.substring(mobile.length() - endLength);
+    }
 }
