@@ -1,5 +1,6 @@
 package cn.cerc.jdb.cache;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import org.apache.log4j.Logger;
@@ -172,5 +173,10 @@ public class CacheQuery implements IRecord {
     @Override
     public BigInteger getBigInteger(String field) {
         return record.getBigInteger(field);
+    }
+
+    @Override
+    public BigDecimal getBigDecimal(String field) {
+        return record.getBigDecimal(field);
     }
 }
