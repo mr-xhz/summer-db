@@ -18,7 +18,7 @@ import cn.cerc.jdb.core.Record;
 
 public class SqlOperator implements IDataOperator {
     private static final Logger log = Logger.getLogger(SqlOperator.class);
-    private final String CONST_UID = "UID_";
+    private String primaryKey = "UID_";
     private Connection conn;
     private String tableName;
     private String lastCommand;
@@ -43,7 +43,7 @@ public class SqlOperator implements IDataOperator {
             bs.append("insert into ").append(tableName).append(" (");
             int i = 0;
             for (String field : record.getItems().keySet()) {
-                if (!CONST_UID.equals(field)) {
+                if (!primaryKey.equals(field)) {
                     i++;
                     if (i > 1)
                         bs.append(",");
@@ -53,7 +53,7 @@ public class SqlOperator implements IDataOperator {
             bs.append(") values (");
             i = 0;
             for (String field : record.getItems().keySet()) {
-                if (!CONST_UID.equals(field)) {
+                if (!primaryKey.equals(field)) {
                     i++;
                     if (i == 1)
                         bs.append("?", record.getField(field));
@@ -73,10 +73,10 @@ public class SqlOperator implements IDataOperator {
 
             int result = ps.executeUpdate();
 
-            if (primaryKeys.contains(CONST_UID)) {
+            if (primaryKeys.contains(primaryKey)) {
                 BigInteger uidvalue = findAutoUid(conn);
                 log.debug("自增列uid value：" + uidvalue);
-                record.setField(CONST_UID, uidvalue);
+                record.setField(primaryKey, uidvalue);
             }
 
             return result > 0;
@@ -100,13 +100,13 @@ public class SqlOperator implements IDataOperator {
                 initPrimaryKeys(record);
             if (primaryKeys.size() == 0)
                 throw new RuntimeException("primary keys not exists");
-            if (!primaryKeys.contains(CONST_UID))
-                log.warn(String.format("not find primary key %s in %s", CONST_UID, this.tableName));
+            if (!primaryKeys.contains(primaryKey))
+                log.warn(String.format("not find primary key %s in %s", primaryKey, this.tableName));
             bs.append("update ").append(tableName);
             // 加入set条件
             int i = 0;
             for (String field : delta.keySet()) {
-                if (!CONST_UID.equals(field)) {
+                if (!primaryKey.equals(field)) {
                     i++;
                     bs.append(i == 1 ? " set " : ",");
                     bs.append(field);
@@ -172,8 +172,8 @@ public class SqlOperator implements IDataOperator {
                 initPrimaryKeys(record);
             if (primaryKeys.size() == 0)
                 throw new RuntimeException("primary keys  not exists");
-            if (!primaryKeys.contains(CONST_UID))
-                log.warn(String.format("not find primary key %s in %s", CONST_UID, this.tableName));
+            if (!primaryKeys.contains(primaryKey))
+                log.warn(String.format("not find primary key %s in %s", primaryKey, this.tableName));
 
             bs.append("delete from ").append(tableName);
             int i = 0;
@@ -204,10 +204,10 @@ public class SqlOperator implements IDataOperator {
 
     private void initPrimaryKeys(Record record) throws SQLException {
         for (String key : record.getFieldDefs().getFields()) {
-            if (CONST_UID.equalsIgnoreCase(key)) {
-                if (!CONST_UID.equals(key))
-                    throw new RuntimeException(String.format("%s <> %s", CONST_UID, key));
-                primaryKeys.add(CONST_UID);
+            if (primaryKey.equalsIgnoreCase(key)) {
+                if (!primaryKey.equals(key))
+                    throw new RuntimeException(String.format("%s <> %s", primaryKey, key));
+                primaryKeys.add(primaryKey);
                 break;
             }
         }
@@ -216,9 +216,9 @@ public class SqlOperator implements IDataOperator {
             if (pks.length == 0)
                 throw new RuntimeException("获取不到主键PK");
             for (String pk : pks) {
-                if (CONST_UID.equalsIgnoreCase(pk)) {
-                    if (!CONST_UID.equals(pk))
-                        throw new RuntimeException(String.format("%s <> %s", CONST_UID, pk));
+                if (primaryKey.equalsIgnoreCase(pk)) {
+                    if (!primaryKey.equals(pk))
+                        throw new RuntimeException(String.format("%s <> %s", primaryKey, pk));
                     primaryKeys.add(pk);
                     break;
                 }
@@ -339,5 +339,13 @@ public class SqlOperator implements IDataOperator {
 
     public void setUpdateMode(UpdateMode updateMode) {
         this.updateMode = updateMode;
+    }
+
+    public String getPrimaryKey() {
+        return primaryKey;
+    }
+
+    public void setPrimaryKey(String primaryKey) {
+        this.primaryKey = primaryKey;
     }
 }
