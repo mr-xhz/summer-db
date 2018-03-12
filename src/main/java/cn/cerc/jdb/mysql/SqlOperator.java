@@ -24,6 +24,7 @@ public class SqlOperator implements IDataOperator {
     private String lastCommand;
     private boolean preview = false;
     private List<String> primaryKeys = new ArrayList<>();
+    private UpdateMode updateMode = UpdateMode.strict;
 
     public SqlOperator(IHandle handle) {
         SqlSession cn = (SqlSession) handle.getProperty(SqlSession.sessionId);
@@ -129,15 +130,17 @@ public class SqlOperator implements IDataOperator {
             }
             if (pkCount == 0)
                 throw new RuntimeException("primary keys value not exists");
-            for (String field : delta.keySet()) {
-                if (!primaryKeys.contains(field)) {
-                    i++;
-                    bs.append(i == 1 ? " where " : " and ").append(field);
-                    Object value = delta.get(field);
-                    if (value != null) {
-                        bs.append("=?", value);
-                    } else
-                        bs.append(" is null ");
+            if (updateMode == UpdateMode.strict) {
+                for (String field : delta.keySet()) {
+                    if (!primaryKeys.contains(field)) {
+                        i++;
+                        bs.append(i == 1 ? " where " : " and ").append(field);
+                        Object value = delta.get(field);
+                        if (value != null) {
+                            bs.append("=?", value);
+                        } else
+                            bs.append(" is null ");
+                    }
                 }
             }
 
@@ -328,5 +331,13 @@ public class SqlOperator implements IDataOperator {
             throw new RuntimeException("SQL语句异常");
 
         return result;
+    }
+
+    public UpdateMode getUpdateMode() {
+        return updateMode;
+    }
+
+    public void setUpdateMode(UpdateMode updateMode) {
+        this.updateMode = updateMode;
     }
 }
