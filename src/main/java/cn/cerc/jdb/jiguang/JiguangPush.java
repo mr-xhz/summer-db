@@ -46,6 +46,10 @@ public class JiguangPush {
         send(ClientType.IOS, null);
     }
 
+    public void send(ClientType clientType, String clientId) {
+        this.send(clientType, clientId, "default");
+    }
+
     /**
      * 发送给指定设备
      * 
@@ -53,11 +57,14 @@ public class JiguangPush {
      *            设备类型
      * @param clientId
      *            设备id
+     * @param sound
+     *            声音类型
      */
-    public void send(ClientType clientType, String clientId) {
+    public void send(ClientType clientType, String clientId, String sound) {
         if (msgId == null)
             throw new RuntimeException("msgId is null");
         addParam("msgId", msgId);
+        addParam("sound", sound);
 
         Builder builder = PushPayload.newBuilder();
 
@@ -75,8 +82,9 @@ public class JiguangPush {
         } else if (clientType == ClientType.IOS) {
             builder.setPlatform(Platform.ios());
             // builder.setNotification(Notification.ios(message, params));
-            builder.setNotification(Notification.newBuilder().addPlatformNotification(
-                    IosNotification.newBuilder().setAlert(message).addExtras(params).setSound("default").build())
+            builder.setNotification(Notification.newBuilder()
+                    .addPlatformNotification(
+                            IosNotification.newBuilder().setAlert(message).addExtras(params).setSound(sound).build())
                     .build());
             // 设置为生产环境
             builder.setOptions(Options.newBuilder().setApnsProduction(true).build()).build();
