@@ -14,6 +14,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Transient;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
@@ -342,5 +343,21 @@ public class utils {
             star += "*";
         }
         return mobile.substring(0, fromLength) + star + mobile.substring(mobile.length() - endLength);
+    }
+
+    /**
+     * 从 request 获得远程访问者的IP地址
+     */
+    public static String getRemoteAddr(HttpServletRequest request) {
+        if (request == null) {
+            log.warn("handle 不存在 request 对象");
+            return "127.0.0.1";
+        }
+
+        String ip = request.getHeader("x-forwarded-for");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        return ip.split(",")[0];
     }
 }
