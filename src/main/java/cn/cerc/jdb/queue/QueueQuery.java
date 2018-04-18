@@ -72,6 +72,26 @@ public class QueueQuery extends DataQuery {
         return true;
     }
 
+    /**
+     * 创建消息队列
+     * 
+     * @param queueCode
+     *            队列代码
+     * @return 返回创建的队列
+     */
+    public CloudQueue create(String queueCode) {
+        return sess.createQueue(queueCode);
+    }
+
+    /**
+     * 判断消息队列是否存在
+     * 
+     * @return
+     */
+    public boolean isExistQueue() {
+        return queue.isQueueExist();
+    }
+
     @Override
     public QueueOperator getOperator() {
         if (operator == null)
