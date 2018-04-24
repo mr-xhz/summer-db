@@ -15,17 +15,17 @@ public class MicroService extends Curl {
     /** 返回消息 */
     private String message;
     /** 返回内容转为gson */
-    private JsonObject data;
+    private JsonObject response;
 
     /** 执行指定的服务 */
     public boolean get(String serviceCode) {
         String url = getServiceUrl(serviceCode);
         String text = this.doGet(url);
-        this.data = new JsonParser().parse(text).getAsJsonObject();
-        if (data.has("result"))
-            this.result = data.get("result").getAsBoolean();
-        if (data.has("message"))
-            this.message = data.get("message").getAsString();
+        this.response = new JsonParser().parse(text).getAsJsonObject();
+        if (response.has("result"))
+            this.result = response.get("result").getAsBoolean();
+        if (response.has("message"))
+            this.message = response.get("message").getAsString();
         return this.result;
     }
 
@@ -33,11 +33,11 @@ public class MicroService extends Curl {
     public boolean post(String serviceCode) {
         String url = getServiceUrl(serviceCode);
         String text = this.doPost(url);
-        this.data = new JsonParser().parse(text).getAsJsonObject();
-        if (data.has("result"))
-            this.result = data.get("result").getAsBoolean();
-        if (data.has("message"))
-            this.message = data.get("message").getAsString();
+        this.response = new JsonParser().parse(text).getAsJsonObject();
+        if (response.has("result"))
+            this.result = response.get("result").getAsBoolean();
+        if (response.has("message"))
+            this.message = response.get("message").getAsString();
         return this.result;
     }
 
@@ -60,8 +60,8 @@ public class MicroService extends Curl {
         return result;
     }
 
-    public JsonObject getData() {
-        return data;
+    public JsonObject getResponse() {
+        return response;
     }
 
     public String getHost() {
@@ -96,6 +96,6 @@ public class MicroService extends Curl {
         System.out.println(service.isResult());
         System.out.println(service.getMessage());
         System.out.println(service.getResponseContent());
-        System.out.println(service.getData().toString());
+        System.out.println(service.getResponse());
     }
 }
