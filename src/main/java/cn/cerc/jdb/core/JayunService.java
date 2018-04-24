@@ -16,6 +16,6 @@ public class JayunService extends MicroService {
         System.out.println(service.isResult());
         System.out.println(service.getMessage());
         System.out.println(service.getResponseContent());
-        System.out.println(service.getData());
+        System.out.println(service.getResponse());
     }
 }
