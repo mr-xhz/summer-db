@@ -14,6 +14,7 @@ import com.aliyuncs.profile.IClientProfile;
 
 import cn.cerc.jdb.core.IConfig;
 
+@Deprecated // 改使用聚安服务
 public class Aliyundysms {
     // 常量设置
     private static final Logger log = Logger.getLogger(Aliyundysms.class);
