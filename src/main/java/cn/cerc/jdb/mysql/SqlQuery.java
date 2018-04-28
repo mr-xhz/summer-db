@@ -22,7 +22,7 @@ public class SqlQuery extends DataQuery {
     private static final Logger log = Logger.getLogger(SqlQuery.class);
 
     private static final long serialVersionUID = 7316772894058168187L;
-    private SqlSession connection;
+    private SqlSession session;
     // private boolean closeMax = false;
     private int offset = 0;
     private int maximum = BigdataException.MAX_RECORDS;
@@ -42,14 +42,14 @@ public class SqlQuery extends DataQuery {
 
     public SqlQuery(IHandle handle) {
         super(handle);
-        this.connection = (SqlSession) handle.getProperty(SqlSession.sessionId);
+        this.session = (SqlSession) handle.getProperty(SqlSession.sessionId);
     }
 
     @Override
     public DataQuery open() {
-        if (connection == null)
+        if (session == null)
             throw new RuntimeException("SqlConnection is null");
-        Connection conn = connection.getConnection();
+        Connection conn = session.getConnection();
         if (conn == null)
             throw new RuntimeException("Connection is null");
         String sql = getSelectCommand();
@@ -80,9 +80,9 @@ public class SqlQuery extends DataQuery {
             this.open();
             return this.size();
         }
-        if (connection == null)
-            throw new RuntimeException("SqlConnection is null");
-        Connection conn = connection.getConnection();
+        if (session == null)
+            throw new RuntimeException("SqlSession is null");
+        Connection conn = session.getConnection();
         if (conn == null)
             throw new RuntimeException("Connection is null");
         try {
