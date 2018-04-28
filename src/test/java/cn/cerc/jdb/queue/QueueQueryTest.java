@@ -1,16 +1,17 @@
 package cn.cerc.jdb.queue;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cn.cerc.jdb.core.StubHandle;
 import cn.cerc.jdb.mongo.MongoSession;
 
 public class QueueQueryTest {
-    private static final Logger log = Logger.getLogger(MongoSession.class);
+    private static final Logger log = LoggerFactory.getLogger(MongoSession.class);
 
     private static QueueQuery dataSet;
     private static StubHandle handle;
@@ -70,16 +71,8 @@ public class QueueQueryTest {
 
         // 获取消息中DataSet的head内容
         log.info(StringUtils.center("heand data", 70, "=="));
-        log.info(dataSet.getHead().getField("queueHeadData1"));
-        log.info(dataSet.getHead().getField("queueHeadData2"));
-        log.info(dataSet.getHead().getField("queueHeadData3"));
-        log.info(dataSet.getHead().getField("queueHeadData4"));
 
         log.info(StringUtils.center("body data", 70, "=="));
-        log.info(dataSet.getField("queueBodyData1"));
-        log.info(dataSet.getField("queueBodyData2"));
-        log.info(dataSet.getField("queueBodyData3"));
-        log.info(dataSet.getField("queueBodyData4"));
 
         dataSet.remove();
     }

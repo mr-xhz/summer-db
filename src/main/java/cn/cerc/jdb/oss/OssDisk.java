@@ -3,7 +3,8 @@ package cn.cerc.jdb.oss;
 import java.io.File;
 import java.io.InputStream;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSException;
@@ -13,7 +14,7 @@ import com.aliyun.oss.model.ObjectMetadata;
 import cn.cerc.jdb.core.IHandle;
 
 public class OssDisk {
-    private static final Logger log = Logger.getLogger(OssDisk.class);
+    private static final Logger log = LoggerFactory.getLogger(OssDisk.class);
     private OssSession session;
     private OSSClient client;
     private String localPath;

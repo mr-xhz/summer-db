@@ -1,6 +1,7 @@
 package cn.cerc.jdb.redis;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cn.cerc.jdb.core.IConfig;
 import cn.cerc.jdb.core.IConnection;
@@ -9,7 +10,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 public class RedisConnection implements IConnection {
-    private static final Logger log = Logger.getLogger(RedisConnection.class);
+    private static final Logger log = LoggerFactory.getLogger(RedisConnection.class);
     // Redis服务器IP
     private static String ADDR = "127.0.0.1";
     // Redis的端口号
