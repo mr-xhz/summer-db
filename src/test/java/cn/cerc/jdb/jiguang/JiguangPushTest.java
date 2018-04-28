@@ -7,6 +7,7 @@ import cn.cerc.jdb.core.StubHandle;
 
 public class JiguangPushTest {
     private StubHandle handle;
+    private static final String sound = "trade_mall.wav";
 
     @Before
     public void setUp() throws Exception {
@@ -30,6 +31,7 @@ public class JiguangPushTest {
         // 发送给指定的设备Id
         push.send(ClientType.Android, "n_868568025516789");// ly-Android
         push.send(ClientType.IOS, "i_77598CF689994EE3B110D6B20F1368B7");// HuangRongjun-iPhone
+        push.send(ClientType.IOS, "i_77598CF689994EE3B110D6B20F1368B7", sound);// HuangRongjun-iPhone
 
         // 发送给指定的设备类型
         // push.send(ClientType.IOS, null);
