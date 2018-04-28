@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cn.cerc.jdb.core.IHandle;
 import redis.clients.jedis.Jedis;
@@ -17,7 +18,7 @@ import redis.clients.jedis.exceptions.JedisConnectionException;
  * 该类主要是做 redis 链接测试 以及所有的数据查询新增
  */
 public class RedisTool {
-    private static final Logger log = Logger.getLogger(RedisTool.class);
+    private static final Logger log = LoggerFactory.getLogger(RedisTool.class);
 
     public static RedisSession sess;
     public static JedisPool jedisPool;
