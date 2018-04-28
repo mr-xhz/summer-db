@@ -18,6 +18,7 @@ public class DaoHandle implements IHandle {
     DataSource dataSource;
     private String corpNo = "master";
     private String userCode = "admin";
+    private String userName = "admin";
     private Map<String, Object> items = new HashMap<>();
     private SqlSession session;
 
@@ -44,7 +45,7 @@ public class DaoHandle implements IHandle {
 
     @Override
     public String getUserName() {
-        return this.userCode;
+        return this.userName;
     }
 
     @Override
@@ -81,5 +82,17 @@ public class DaoHandle implements IHandle {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setCorpNo(String corpNo) {
+        this.corpNo = corpNo;
+    }
+
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

@@ -4,6 +4,8 @@
     <groupId>cn.cerc</groupId>
     <artifactId>summer-db</artifactId>
     <version>1.4.1</version>
+    <description>提供DataSet及派生类，满足内存表与实体表使用需要</description>
+    <url>https://github.com/cn-cerc/summer-db</url>
     <build>
         <plugins>
             <plugin>
@@ -275,6 +277,4 @@
             </plugin>
         </plugins>
     </reporting>
-    <description>提供DataSet及派生类，满足内存表与实体表使用需要</description>
-    <url>https://github.com/cn-cerc/summer-db</url>
 </project>
