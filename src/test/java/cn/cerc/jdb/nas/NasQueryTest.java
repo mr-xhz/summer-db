@@ -1,14 +1,15 @@
 package cn.cerc.jdb.nas;
 
-import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cn.cerc.jdb.core.StubHandle;
 
 public class NasQueryTest {
 
-    private static final Logger log = Logger.getLogger(NasQueryTest.class);
+    private static final Logger log = LoggerFactory.getLogger(NasQueryTest.class);
     private NasQuery ds;
     private StubHandle handle;
 
@@ -32,7 +33,6 @@ public class NasQueryTest {
         ds.add("select test.txt from %s", "D://testFolder1/testFolder2");
         ds.setNasMode(NasModel.create);
         ds.open();
-        log.info(ds.getActive());
         ds.append();
         ds.setField("key", "一大串字符串................................................");
         ds.save();
@@ -57,7 +57,6 @@ public class NasQueryTest {
         ds.add("select test.txt from %s", "D://testFolder1/testFolder2");
         ds.setNasMode(NasModel.readWrite);
         ds.open();
-        log.info(ds.getActive());
         log.info("获取到的文件内容为:\n" + ds.getField("key"));
         log.info("获取到的文件内容为:\n" + ds.getField("key2"));
     }
@@ -75,7 +74,6 @@ public class NasQueryTest {
          */
         ds.add("select test.txt from %s", "D://testFolder1/testFolder2");
         ds.open();
-        log.info(ds.getActive());
         ds.delete();
     }
 

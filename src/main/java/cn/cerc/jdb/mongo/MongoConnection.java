@@ -1,6 +1,7 @@
 package cn.cerc.jdb.mongo;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -10,7 +11,7 @@ import cn.cerc.jdb.core.IConfig;
 import cn.cerc.jdb.core.IConnection;
 
 public class MongoConnection implements IConnection {
-    private static final Logger log = Logger.getLogger(MongoConnection.class);
+    private static final Logger log = LoggerFactory.getLogger(MongoConnection.class);
     private static MongoClient pool;
     private static String dbname;
     private IConfig config;

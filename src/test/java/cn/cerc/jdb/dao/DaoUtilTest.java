@@ -9,7 +9,7 @@ public class DaoUtilTest {
     @Test
     public void testBuildEntity() {
         StubHandle handle = new StubHandle();
-        String text = DaoUtil.buildEntity(handle, "s_userinfo", "UserInfo");
+        String text = DaoUtil.buildEntity(handle, "t_profitday", "ProfitDay");
         System.out.println(text);
     }
 }

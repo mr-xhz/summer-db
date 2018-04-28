@@ -10,14 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cn.cerc.jdb.core.IDataOperator;
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Record;
 
 public class SqlOperator implements IDataOperator {
-    private static final Logger log = Logger.getLogger(SqlOperator.class);
+    private static final Logger log = LoggerFactory.getLogger(SqlOperator.class);
     private String primaryKey = "UID_";
     private Connection conn;
     private String tableName;

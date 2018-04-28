@@ -13,7 +13,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * HTTP请求代理类
@@ -22,7 +23,7 @@ import org.apache.log4j.Logger;
  * @version 1.0, 2018-1-1
  */
 public class Curl {
-    private static Logger log = Logger.getLogger(Curl.class);
+    private static Logger log = LoggerFactory.getLogger(Curl.class);
     /** 请求编码 */
     private String requestEncoding = "UTF-8";
     /** 返回的内容编码 */

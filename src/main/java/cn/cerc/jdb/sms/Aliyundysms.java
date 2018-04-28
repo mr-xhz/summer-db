@@ -1,6 +1,7 @@
 package cn.cerc.jdb.sms;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
@@ -17,7 +18,7 @@ import cn.cerc.jdb.core.IConfig;
 @Deprecated // 改使用聚安服务
 public class Aliyundysms {
     // 常量设置
-    private static final Logger log = Logger.getLogger(Aliyundysms.class);
+    private static final Logger log = LoggerFactory.getLogger(Aliyundysms.class);
     private static final String product = "Dysmsapi";
     private static final String domain = "dysmsapi.aliyuncs.com";
     public static final String SingName = "dayu.singName";
