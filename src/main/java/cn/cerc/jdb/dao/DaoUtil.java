@@ -157,7 +157,7 @@ public class DaoUtil {
                     // Class<?> clazz = val.getClass();
                     if (val instanceof Integer)
                         sb.append("int");
-                    if (val instanceof BigInteger)
+                    else if (val instanceof BigInteger)
                         sb.append("long");
                     else if (val instanceof Boolean)
                         sb.append("boolean");
