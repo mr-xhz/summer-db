@@ -30,9 +30,9 @@ public class CacheQuery implements IRecord {
 
     public CacheQuery setKey(String key) {
         if (this.key != null)
-            throw new RuntimeException("[MemoryBuffer]错误的初始化参数！");
+            throw new RuntimeException("[CacheQuery]错误的初始化参数！");
         if (key == null)
-            throw new RuntimeException("[MemoryBuffer]错误的初始化参数！");
+            throw new RuntimeException("[CacheQuery]错误的初始化参数！");
         this.key = key;
 
         connected = true;
