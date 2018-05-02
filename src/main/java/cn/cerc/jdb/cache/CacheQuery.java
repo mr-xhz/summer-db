@@ -3,7 +3,8 @@ package cn.cerc.jdb.cache;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cn.cerc.jdb.core.IRecord;
 import cn.cerc.jdb.core.Record;
@@ -11,7 +12,7 @@ import cn.cerc.jdb.core.TDate;
 import cn.cerc.jdb.core.TDateTime;
 
 public class CacheQuery implements IRecord {
-    private static final Logger log = Logger.getLogger(CacheQuery.class);
+    private static final Logger log = LoggerFactory.getLogger(CacheQuery.class);
 
     private String key;
     private boolean existsData = false;
@@ -30,9 +31,9 @@ public class CacheQuery implements IRecord {
 
     public CacheQuery setKey(String key) {
         if (this.key != null)
-            throw new RuntimeException("[MemoryBuffer]错误的初始化参数！");
+            throw new RuntimeException("[CacheQuery]错误的初始化参数！");
         if (key == null)
-            throw new RuntimeException("[MemoryBuffer]错误的初始化参数！");
+            throw new RuntimeException("[CacheQuery]错误的初始化参数！");
         this.key = key;
 
         connected = true;

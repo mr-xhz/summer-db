@@ -3,7 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>cn.cerc</groupId>
     <artifactId>summer-db</artifactId>
-    <version>1.4.0</version>
+    <version>1.4.1</version>
+    <description>提供DataSet及派生类，满足内存表与实体表使用需要</description>
+    <url>https://github.com/cn-cerc/summer-db</url>
+    <properties>
+        <mysql-connector-java.version>5.1.38</mysql-connector-java.version>
+        <org.springframework.version>4.2.6.RELEASE</org.springframework.version>
+        <org.slf4j.version>1.7.25</org.slf4j.version>
+    </properties>
     <build>
         <plugins>
             <plugin>
@@ -97,13 +104,6 @@
         <!-- 测试源码编译后的 class 文件的路径配置 -->
         <testOutputDirectory>target/test-classes</testOutputDirectory>
     </build>
-    <properties>
-        <mysql-connector-java.version>5.1.38</mysql-connector-java.version>
-        <org.hibernate.version>4.3.5.Final</org.hibernate.version>
-        <org.springframework.version>4.2.6.RELEASE</org.springframework.version>
-        <quartz.version>2.2.1</quartz.version>
-        <cn.cerc.summer.version>1.4.0</cn.cerc.summer.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -126,7 +126,7 @@
         <dependency>
             <groupId>cn.cerc</groupId>
             <artifactId>summer-core</artifactId>
-            <version>${cn.cerc.summer.version}</version>
+            <version>1.4.1</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -144,12 +144,6 @@
             <groupId>commons-pool</groupId>
             <artifactId>commons-pool</artifactId>
             <version>1.5.6</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -205,6 +199,12 @@
             <artifactId>aliyun-sdk-mns</artifactId>
             <version>1.1.8</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.aliyun.oss</groupId>
@@ -216,6 +216,12 @@
             <groupId>cn.jpush.api</groupId>
             <artifactId>jpush-client</artifactId>
             <version>3.3.4</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- redis -->
         <dependency>
@@ -223,12 +229,32 @@
             <artifactId>jedis</artifactId>
             <version>2.9.0</version>
         </dependency>
-        <!-- <dependency> -->
-        <!-- <groupId>org.codehaus.plexus</groupId> -->
-        <!-- <artifactId>plexus-interpolation</artifactId> -->
-        <!-- <version>1.14</version> -->
-        <!-- <scope>provided</scope> -->
-        <!-- </dependency> -->
+        <!-- spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${org.springframework.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${org.springframework.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${org.springframework.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${org.slf4j.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>
@@ -263,6 +289,4 @@
             </plugin>
         </plugins>
     </reporting>
-    <description>提供DataSet及派生类，满足内存表与实体表使用需要</description>
-    <url>https://github.com/cn-cerc/summer-db</url>
 </project>

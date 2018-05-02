@@ -1,6 +1,7 @@
 package cn.cerc.jdb.queue;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.aliyun.mns.client.CloudQueue;
 import com.aliyun.mns.client.MNSClient;
@@ -10,7 +11,7 @@ import com.aliyun.mns.model.QueueMeta;
 import cn.cerc.jdb.core.ISession;
 
 public class QueueSession implements ISession {
-    private static final Logger log = Logger.getLogger(QueueSession.class);
+    private static final Logger log = LoggerFactory.getLogger(QueueSession.class);
 
     public static final String AccessKeyId = "mns.accesskeyid";
     public static final String AccessKeySecret = "mns.accesskeysecret";

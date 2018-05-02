@@ -1,6 +1,7 @@
 package cn.cerc.jdb.queue;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.aliyun.mns.client.CloudQueue;
 import com.aliyun.mns.model.Message;
@@ -10,7 +11,7 @@ import cn.cerc.jdb.core.DataQuery;
 import cn.cerc.jdb.core.IHandle;
 
 public class QueueQuery extends DataQuery {
-    private static final Logger log = Logger.getLogger(QueueQuery.class);
+    private static final Logger log = LoggerFactory.getLogger(QueueQuery.class);
     private static final long serialVersionUID = 7781788221337787366L;
     private QueueOperator operator;
     private String queueCode;

@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
 import org.bson.Document;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
@@ -16,7 +17,7 @@ import cn.cerc.jdb.core.StubHandle;
 
 public class MongoUtilsTest {
 
-    private static final Logger log = Logger.getLogger(MongoUtilsTest.class);
+    private static final Logger log = LoggerFactory.getLogger(MongoUtilsTest.class);
 
     private static MongoUtils utils;
 
@@ -185,8 +186,6 @@ public class MongoUtilsTest {
         BasicDBObject projection = new BasicDBObject("batch-name", 1);
         projection.put("_id", 0);
         Document res = utils.findOneDocument(coll, projection, filter);
-        log.info(res);
-
     }
 
     // create test data
