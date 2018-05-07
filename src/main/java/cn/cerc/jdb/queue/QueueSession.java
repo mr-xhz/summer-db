@@ -62,9 +62,16 @@ public class QueueSession implements ISession {
      */
     public CloudQueue createQueue(String queueCode) {
         QueueMeta meta = new QueueMeta();
+        // 设置队列的名字
         meta.setQueueName(queueCode);
-        meta.setPollingWaitSeconds(15);
-        meta.setMaxMessageSize(2048L);
+        // 设置队列消息的长轮询等待时间，0为关闭长轮询
+        meta.setPollingWaitSeconds(0);
+        // 设置队列消息的最大长度，单位是byte
+        meta.setMaxMessageSize(65356L);
+        // 设置队列消息的最大长度，单位是byte
+        meta.setMessageRetentionPeriod(72000L);
+        // 设置队列消息的不可见时间，即取出消息隐藏时长，单位是秒
+        meta.setVisibilityTimeout(180L);
         return client.createQueue(meta);
     }
 
