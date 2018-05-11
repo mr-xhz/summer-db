@@ -11,12 +11,16 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.mysql.SqlQuery;
 
 public class DaoUtil {
+    private static final Logger log = LoggerFactory.getLogger(DaoUtil.class);
     private static int PUBLIC = 1;
     private static int PRIVATE = 2;
     private static int PROTECTED = 4;
@@ -61,8 +65,12 @@ public class DaoUtil {
                     }
                 }
             }
-            if (record.getFieldDefs().size() != items.size())
-                throw new RuntimeException("field[].size != property[].size");
+            if (record.getFieldDefs().size() != items.size()) {
+                if (record.getFieldDefs().size() > items.size())
+                    log.warn("field[].size > property[].size");
+                else
+                    throw new RuntimeException("field[].size < property[].size");
+            }
             // 查找并赋值
             for (String fieldName : record.getFieldDefs().getFields()) {
                 boolean exists = false;
@@ -98,7 +106,7 @@ public class DaoUtil {
                     }
                 }
                 if (!exists)
-                    throw new RuntimeException("property not find: " + fieldName);
+                    log.warn("property not find: " + fieldName);
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
