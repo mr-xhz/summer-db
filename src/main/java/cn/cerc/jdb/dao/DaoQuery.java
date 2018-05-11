@@ -16,6 +16,8 @@ public class DaoQuery<T> extends SqlQuery {
 
     /** 将对象追加到数据表中 */
     public void append(T item) {
+        if (item instanceof DaoEvent)
+            ((DaoEvent) item).beforePost();
         this.append();
         DaoUtil.copy(item, this.getCurrent());
         this.post();
@@ -23,6 +25,8 @@ public class DaoQuery<T> extends SqlQuery {
 
     /** 与read函数配套，将对象内容保存到数据库中 */
     public void save(T item) {
+        if (item instanceof DaoEvent)
+            ((DaoEvent) item).beforePost();
         this.edit();
         DaoUtil.copy(item, this.getCurrent());
         this.post();
