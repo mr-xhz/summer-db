@@ -146,6 +146,8 @@ public class DaoUtil {
         StringBuffer sb = new StringBuffer();
         sb.append(String.format("@Entity(name = \"%s\")", tableName)).append("\r\n");
         sb.append("public class " + className + "{").append("\r\n");
+        sb.append("\r\n");
+
         SqlQuery ds = new SqlQuery(handle);
         ds.add("select * from " + tableName);
         ds.setMaximum(1);
@@ -202,6 +204,7 @@ public class DaoUtil {
             sb.append(";");
             if (remark != null)
                 sb.append("//").append(remark);
+            sb.append("\r\n");
             sb.append("\r\n");
         }
         sb.append("}");
