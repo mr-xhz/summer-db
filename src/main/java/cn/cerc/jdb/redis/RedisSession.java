@@ -4,6 +4,7 @@ import cn.cerc.jdb.core.ISession;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+@Deprecated
 public class RedisSession implements ISession {
     public static final String redis_site = "redis.site";
     public static final String redis_port = "redis.port";

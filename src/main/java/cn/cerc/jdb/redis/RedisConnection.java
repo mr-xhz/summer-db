@@ -9,6 +9,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+@Deprecated
 public class RedisConnection implements IConnection {
     private static final Logger log = LoggerFactory.getLogger(RedisConnection.class);
     // Redis服务器IP
