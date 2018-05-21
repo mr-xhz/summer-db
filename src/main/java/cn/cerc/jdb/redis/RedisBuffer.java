@@ -235,6 +235,7 @@ public class RedisBuffer {
         try {
             set(key, serializeToString(obj));
         } catch (IOException e) {
+            e.printStackTrace();
             log.error(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
