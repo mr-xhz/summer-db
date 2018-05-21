@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import cn.cerc.jdb.core.IConfig;
 
 public class LocalConfig implements IConfig {
-    private static final Logger log = LoggerFactory.getLogger(ServerConfig.class);
+    private static final Logger log = LoggerFactory.getLogger(LocalConfig.class);
     private static Properties properties = new Properties();
     private static LocalConfig instance;
 
