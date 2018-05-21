@@ -1,10 +1,6 @@
 package cn.cerc.jdb.redis;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.cerc.jdb.core.ServerConfig;
+import cn.cerc.jdb.core.Utils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -233,7 +230,7 @@ public class RedisBuffer {
 
     public void setObject(String key, Object obj) {
         try {
-            set(key, serializeToString(obj));
+            set(key, Utils.serializeToString(obj));
         } catch (IOException e) {
             e.printStackTrace();
             log.error(e.getMessage());
@@ -244,7 +241,7 @@ public class RedisBuffer {
     public Object getObject(String key) {
         String str = get(key);
         try {
-            return str == null ? null : deserializeToObject(str);
+            return str == null ? null : Utils.deserializeToObject(str);
         } catch (ClassNotFoundException | IOException e) {
             log.error(e.getMessage());
             return null;
@@ -357,21 +354,6 @@ public class RedisBuffer {
                 return jedis.brpop(0, key);
             }
         }, dbIndex, key);
-    }
-
-    // 序列化
-    public static String serializeToString(Object obj) throws IOException {
-        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-        ObjectOutputStream objOut = new ObjectOutputStream(byteOut);
-        objOut.writeObject(obj);
-        return byteOut.toString("ISO-8859-1");// 此处只能是ISO-8859-1,但是不会影响中文使用;
-    }
-
-    // 反序列化
-    public static Object deserializeToObject(String str) throws IOException, ClassNotFoundException {
-        ByteArrayInputStream byteIn = new ByteArrayInputStream(str.getBytes("ISO-8859-1"));
-        ObjectInputStream objIn = new ObjectInputStream(byteIn);
-        return objIn.readObject();
     }
 
     // index代表 缓存存放到哪一个db实例里面
