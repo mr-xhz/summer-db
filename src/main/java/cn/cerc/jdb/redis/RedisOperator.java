@@ -6,6 +6,7 @@ import cn.cerc.jdb.core.Record;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+@Deprecated
 public class RedisOperator implements IDataOperator {
 
     private RedisSession session;

@@ -4,6 +4,7 @@ import cn.cerc.jdb.core.DataQuery;
 import cn.cerc.jdb.core.IDataOperator;
 import cn.cerc.jdb.core.IHandle;
 
+@Deprecated
 public class RedisQuery extends DataQuery {
 
     private static final long serialVersionUID = 5655647321461069483L;

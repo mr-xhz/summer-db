@@ -40,10 +40,12 @@ public class RedisSession implements ISession {
         return jedis;
     }
 
+    @Deprecated
     public void returnRedis(Jedis jedis) {
         jedisPool.returnResource(jedis);
     }
 
+    @Deprecated
     public void returnBrokeRedis(Jedis jedis) {
         jedisPool.returnBrokenResource(jedis);
     }
