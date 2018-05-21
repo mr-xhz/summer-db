@@ -20,7 +20,6 @@ public class Queue {
         this.client = client;
     }
 
-    /** 读取队列 */
     public String read() {
         message = client.popMessage();
         if (message != null) {
@@ -47,7 +46,6 @@ public class Queue {
         }
     }
 
-    /** 写入队列 */
     public void append(String content) {
         message = new Message();
         message.setMessageBody(content);
@@ -62,7 +60,6 @@ public class Queue {
         }
     }
 
-    /** 移除消息队列 */
     public void delete() {
         if (receiptHandle == null)
             return;
