@@ -140,18 +140,6 @@ public class RedisBuffer {
         }, dbIndex, key, value);
     }
 
-    public void set(String key, Object value) {
-        execute(new RedisCallback<String>() {
-            @Override
-            public String call(Jedis jedis, Object parms) {
-                String key = ((Object[]) parms)[1].toString();
-                String value = ((Object[]) parms)[2].toString();
-                jedis.set(key, value);
-                return null;
-            }
-        }, dbIndex, key, value);
-    }
-
     public void set(String key, byte[] value) {
         execute(new RedisCallback<String>() {
             @Override
