@@ -13,9 +13,9 @@ import cn.cerc.jdb.core.ISession;
 public class QueueSession implements ISession {
     private static final Logger log = LoggerFactory.getLogger(QueueSession.class);
 
+    public static final String AccountEndpoint = "mns.accountendpoint";
     public static final String AccessKeyId = "mns.accesskeyid";
     public static final String AccessKeySecret = "mns.accesskeysecret";
-    public static final String AccountEndpoint = "mns.accountendpoint";
     public static final String SecurityToken = "mns.securitytoken";
     // IHandle中识别码
     public static String sessionId = "aliyunQueueSession";
