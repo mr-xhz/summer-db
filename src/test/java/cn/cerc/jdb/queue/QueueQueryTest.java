@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.StubHandle;
 import cn.cerc.jdb.mongo.MongoSession;
 
@@ -14,17 +15,17 @@ public class QueueQueryTest {
     private static final Logger log = LoggerFactory.getLogger(MongoSession.class);
 
     private static QueueQuery dataSet;
-    private static StubHandle handle;
+    private static IHandle handle;
 
     @BeforeClass
     public static void setUp() {
-        handle = new StubHandle();
+        handle = new QueueHandle();
         dataSet = new QueueQuery(handle);
     }
 
     @AfterClass
     public static void closeSession() {
-        dataSet.sessionClose();
+//        dataSet.sessionClose();
     }
 
     /**

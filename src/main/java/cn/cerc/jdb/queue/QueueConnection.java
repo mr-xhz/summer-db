@@ -9,7 +9,6 @@ import cn.cerc.jdb.core.IConnection;
 public class QueueConnection implements IConnection {
     private static MNSClient client;
     private static CloudAccount account;
-
     private IConfig config;
 
     @Override
@@ -37,8 +36,14 @@ public class QueueConnection implements IConnection {
         String userCode = config.getProperty(QueueSession.AccessKeyId, null);
         String password = config.getProperty(QueueSession.AccessKeySecret, null);
         String token = config.getProperty(QueueSession.SecurityToken, "");
-        if (server == null || userCode == null || password == null || token == null)
-            throw new RuntimeException("propertys.msn 配置为空");
+        if (server == null)
+            throw new RuntimeException(QueueSession.AccountEndpoint + " 配置为空");
+        if (userCode == null)
+            throw new RuntimeException(QueueSession.AccessKeyId + " 配置为空");
+        if (password == null)
+            throw new RuntimeException(QueueSession.AccessKeySecret + " 配置为空");
+        if (token == null)
+            throw new RuntimeException(QueueSession.SecurityToken + " 配置为空");
         if (account == null) {
             account = new CloudAccount(userCode, password, server, token);
         }
