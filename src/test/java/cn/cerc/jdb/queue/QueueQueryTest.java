@@ -1,31 +1,20 @@
 package cn.cerc.jdb.queue;
 
 import org.apache.commons.lang.StringUtils;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.cerc.jdb.core.IHandle;
-import cn.cerc.jdb.core.StubHandle;
-import cn.cerc.jdb.mongo.MongoSession;
 
 public class QueueQueryTest {
-    private static final Logger log = LoggerFactory.getLogger(MongoSession.class);
-
-    private static QueueQuery dataSet;
+    private static final Logger log = LoggerFactory.getLogger(QueueQueryTest.class);
     private static IHandle handle;
 
-    @BeforeClass
-    public static void setUp() {
+    @Before
+    public void setUp() {
         handle = new QueueHandle();
-        dataSet = new QueueQuery(handle);
-    }
-
-    @AfterClass
-    public static void closeSession() {
-//        dataSet.sessionClose();
     }
 
     /**
@@ -34,8 +23,9 @@ public class QueueQueryTest {
      * @Description
      * @author rick_zhou
      */
-    @Test
+    //Test
     public void sendMsg() {
+        QueueQuery dataSet = new QueueQuery(handle);
         // ds.add("select * from %s", appdb.get(handle, appdb.MQ_TOPIC_NAME));
         dataSet.add("select * from %s", QueueDB.TEST);
         dataSet.open();
@@ -63,8 +53,9 @@ public class QueueQueryTest {
      * @Description
      * @author rick_zhou
      */
-    @Test
+    //Test
     public void query() {
+        QueueQuery dataSet = new QueueQuery(handle);
         // ds.add("select * from %s", appdb.get(handle, appdb.MQ_TOPIC_NAME));
         dataSet.add("select * from %s", QueueDB.TEST);
         dataSet.setQueueMode(QueueMode.recevie);
@@ -72,7 +63,7 @@ public class QueueQueryTest {
 
         // 获取消息中DataSet的head内容
         log.info(StringUtils.center("heand data", 70, "=="));
-
+        log.info(dataSet.getJSON());
         log.info(StringUtils.center("body data", 70, "=="));
 
         dataSet.remove();
