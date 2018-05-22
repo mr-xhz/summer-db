@@ -9,9 +9,10 @@ import cn.cerc.jdb.core.ServerConfig;
 public class QueueFactory {
     private static MNSClient client;
     private static CloudAccount account;
+    private static ServerConfig config;
 
     static {
-        ServerConfig config = ServerConfig.getInstance();
+        config = ServerConfig.getInstance();
         String server = config.getProperty(QueueSession.AccountEndpoint, null);
         String userCode = config.getProperty(QueueSession.AccessKeyId, null);
         String password = config.getProperty(QueueSession.AccessKeySecret, null);
@@ -30,8 +31,12 @@ public class QueueFactory {
         client = account.getMNSClient();
     }
 
-    public static Queue getQueue(String queueCode) {
-        CloudQueue queue = client.getQueueRef(queueCode);
+    public static Queue getQueue(String propertKey) {
+        String queueId = config.getProperty(propertKey);
+        if (queueId == null)
+            throw new RuntimeException("application.properties 中没有找到配置项：" + propertKey);
+        
+        CloudQueue queue = client.getQueueRef(queueId);
         return new Queue(queue);
     }
 }
