@@ -19,7 +19,7 @@ import redis.clients.jedis.exceptions.JedisConnectionException;
 
 public class RedisBuffer {
     private static final Logger log = LoggerFactory.getLogger(RedisBuffer.class);
-    public static final String redis_site = "redis.site";
+    public static final String redis_site = "redis.host";
     public static final String redis_port = "redis.port";
     public static final String redis_password = "redis.password";
     public static final String redis_timeout = "redis.timeout";
