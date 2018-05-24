@@ -59,6 +59,8 @@ public class RedisBuffer {
         String ADDR = config.getProperty(redis_site, "127.0.0.1");// ip
         int PORT = Integer.parseInt(config.getProperty(redis_port, "6379"));// 端口号
         String AUTH = config.getProperty(redis_password, null);// 密码
+        if ("".equals(AUTH))
+            AUTH = null;
         int TIMEOUT = Integer.parseInt(config.getProperty(redis_timeout, "10000")); // 超时
 
         // 建立连接池
