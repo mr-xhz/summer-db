@@ -107,8 +107,7 @@ public class utils {
     /**
      * 保障查询安全，防范注入攻击 (已停用，请改使用cn.cerc.jdb.core.Utils.safeString)
      * 
-     * @param value
-     *            用户输入值
+     * @param value 用户输入值
      * 
      * @return 经过处理后的值
      */
@@ -347,7 +346,7 @@ public class utils {
     }
 
     /**
-     * 从 request 获得远程访问者的IP地址
+     * 获取最终访问者的ip地址
      */
     public static String getRemoteAddr(HttpServletRequest request) {
         if (request == null) {
@@ -359,6 +358,9 @@ public class utils {
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-        return ip.split(",")[0];
+
+        // 获取最右边的ip地址
+        String[] args = ip.split(",");
+        return args[args.length - 1];
     }
 }
