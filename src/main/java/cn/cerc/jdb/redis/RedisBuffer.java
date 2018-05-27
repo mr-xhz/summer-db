@@ -91,6 +91,16 @@ public class RedisBuffer {
         }, dbIndex, key);
     }
 
+    public Long hlen(String key) {
+        return execute(new RedisCallback<Long>() {
+            @Override
+            public Long call(Jedis jedis, Object params) {
+                String key = ((Object[]) params)[1].toString();
+                return jedis.hlen(key);
+            }
+        }, dbIndex, key);
+    }
+
     public Boolean hexists(String mapKey, String attributeKey) {
         return execute(new RedisCallback<Boolean>() {
             @Override

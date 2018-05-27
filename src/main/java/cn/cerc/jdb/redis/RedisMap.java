@@ -52,6 +52,10 @@ public class RedisMap<K, V> {
         buffer.hdel(mapKey, "" + field);
     }
 
+    public long len() {
+       return buffer.hlen(mapKey);
+    }
+    
     public Map<String, String> getItems() {
         return buffer.hgetAll(mapKey);
     }
