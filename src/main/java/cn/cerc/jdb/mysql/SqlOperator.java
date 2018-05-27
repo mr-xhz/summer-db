@@ -32,6 +32,12 @@ public class SqlOperator implements IDataOperator {
         this.conn = cn.getConnection();
     }
 
+    public boolean insert(String tableName, String primaryKey, Record record) {
+        this.setTableName(tableName);
+        this.setPrimaryKey(primaryKey);
+        return this.insert(record);
+    }
+
     @Override
     public boolean insert(Record record) {
         if (record.getFieldDefs().size() == 0)
