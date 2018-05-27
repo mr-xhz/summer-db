@@ -1,8 +1,9 @@
 package cn.cerc.jdb.redis;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.Serializable;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -13,14 +14,22 @@ public class RedisBufferTest {
     @Ignore
     public void test() {
         RedisBuffer buff = new RedisBuffer();
-
-        Record obj1 = new Record();
-        obj1.setCode("中国");
-        obj1.setName("中华人民共和国");
-        buff.setObject("b1", obj1);
-
-        Record obj2 = (Record) buff.getObject("b1");
-        assertEquals(obj1.getName(), obj2.getName());
+        buff.hset("test", "1.0", "a");
+        buff.hset("test", "20.0", "b");
+        buff.hset("test", "10.5", "c");
+        buff.hset("test", "3.0", "d");
+        Map<String, String> items = buff.hgetAll("test");
+        System.err.println(items);
+        TreeMap<String, String> args = new TreeMap<>(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                Double v1 = Double.parseDouble(o1);
+                Double v2 = Double.parseDouble(o2);
+                return v1.compareTo(v2);
+            }
+        });
+        args.putAll(items);
+        System.out.println(args);
     }
 
 }

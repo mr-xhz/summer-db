@@ -134,7 +134,7 @@ public class RedisBuffer {
         }, dbIndex, mapKey, attributeKey);
     }
 
-    public void hset(int index, String key, String field, String value) {
+    public void hset(String key, String field, String value) {
         execute(new RedisCallback<String>() {
             @Override
             public String call(Jedis jedis, Object parms) {
@@ -144,7 +144,7 @@ public class RedisBuffer {
                 jedis.hset(key, field, value);
                 return null;
             }
-        }, key, field, value);
+        }, dbIndex, key, field, value);
     }
 
     public String get(String key) {
