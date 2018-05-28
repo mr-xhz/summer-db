@@ -39,6 +39,9 @@ public class RedisBuffer {
     private int dbIndex = 0;
 
     public RedisBuffer() {
+        if(jedisPool != null)
+            return;
+        
         JedisPoolConfig jconfig = new JedisPoolConfig();
         jconfig.setMaxTotal(MAX_ACTIVE);
         jconfig.setMaxIdle(MAX_IDLE);
