@@ -49,12 +49,11 @@ public class ServerConfig implements IConfig {
     @Override
     public String getProperty(String key, String def) {
         String result = null;
-        if (properties != null) {
-            result = properties.getProperty(key);
-            if (result == null) {
-                LocalConfig config = LocalConfig.getInstance();
-                result = config.getProperty(key, def);
-            }
+        LocalConfig config = LocalConfig.getInstance();
+        result = config.getProperty(key, null);
+        if (result == null) {
+            if (properties != null)
+                result = properties.getProperty(key);
         }
         return result != null ? result : def;
     }
