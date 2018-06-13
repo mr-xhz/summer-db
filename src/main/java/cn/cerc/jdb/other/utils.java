@@ -363,4 +363,11 @@ public class utils {
         String[] args = ip.split(",");
         return args[args.length - 1];
     }
+
+    public static String guidFixStr() {
+        String guid = utils.newGuid();
+        String str = guid.substring(1, guid.length() - 1);
+        return str.replaceAll("-", "");
+    }
+
 }
