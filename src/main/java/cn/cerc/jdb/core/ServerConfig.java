@@ -18,6 +18,7 @@ public class ServerConfig implements IConfig {
     public static final String TaskServiceEnabled = "task.service";
     public static final String config_version = "version";
     public static final String config_debug = "debug";
+    public static final String confg_appname = "appName";
 
     static {
         try {
@@ -89,6 +90,10 @@ public class ServerConfig implements IConfig {
 
     public static boolean enableTaskService() {
         return "1".equals(getInstance().getProperty(TaskServiceEnabled, null));
+    }
+    public static String getAppName() {
+        String result = getInstance().getProperty(confg_appname, "localhost");
+        return result;
     }
 
 }
