@@ -13,6 +13,10 @@ public class ServerConfig implements IConfig {
     private static ServerConfig instance;
     // 是否为debug状态
     private int debug = -1;
+    // 版本状态
+    public static final int appVersionDevelop = 0;
+    public static final int appVersionBeta = 1;
+    public static final int appVersionRelease = 2;
 
     private static final String confFile = "/application.properties";
     static {
@@ -71,5 +75,15 @@ public class ServerConfig implements IConfig {
             debug = "1".equals(this.getProperty("debug", "0")) ? 1 : 0;
         }
         return debug == 1;
+    }
+
+    public static ServerVersion getServerVersion() {
+        String tmp = getInstance().getProperty("version", "develop");
+        if ("master".equals(tmp))
+            return ServerVersion.master;
+        else if ("beta".equals(tmp))
+            return ServerVersion.beta;
+        else
+            return ServerVersion.develop;
     }
 }
