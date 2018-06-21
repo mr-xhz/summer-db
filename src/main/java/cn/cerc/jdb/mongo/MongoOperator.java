@@ -16,62 +16,62 @@ import cn.cerc.jdb.core.Record;
 import cn.cerc.jdb.core.TDateTime;
 
 public class MongoOperator implements IDataOperator {
-	private String tableName;
-	private MongoSession sess;
+    private String tableName;
+    private MongoSession sess;
 
-	public MongoOperator(IHandle handle) {
-		this.sess = (MongoSession) handle.getProperty(MongoSession.sessionId);
-	}
+    public MongoOperator(IHandle handle) {
+        this.sess = (MongoSession) handle.getProperty(MongoSession.sessionId);
+    }
 
-	@Override
-	public boolean insert(Record record) {
-		MongoCollection<Document> coll = sess.getDatabase().getCollection(this.tableName);
-		Document doc = getValue(record);
-		coll.insertOne(doc);
-		return true;
-	}
+    @Override
+    public boolean insert(Record record) {
+        MongoCollection<Document> coll = sess.getDatabase().getCollection(this.tableName);
+        Document doc = getValue(record);
+        coll.insertOne(doc);
+        return true;
+    }
 
-	@Override
-	public boolean update(Record record) {
-		MongoCollection<Document> coll = sess.getDatabase().getCollection(this.tableName);
-		Document doc = getValue(record);
-		String uid = record.getString("_id");
-		Object key = "".equals(uid) ? "null" : new ObjectId(uid);
-		UpdateResult res = coll.replaceOne(Filters.eq("_id", key), doc);
-		return res.getModifiedCount() == 1;
-	}
+    @Override
+    public boolean update(Record record) {
+        MongoCollection<Document> coll = sess.getDatabase().getCollection(this.tableName);
+        Document doc = getValue(record);
+        String uid = record.getString("_id");
+        Object key = "".equals(uid) ? "null" : new ObjectId(uid);
+        UpdateResult res = coll.replaceOne(Filters.eq("_id", key), doc);
+        return res.getModifiedCount() == 1;
+    }
 
-	@Override
-	public boolean delete(Record record) {
-		MongoCollection<Document> coll = sess.getDatabase().getCollection(this.tableName);
-		String uid = record.getString("_id");
-		Object key = "".equals(uid) ? "null" : new ObjectId(uid);
-		DeleteResult res = coll.deleteOne(Filters.eq("_id", key));
-		return res.getDeletedCount() == 1;
-	}
+    @Override
+    public boolean delete(Record record) {
+        MongoCollection<Document> coll = sess.getDatabase().getCollection(this.tableName);
+        String uid = record.getString("_id");
+        Object key = "".equals(uid) ? "null" : new ObjectId(uid);
+        DeleteResult res = coll.deleteOne(Filters.eq("_id", key));
+        return res.getDeletedCount() == 1;
+    }
 
-	public String getTableName() {
-		return tableName;
-	}
+    public String getTableName() {
+        return tableName;
+    }
 
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
-	}
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
 
-	private Document getValue(Record record) {
-		Document doc = new Document();
-		for (int i = 0; i < record.getFieldDefs().size(); i++) {
-			String field = record.getFieldDefs().getFields().get(i);
-			if (field.equals("_id"))
-				continue;
-			Object obj = record.getField(field);
-			if (obj instanceof TDateTime)
-				doc.append(field, ((TDateTime) obj).toString());
-			else if (obj instanceof Date)
-				doc.append(field, (new TDateTime((Date) obj)).toString());
-			else
-				doc.append(field, obj);
-		}
-		return doc;
-	}
+    private Document getValue(Record record) {
+        Document doc = new Document();
+        for (int i = 0; i < record.getFieldDefs().size(); i++) {
+            String field = record.getFieldDefs().getFields().get(i);
+            if (field.equals("_id"))
+                continue;
+            Object obj = record.getField(field);
+            if (obj instanceof TDateTime)
+                doc.append(field, ((TDateTime) obj).toString());
+            else if (obj instanceof Date)
+                doc.append(field, (new TDateTime((Date) obj)).toString());
+            else
+                doc.append(field, obj);
+        }
+        return doc;
+    }
 }

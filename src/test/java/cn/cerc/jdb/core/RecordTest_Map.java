@@ -12,23 +12,23 @@ import org.junit.Test;
  *
  */
 public class RecordTest_Map {
-	private Record rs;
+    private Record rs;
 
-	@Before
-	public void setUp() {
-		rs = new Record();
-		rs.setField("A", "A001");
-		rs.setField("B", "B001");
-		rs.setField("C", "C001");
-	}
+    @Before
+    public void setUp() {
+        rs = new Record();
+        rs.setField("A", "A001");
+        rs.setField("B", "B001");
+        rs.setField("C", "C001");
+    }
 
-	@Test
-	public void test() {
-		int i = 0;
-		for (@SuppressWarnings("unused")
-		String key : rs.getItems().keySet()) {
-			i++;
-		}
-		assertEquals(i, rs.size());
-	}
+    @Test
+    public void test() {
+        int i = 0;
+        for (@SuppressWarnings("unused")
+        String key : rs.getItems().keySet()) {
+            i++;
+        }
+        assertEquals(i, rs.size());
+    }
 }
