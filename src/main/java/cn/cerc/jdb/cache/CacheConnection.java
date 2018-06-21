@@ -1,7 +1,6 @@
 package cn.cerc.jdb.cache;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import com.danga.MemCached.MemCachedClient;
 import com.danga.MemCached.SockIOPool;
@@ -11,7 +10,7 @@ import cn.cerc.jdb.core.IConnection;
 
 public class CacheConnection implements IConnection {
     private IConfig config;
-    private static final Logger log = LoggerFactory.getLogger(CacheConnection.class);
+    private static final Logger log = Logger.getLogger(CacheConnection.class);
     private static String site;
     private static SockIOPool pool;
     // private static int count = 0;

@@ -3,8 +3,7 @@ package cn.cerc.jdb.jiguang;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import cn.cerc.jdb.core.IHandle;
 import cn.jiguang.common.resp.APIConnectionException;
@@ -19,7 +18,7 @@ import cn.jpush.api.push.model.notification.IosNotification;
 import cn.jpush.api.push.model.notification.Notification;
 
 public class JiguangPush {
-    private static final Logger log = LoggerFactory.getLogger(JiguangPush.class);
+    private static final Logger log = Logger.getLogger(JiguangPush.class);
     private JiguangSession session;
     // 消息id，回调时使用
     private String msgId;

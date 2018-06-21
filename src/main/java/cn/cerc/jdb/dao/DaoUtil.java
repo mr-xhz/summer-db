@@ -11,8 +11,7 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import cn.cerc.jdb.core.IHandle;
 import cn.cerc.jdb.core.Record;
@@ -20,7 +19,7 @@ import cn.cerc.jdb.core.TDateTime;
 import cn.cerc.jdb.mysql.SqlQuery;
 
 public class DaoUtil {
-    private static final Logger log = LoggerFactory.getLogger(DaoUtil.class);
+    private static final Logger log = Logger.getLogger(DaoUtil.class);
     private static int PUBLIC = 1;
     private static int PRIVATE = 2;
     private static int PROTECTED = 4;

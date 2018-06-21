@@ -6,8 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSException;
@@ -18,7 +17,7 @@ import com.aliyun.oss.model.ObjectMetadata;
 import cn.cerc.jdb.core.ISession;
 
 public class OssSession implements ISession {
-    private static final Logger log = LoggerFactory.getLogger(OssSession.class);
+    private static final Logger log = Logger.getLogger(OssSession.class);
     // 设置连接地址
     public static final String oss_endpoint = "oss.endpoint";
     // 连接区域

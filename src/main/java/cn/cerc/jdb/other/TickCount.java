@@ -1,10 +1,9 @@
 package cn.cerc.jdb.other;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 public class TickCount {
-    private static final Logger log = LoggerFactory.getLogger(TickCount.class);
+    private static final Logger log = Logger.getLogger(TickCount.class);
     private long lastTime;
 
     public TickCount() {

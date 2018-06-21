@@ -4,8 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import cn.cerc.jdb.core.ISession;
 
@@ -18,7 +17,7 @@ public class SqlSession implements ISession {
     // IHandle中识别码
     public static String sessionId = "sqlSession";
 
-    private static final Logger log = LoggerFactory.getLogger(SqlSession.class);
+    private static final Logger log = Logger.getLogger(SqlSession.class);
     private Connection connection;
     private int tag;
 

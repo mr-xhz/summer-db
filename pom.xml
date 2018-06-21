@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>cn.cerc</groupId>
     <artifactId>summer-db</artifactId>
-    <version>1.4.1</version>
+    <version>1.5.0</version>
     <description>提供DataSet及派生类，满足内存表与实体表使用需要</description>
     <url>https://github.com/cn-cerc/summer-db</url>
     <properties>
@@ -126,7 +126,7 @@
         <dependency>
             <groupId>cn.cerc</groupId>
             <artifactId>summer-core</artifactId>
-            <version>1.4.1</version>
+            <version>1.5.0</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -242,19 +242,7 @@
             <version>${org.springframework.version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${org.slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.25</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
-
     <repositories>
         <repository>
             <id>thirdparty</id>

@@ -7,8 +7,8 @@ import java.util.regex.Pattern;
 import org.bson.Document;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
@@ -17,7 +17,7 @@ import cn.cerc.jdb.core.StubHandle;
 
 public class MongoUtilsTest {
 
-    private static final Logger log = LoggerFactory.getLogger(MongoUtilsTest.class);
+    private static final Logger log = Logger.getLogger(MongoUtilsTest.class);
 
     private static MongoUtils utils;
 

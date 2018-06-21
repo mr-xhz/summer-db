@@ -1,15 +1,13 @@
 package cn.cerc.jdb.queue;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.junit.Before;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import cn.cerc.jdb.core.IHandle;
 
 public class QueueQueryTest {
-    private static final Logger log = LoggerFactory.getLogger(QueueQueryTest.class);
+    private static final Logger log = Logger.getLogger(QueueQueryTest.class);
     private static IHandle handle;
 
     @Before

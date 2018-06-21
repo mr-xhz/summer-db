@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import cn.cerc.jdb.core.Utils;
 import redis.clients.jedis.Jedis;
@@ -15,7 +14,7 @@ import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 
 public class RedisBuffer {
-    private static final Logger log = LoggerFactory.getLogger(RedisBuffer.class);
+    private static final Logger log = Logger.getLogger(RedisBuffer.class);
 
     // redis 数据库编号
     private int dbIndex = 0;

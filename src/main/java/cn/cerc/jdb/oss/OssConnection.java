@@ -2,8 +2,7 @@ package cn.cerc.jdb.oss;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import com.aliyun.oss.ClientConfiguration;
 import com.aliyun.oss.OSSClient;
@@ -13,7 +12,7 @@ import cn.cerc.jdb.core.IConfig;
 import cn.cerc.jdb.core.IConnection;
 
 public class OssConnection implements IConnection {
-    private static final Logger log = LoggerFactory.getLogger(OssConnection.class);
+    private static final Logger log = Logger.getLogger(OssConnection.class);
     private static OSSClient client;
     private static String bucket;
     private IConfig config;

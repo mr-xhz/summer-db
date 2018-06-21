@@ -2,8 +2,7 @@ package cn.cerc.jdb.queue;
 
 import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import com.aliyun.mns.client.CloudQueue;
 import com.aliyun.mns.model.Message;
@@ -11,7 +10,7 @@ import com.aliyun.mns.model.Message;
 import cn.cerc.jdb.core.Utils;
 
 public class Queue {
-    private static final Logger log = LoggerFactory.getLogger(Queue.class);
+    private static final Logger log = Logger.getLogger(Queue.class);
     private CloudQueue client;
     private String receiptHandle;
     private Message message;

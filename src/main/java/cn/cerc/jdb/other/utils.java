@@ -16,8 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Transient;
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import cn.cerc.jdb.core.CustomDataSet;
 import cn.cerc.jdb.core.Record;
@@ -25,7 +24,7 @@ import cn.cerc.jdb.core.TDate;
 import cn.cerc.jdb.core.TDateTime;
 
 public class utils {
-    static final Logger log = LoggerFactory.getLogger(utils.class);
+    static final Logger log = Logger.getLogger(utils.class);
     public static final String vbCrLf = "\r\n";
 
     public static double roundTo(double val, int scale) {

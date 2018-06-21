@@ -2,13 +2,12 @@ package cn.cerc.jdb.mysql;
 
 import static cn.cerc.jdb.other.utils.vbCrLf;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import cn.cerc.jdb.core.IHandle;
 
 public class BatchScript {
-    private static final Logger log = LoggerFactory.getLogger(BatchScript.class);
+    private static final Logger log = Logger.getLogger(BatchScript.class);
     private StringBuffer items = new StringBuffer();
     private IHandle handle;
     private SqlSession conn;
