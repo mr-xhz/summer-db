@@ -14,7 +14,11 @@ public class ServerConfig implements IConfig {
     private static ServerConfig instance;
     // 是否为debug状态
     private int debug = -1;
-    
+    // 是否为任务主机
+    public static final String TaskServiceEnabled = "task.service";
+    public static final String config_version = "version";
+    public static final String config_debug = "debug";
+
     static {
         try {
             InputStream file = ServerConfig.class.getResourceAsStream(confFile);
@@ -68,13 +72,13 @@ public class ServerConfig implements IConfig {
      */
     public boolean isDebug() {
         if (debug == -1) {
-            debug = "1".equals(this.getProperty("debug", "0")) ? 1 : 0;
+            debug = "1".equals(this.getProperty(config_debug, "0")) ? 1 : 0;
         }
         return debug == 1;
     }
 
     public static ServerVersion getVersion() {
-        String tmp = getInstance().getProperty("version", "develop");
+        String tmp = getInstance().getProperty(config_version, "develop");
         if ("master".equals(tmp))
             return ServerVersion.master;
         else if ("beta".equals(tmp))
@@ -82,4 +86,9 @@ public class ServerConfig implements IConfig {
         else
             return ServerVersion.develop;
     }
+
+    public static boolean enableTaskService() {
+        return "1".equals(getInstance().getProperty(TaskServiceEnabled, null));
+    }
+
 }
