@@ -9,21 +9,12 @@ import org.apache.log4j.Logger;
 
 public class ServerConfig implements IConfig {
     private static final Logger log = Logger.getLogger(ServerConfig.class);
+    private static final String confFile = "/application.properties";
     private static Properties properties = new Properties();
     private static ServerConfig instance;
     // 是否为debug状态
     private int debug = -1;
-    // 版本状态
-    public static final int appVersionDevelop = 0;
-    public static final int appVersionBeta = 1;
-    public static final int appVersionRelease = 2;
-
-    public static final int appNone = 0;
-    public static final int appTest = 1;
-    public static final int appBeta = 2;
-    public static final int appRelease = 3;
-
-    private static final String confFile = "/application.properties";
+    
     static {
         try {
             InputStream file = ServerConfig.class.getResourceAsStream(confFile);
