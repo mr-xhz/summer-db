@@ -25,7 +25,7 @@ public class Buffer extends CacheQuery {
         setKey(str.toString());
     }
 
-    private static IMemcache getMemcache() {
+    public static IMemcache getMemcache() {
         CacheConnection conn = new CacheConnection();
         conn.setConfig(new IConfig() {
 
