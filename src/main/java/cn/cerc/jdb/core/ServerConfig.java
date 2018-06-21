@@ -66,19 +66,6 @@ public class ServerConfig implements IConfig {
         return result != null ? result : def;
     }
 
-    public static int getAppLevel() {
-        String tmp = getInstance().getProperty("version", "beta");
-        if ("test".equals(tmp)) {
-            return 1;
-        } else if ("beta".equals(tmp)) {
-            return 2;
-        } else if ("release".equals(tmp)) {
-            return 3;
-        } else {
-            return 0;
-        }
-    }
-
     @Override
     public String getProperty(String key) {
         return getProperty(key, null);
@@ -95,7 +82,7 @@ public class ServerConfig implements IConfig {
         return debug == 1;
     }
 
-    public static ServerVersion getServerVersion() {
+    public static ServerVersion getVersion() {
         String tmp = getInstance().getProperty("version", "develop");
         if ("master".equals(tmp))
             return ServerVersion.master;
