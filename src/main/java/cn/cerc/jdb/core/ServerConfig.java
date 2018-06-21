@@ -84,13 +84,16 @@ public class ServerConfig implements IConfig {
             return ServerVersion.master;
         else if ("beta".equals(tmp))
             return ServerVersion.beta;
-        else
+        else if ("develop".equals(tmp))
             return ServerVersion.develop;
+        else
+            return ServerVersion.test;
     }
 
     public static boolean enableTaskService() {
         return "1".equals(getInstance().getProperty(TaskServiceEnabled, null));
     }
+
     public static String getAppName() {
         String result = getInstance().getProperty(confg_appname, "localhost");
         return result;
