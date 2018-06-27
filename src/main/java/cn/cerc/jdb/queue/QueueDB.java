@@ -32,4 +32,9 @@ public class QueueDB {
     /** 测试队列 **/
     public static final String TEST = "test";
 
+    /** 全文检索 */
+    public static final String ELASTICSEARCH = "elasticsearch";
+
+    /** 全文检索 测试队列 **/
+    public static final String ELASTICSEARCH_TEST = "elasticsearch-test";
 }
