@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -367,6 +368,27 @@ public class utils {
         String guid = utils.newGuid();
         String str = guid.substring(1, guid.length() - 1);
         return str.replaceAll("-", "");
+    }
+
+    /**
+     * 获取数字和字母的混合字符串
+     */
+    public static String getStrRandom(int length) {
+        String result = "";
+        Random random = new Random();
+
+        for (int i = 0; i < length; i++) {
+            String symbol = random.nextInt(2) % 2 == 0 ? "char" : "num";
+
+            if ("char".equalsIgnoreCase(symbol)) {
+                // 随机获取大小写字母
+                int letterIndex = random.nextInt(2) % 2 == 0 ? 65 : 97;
+                result += (char) (random.nextInt(26) + letterIndex);
+            } else if ("num".equalsIgnoreCase(symbol)) {
+                result += String.valueOf(random.nextInt(10));
+            }
+        }
+        return result;
     }
 
 }
