@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -36,6 +37,66 @@ public class Curl {
     private Map<String, Object> parameters = new HashMap<>();
     /** 返回内容 */
     private String responseContent = null;
+
+    public String sendGet(String reqUrl) {
+        String result = "";
+        BufferedReader in = null;
+        try {
+
+            StringBuilder builder = new StringBuilder();
+            builder.append(reqUrl);
+
+            int i = 0;
+            for (String key : parameters.keySet()) {
+                i++;
+                builder.append(i == 1 ? "?" : "&");
+                builder.append(key);
+                builder.append("=");
+                String value = parameters.get(key).toString();
+                if (value != null) {
+                    builder.append(encodeUTF8(value));
+                }
+            }
+            URL url = new URL(builder.toString());
+
+            // 打开和URL之间的连接
+            URLConnection connection = url.openConnection();
+
+            // 设置通用的请求属性
+            connection.setRequestProperty("accept", "*/*");
+            connection.setRequestProperty("connection", "Keep-Alive");
+            connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+
+            // 建立实际的连接
+            connection.connect();
+
+            // 定义 BufferedReader输入流来读取URL的响应
+            in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+                result += line;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    private String encodeUTF8(String value) {
+        try {
+            return URLEncoder.encode(value, requestEncoding);
+        } catch (UnsupportedEncodingException e) {
+            return value;
+        }
+    }
 
     /** 发送带参数的GET的HTTP请求 */
     public String doGet(String reqUrl) {
@@ -68,7 +129,14 @@ public class Curl {
             url_con.getOutputStream().flush();
             url_con.getOutputStream().close();
 
-            InputStream in = url_con.getInputStream();
+            int status = url_con.getResponseCode();
+            BufferedInputStream in;
+            if (status >= 400) {
+                in = new BufferedInputStream(url_con.getErrorStream());
+            } else {
+                in = new BufferedInputStream(url_con.getInputStream());
+            }
+
             BufferedReader rd = new BufferedReader(new InputStreamReader(in, this.recvEncoding));
             String tempLine = rd.readLine();
             StringBuffer temp = new StringBuffer();
