@@ -14,8 +14,16 @@ public class SqlSession implements ISession {
     public static final String rds_database = "rds.database";
     public static final String rds_username = "rds.username";
     public static final String rds_password = "rds.password";
+    
+    // Propertys slave 中识别码
+    public static final String rds_slave_site = "rds.slave.site";
+    public static final String rds_slave_database = "rds.slave.database";
+    public static final String rds_slave_username = "rds.slave.username";
+    public static final String rds_slave_password = "rds.slave.password";
+    
     // IHandle中识别码
     public static String sessionId = "sqlSession";
+    public static String slaveSessionId = "slaveSqlSession";
 
     private static final Logger log = Logger.getLogger(SqlSession.class);
     private Connection connection;

@@ -23,6 +23,7 @@ public class SqlQuery extends DataQuery {
 
     private static final long serialVersionUID = 7316772894058168187L;
     private SqlSession session;
+    private SqlSession slaveSession;
     // private boolean closeMax = false;
     private int offset = 0;
     private int maximum = BigdataException.MAX_RECORDS;
@@ -43,6 +44,7 @@ public class SqlQuery extends DataQuery {
     public SqlQuery(IHandle handle) {
         super(handle);
         this.session = (SqlSession) handle.getProperty(SqlSession.sessionId);
+        this.slaveSession = (SqlSession)handle.getProperty(SqlSession.slaveSessionId);
     }
 
     @Override
@@ -50,7 +52,19 @@ public class SqlQuery extends DataQuery {
         if (session == null)
             throw new RuntimeException("SqlConnection is null");
         Connection conn = session.getConnection();
-        if (conn == null)
+        return this._open(conn);
+    }
+    
+    public DataQuery openReadonly() {
+        if (slaveSession == null)
+            throw new RuntimeException("slaveSession is null");
+        
+        Connection conn = slaveSession.getConnection();
+        return this._open(conn);
+    }
+    
+    private DataQuery _open(Connection conn){
+    	if (conn == null)
             throw new RuntimeException("Connection is null");
         String sql = getSelectCommand();
         try {
