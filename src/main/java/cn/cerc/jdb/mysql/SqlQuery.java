@@ -44,7 +44,7 @@ public class SqlQuery extends DataQuery {
     public SqlQuery(IHandle handle) {
         super(handle);
         this.session = (SqlSession) handle.getProperty(SqlSession.sessionId);
-        this.slaveSession = (SqlSession)handle.getProperty(SqlSession.slaveSessionId);
+        this.slaveSession = (SqlSession) handle.getProperty(SqlSession.slaveSessionId);
     }
 
     @Override
@@ -54,17 +54,17 @@ public class SqlQuery extends DataQuery {
         Connection conn = session.getConnection();
         return this._open(conn);
     }
-    
+
     public DataQuery openReadonly() {
         if (slaveSession == null)
             throw new RuntimeException("slaveSession is null");
-        
+
         Connection conn = slaveSession.getConnection();
         return this._open(conn);
     }
-    
-    private DataQuery _open(Connection conn){
-    	if (conn == null)
+
+    private DataQuery _open(Connection conn) {
+        if (conn == null)
             throw new RuntimeException("Connection is null");
         String sql = getSelectCommand();
         try {
