@@ -347,7 +347,16 @@ public class Curl {
         return responseContent;
     }
 
+    /**
+     * 请改为 putParameter
+     */
+    @Deprecated
     public Curl addParameter(String key, Object value) {
+        this.parameters.put(key, value);
+        return this;
+    }
+
+    public Curl putParameter(String key, Object value) {
         this.parameters.put(key, value);
         return this;
     }
