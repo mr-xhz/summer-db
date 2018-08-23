@@ -90,7 +90,7 @@ public class MicroService extends Curl {
 
     public static void main(String[] args) {
         MicroService service = new MicroService();
-        service.addParameter("appKey", "asdfsdf");
+        service.putParameter("appKey", "asdfsdf");
         
         System.out.println(service.post("server.getIP"));
         System.out.println(service.isResult());
