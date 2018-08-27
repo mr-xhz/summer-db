@@ -391,4 +391,15 @@ public class utils {
         return result;
     }
 
+    /**
+     * 创建指定长度的随机数
+     */
+    public static String getNumRandom(int len) {
+        Random random = new Random();
+        String verify = "";
+        for (int i = 0; i < len; i++) {
+            verify = verify + random.nextInt(10);
+        }
+        return verify;
+    }
 }
