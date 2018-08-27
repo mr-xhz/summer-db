@@ -140,10 +140,8 @@ public class Curl {
             BufferedReader rd = new BufferedReader(new InputStreamReader(in, this.recvEncoding));
             String tempLine = rd.readLine();
             StringBuffer temp = new StringBuffer();
-            String crlf = System.getProperty("line.separator");
             while (tempLine != null) {
                 temp.append(tempLine);
-                temp.append(crlf);
                 tempLine = rd.readLine();
             }
             responseContent = temp.toString();
@@ -205,10 +203,8 @@ public class Curl {
             BufferedReader rd = new BufferedReader(new InputStreamReader(in, recvEncoding));
             String tempLine = rd.readLine();
             StringBuffer temp = new StringBuffer();
-            String crlf = System.getProperty("line.separator");
             while (tempLine != null) {
                 temp.append(tempLine);
-                temp.append(crlf);
                 tempLine = rd.readLine();
             }
             responseContent = temp.toString();
@@ -286,10 +282,8 @@ public class Curl {
             BufferedReader rd = new BufferedReader(new InputStreamReader(in, recvEncoding));
             String tempLine = rd.readLine();
             StringBuffer tempStr = new StringBuffer();
-            String crlf = System.getProperty("line.separator");
             while (tempLine != null) {
                 tempStr.append(tempLine);
-                tempStr.append(crlf);
                 tempLine = rd.readLine();
             }
             responseContent = tempStr.toString();
