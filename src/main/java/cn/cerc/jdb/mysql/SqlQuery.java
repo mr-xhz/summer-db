@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.apache.log4j.Logger;
 
 import cn.cerc.jdb.core.DataQuery;
@@ -24,6 +26,9 @@ public class SqlQuery extends DataQuery {
     private static final long serialVersionUID = 7316772894058168187L;
     private SqlSession session;
     private SqlSession slaveSession;
+    
+    private DataSource dataSource;
+    private DataSource slaveDataSource;
     // private boolean closeMax = false;
     private int offset = 0;
     private int maximum = BigdataException.MAX_RECORDS;
@@ -45,45 +50,89 @@ public class SqlQuery extends DataQuery {
         super(handle);
         this.session = (SqlSession) handle.getProperty(SqlSession.sessionId);
         this.slaveSession = (SqlSession)handle.getProperty(SqlSession.slaveSessionId);
+        
+        this.dataSource = (DataSource) handle.getProperty(SqlSession.dataSource);
+        this.slaveDataSource = (DataSource) handle.getProperty(SqlSession.slaveDataSource);
+    } 
+    
+    private Statement getStatement(boolean isSlave) throws SQLException{
+    	try{
+	    	if(isSlave){
+	    		if(this.slaveDataSource == null){
+	    			if(this.dataSource == null){
+		    			if(this.slaveSession == null){
+		    				return this.session.getConnection().createStatement();
+		    			}else{
+		    				return this.slaveSession.getConnection().createStatement();
+		    			}
+	    			}else{
+	    				return this.dataSource.getConnection().createStatement();
+	    			}
+	    		}else{
+	    			return this.slaveDataSource.getConnection().createStatement();
+	    		}
+	    	}else{
+	    		if(this.dataSource == null){
+	    			return this.session.getConnection().createStatement();
+	    		}else{
+	    			return this.dataSource.getConnection().createStatement();
+	    		}
+	    	}
+    	}catch(SQLException e){
+    		throw e;
+    	}
+    } 
+    
+    private void closeStatement(Statement statement){
+    	try{
+	    	Connection conn = statement.getConnection();
+	    	//statement.close();
+	    	if(this.slaveDataSource == null){
+    			if(this.dataSource == null){
+    			}else{
+    				conn.close();
+    			}
+    		}else{
+    			conn.close();
+    		}
+    	}catch(SQLException e){
+    		e.printStackTrace();
+    	}
     }
 
     @Override
     public DataQuery open() {
         if (session == null)
             throw new RuntimeException("SqlConnection is null");
-        Connection conn = session.getConnection();
-        return this._open(conn);
+        return this._open(false);
     }
     
     public DataQuery openReadonly() {
-        if (slaveSession == null)
-            throw new RuntimeException("slaveSession is null");
-        
-        Connection conn = slaveSession.getConnection();
-        return this._open(conn);
+        return this._open(true);
     }
     
-    private DataQuery _open(Connection conn){
-    	if (conn == null)
-            throw new RuntimeException("Connection is null");
+    private DataQuery _open(boolean isSlave){
+    	
         String sql = getSelectCommand();
+        Statement st = null;
         try {
             this.fetchFinish = true;
-            try (Statement st = conn.createStatement()) {
-                log.debug(sql.replaceAll("\r\n", " "));
-                st.execute(sql.replace("\\", "\\\\"));
-                try (ResultSet rs = st.getResultSet()) {
-                    // 取出所有数据
-                    append(rs);
-                    this.first();
-                    this.active = true;
-                    return this;
-                }
+            st = this.getStatement(isSlave);
+            log.debug(sql.replaceAll("\r\n", " "));
+            st.execute(sql.replace("\\", "\\\\"));
+            try (ResultSet rs = st.getResultSet()) {
+                // 取出所有数据
+                append(rs);
+                this.first();
+                this.active = true;
+                return this;
             }
         } catch (SQLException e) {
             log.error(sql);
             throw new RuntimeException(e.getMessage());
-        }
+        }finally {
+			this.closeStatement(st);
+		}
     }
 
     // 追加相同数据表的其它记录，与已有记录合并

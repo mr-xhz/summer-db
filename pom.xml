@@ -242,6 +242,13 @@
             <version>${org.springframework.version}</version>
             <scope>provided</scope>
         </dependency>
+        
+        <!-- 阿里的 source -->
+		<dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.0.23</version>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>
