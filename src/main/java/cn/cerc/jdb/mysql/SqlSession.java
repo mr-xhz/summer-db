@@ -24,6 +24,9 @@ public class SqlSession implements ISession {
     // IHandle中识别码
     public static String sessionId = "sqlSession";
     public static String slaveSessionId = "slaveSqlSession";
+    
+    public static String dataSource = "dataSource";
+    public static String slaveDataSource = "slaveDataSource";
 
     private static final Logger log = Logger.getLogger(SqlSession.class);
     private Connection connection;

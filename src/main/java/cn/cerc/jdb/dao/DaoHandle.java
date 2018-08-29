@@ -79,6 +79,7 @@ public class DaoHandle implements IHandle {
                 throw new RuntimeException("dataSource is null");
             session.setConnection(dataSource.getConnection());
             items.put(SqlSession.sessionId, session);
+            items.put(SqlSession.dataSource, dataSource);
         } catch (SQLException e) {
             e.printStackTrace();
         }
