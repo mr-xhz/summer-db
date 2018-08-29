@@ -27,18 +27,16 @@ public class SqlConnection implements IConnection {
     public IConfig getConfig() {
         return config;
     }
-    
-    
 
     public Boolean getIsSlave() {
-		return isSlave;
-	}
+        return isSlave;
+    }
 
-	public void setIsSlave(Boolean isSlave) {
-		this.isSlave = isSlave;
-	}
+    public void setIsSlave(Boolean isSlave) {
+        this.isSlave = isSlave;
+    }
 
-	@Override
+    @Override
     public SqlSession getSession() {
         init();
         try {
@@ -56,20 +54,20 @@ public class SqlConnection implements IConnection {
     public void init() {
         if (url == null) {
             try {
-            	if(isSlave == null || isSlave == false){
-	                host = config.getProperty(SqlSession.rds_site, "127.0.0.1:3306");
-	                db = config.getProperty(SqlSession.rds_database, "appdb");
-	                url = String.format("jdbc:mysql://%s/%s?useSSL=false", host, db);
-	                user = config.getProperty(SqlSession.rds_username, "appdb_user");
-	                pwd = config.getProperty(SqlSession.rds_password, "appdb_password");
-            	}else if(isSlave){
-            		host = config.getProperty(SqlSession.rds_slave_site, "127.0.0.1:3306");
-	                db = config.getProperty(SqlSession.rds_slave_database, "appdb");
-	                url = String.format("jdbc:mysql://%s/%s?useSSL=false", host, db);
-	                user = config.getProperty(SqlSession.rds_slave_username, "appdb_user");
-	                pwd = config.getProperty(SqlSession.rds_slave_password, "appdb_password");
-            	}
-            	Class.forName("com.mysql.jdbc.Driver");
+                if (isSlave == null || isSlave == false) {
+                    host = config.getProperty(SqlSession.rds_site, "127.0.0.1:3306");
+                    db = config.getProperty(SqlSession.rds_database, "appdb");
+                    url = String.format("jdbc:mysql://%s/%s?useSSL=false", host, db);
+                    user = config.getProperty(SqlSession.rds_username, "appdb_user");
+                    pwd = config.getProperty(SqlSession.rds_password, "appdb_password");
+                } else if (isSlave) {
+                    host = config.getProperty(SqlSession.rds_slave_site, "127.0.0.1:3306");
+                    db = config.getProperty(SqlSession.rds_slave_database, "appdb");
+                    url = String.format("jdbc:mysql://%s/%s?useSSL=false", host, db);
+                    user = config.getProperty(SqlSession.rds_slave_username, "appdb_user");
+                    pwd = config.getProperty(SqlSession.rds_slave_password, "appdb_password");
+                }
+                Class.forName("com.mysql.jdbc.Driver");
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException("找不到 mysql.jdbc 驱动");
             }

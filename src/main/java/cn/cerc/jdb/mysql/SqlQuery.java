@@ -26,7 +26,7 @@ public class SqlQuery extends DataQuery {
     private static final long serialVersionUID = 7316772894058168187L;
     private SqlSession session;
     private SqlSession slaveSession;
-    
+
     private DataSource dataSource;
     private DataSource slaveDataSource;
     // private boolean closeMax = false;
@@ -49,55 +49,55 @@ public class SqlQuery extends DataQuery {
     public SqlQuery(IHandle handle) {
         super(handle);
         this.session = (SqlSession) handle.getProperty(SqlSession.sessionId);
-        this.slaveSession = (SqlSession)handle.getProperty(SqlSession.slaveSessionId);
-        
+        this.slaveSession = (SqlSession) handle.getProperty(SqlSession.slaveSessionId);
+
         this.dataSource = (DataSource) handle.getProperty(SqlSession.dataSource);
         this.slaveDataSource = (DataSource) handle.getProperty(SqlSession.slaveDataSource);
-    } 
-    
-    private Statement getStatement(boolean isSlave) throws SQLException{
-    	try{
-	    	if(isSlave){
-	    		if(this.slaveDataSource == null){
-	    			if(this.dataSource == null){
-		    			if(this.slaveSession == null){
-		    				return this.session.getConnection().createStatement();
-		    			}else{
-		    				return this.slaveSession.getConnection().createStatement();
-		    			}
-	    			}else{
-	    				return this.dataSource.getConnection().createStatement();
-	    			}
-	    		}else{
-	    			return this.slaveDataSource.getConnection().createStatement();
-	    		}
-	    	}else{
-	    		if(this.dataSource == null){
-	    			return this.session.getConnection().createStatement();
-	    		}else{
-	    			return this.dataSource.getConnection().createStatement();
-	    		}
-	    	}
-    	}catch(SQLException e){
-    		throw e;
-    	}
-    } 
-    
-    private void closeStatement(Statement statement){
-    	try{
-	    	Connection conn = statement.getConnection();
-	    	//statement.close();
-	    	if(this.slaveDataSource == null){
-    			if(this.dataSource == null){
-    			}else{
-    				conn.close();
-    			}
-    		}else{
-    			conn.close();
-    		}
-    	}catch(SQLException e){
-    		e.printStackTrace();
-    	}
+    }
+
+    private Statement getStatement(boolean isSlave) throws SQLException {
+        try {
+            if (isSlave) {
+                if (this.slaveDataSource == null) {
+                    if (this.dataSource == null) {
+                        if (this.slaveSession == null) {
+                            return this.session.getConnection().createStatement();
+                        } else {
+                            return this.slaveSession.getConnection().createStatement();
+                        }
+                    } else {
+                        return this.dataSource.getConnection().createStatement();
+                    }
+                } else {
+                    return this.slaveDataSource.getConnection().createStatement();
+                }
+            } else {
+                if (this.dataSource == null) {
+                    return this.session.getConnection().createStatement();
+                } else {
+                    return this.dataSource.getConnection().createStatement();
+                }
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
+    private void closeStatement(Statement statement) {
+        try {
+            Connection conn = statement.getConnection();
+            // statement.close();
+            if (this.slaveDataSource == null) {
+                if (this.dataSource == null) {
+                } else {
+                    conn.close();
+                }
+            } else {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -106,13 +106,13 @@ public class SqlQuery extends DataQuery {
             throw new RuntimeException("SqlConnection is null");
         return this._open(false);
     }
-    
+
     public DataQuery openReadonly() {
         return this._open(true);
     }
-    
-    private DataQuery _open(boolean isSlave){
-    	
+
+    private DataQuery _open(boolean isSlave) {
+
         String sql = getSelectCommand();
         Statement st = null;
         try {
@@ -130,9 +130,9 @@ public class SqlQuery extends DataQuery {
         } catch (SQLException e) {
             log.error(sql);
             throw new RuntimeException(e.getMessage());
-        }finally {
-			this.closeStatement(st);
-		}
+        } finally {
+            this.closeStatement(st);
+        }
     }
 
     // 追加相同数据表的其它记录，与已有记录合并

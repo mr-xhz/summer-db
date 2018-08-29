@@ -11,7 +11,7 @@ public class JayunService extends MicroService {
 
     public static void main(String[] args) {
         JayunService service = new JayunService();
-        service.addParameter("appKey", "asdfsdf");
+        service.putParameter("appKey", "asdfsdf");
         System.out.println(service.post("server.getIP"));
         System.out.println(service.isResult());
         System.out.println(service.getMessage());
