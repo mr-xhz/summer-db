@@ -30,31 +30,31 @@ public class SqlOperator implements IDataOperator {
     private UpdateMode updateMode = UpdateMode.strict;
 
     public SqlOperator(IHandle handle) {
-    	session = (SqlSession) handle.getProperty(SqlSession.sessionId);
+        session = (SqlSession) handle.getProperty(SqlSession.sessionId);
         dataSource = (DataSource) handle.getProperty(SqlSession.dataSource);
     }
-    
-    private Connection getConnection(){
-    	try{
-    		if(this.dataSource == null){
-    			return this.session.getConnection();
-    		}else{
-    			return this.dataSource.getConnection();
-    		}
-    	}catch(SQLException e){
-    	}
-    	return null;
-    } 
-    
-    private void closeConnection(Connection conn){
-    	try{
-	    	if(this.dataSource == null){
-			}else{
-				conn.close();
-			}
-    	}catch(SQLException e){
-    		e.printStackTrace();
-    	}
+
+    private Connection getConnection() {
+        try {
+            if (this.dataSource == null) {
+                return this.session.getConnection();
+            } else {
+                return this.dataSource.getConnection();
+            }
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+
+    private void closeConnection(Connection conn) {
+        try {
+            if (this.dataSource == null) {
+            } else {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean insert(String tableName, String primaryKey, Record record) {
@@ -70,7 +70,7 @@ public class SqlOperator implements IDataOperator {
         Connection conn = getConnection();
         try (BuildStatement bs = new BuildStatement(conn);) {
             if (primaryKeys.size() == 0)
-                initPrimaryKeys(conn,record);
+                initPrimaryKeys(conn, record);
 
             bs.append("insert into ").append(tableName).append(" (");
             int i = 0;
@@ -116,8 +116,8 @@ public class SqlOperator implements IDataOperator {
             log.error(lastCommand);
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
-        }finally{
-        	closeConnection(conn);
+        } finally {
+            closeConnection(conn);
         }
     }
 
@@ -128,11 +128,11 @@ public class SqlOperator implements IDataOperator {
         Map<String, Object> delta = record.getDelta();
         if (delta.size() == 0)
             return false;
-        
+
         Connection conn = getConnection();
         try (BuildStatement bs = new BuildStatement(conn);) {
             if (this.primaryKeys.size() == 0)
-                initPrimaryKeys(conn,record);
+                initPrimaryKeys(conn, record);
             if (primaryKeys.size() == 0)
                 throw new RuntimeException("primary keys not exists");
             if (!primaryKeys.contains(primaryKey))
@@ -197,17 +197,17 @@ public class SqlOperator implements IDataOperator {
             log.error(lastCommand);
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
-        }finally{
-        	closeConnection(conn);
+        } finally {
+            closeConnection(conn);
         }
     }
 
     @Override
     public boolean delete(Record record) {
-    	Connection conn = getConnection();
+        Connection conn = getConnection();
         try (BuildStatement bs = new BuildStatement(conn);) {
             if (this.primaryKeys.size() == 0)
-                initPrimaryKeys(conn,record);
+                initPrimaryKeys(conn, record);
             if (primaryKeys.size() == 0)
                 throw new RuntimeException("primary keys  not exists");
             if (!primaryKeys.contains(primaryKey))
@@ -237,13 +237,13 @@ public class SqlOperator implements IDataOperator {
             log.error(lastCommand);
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
-        }finally{
-        	closeConnection(conn);
+        } finally {
+            closeConnection(conn);
         }
     }
 
-    private void initPrimaryKeys(Connection conn,Record record) throws SQLException {
-    	
+    private void initPrimaryKeys(Connection conn, Record record) throws SQLException {
+
         for (String key : record.getFieldDefs().getFields()) {
             if (primaryKey.equalsIgnoreCase(key)) {
                 if (!primaryKey.equals(key))
