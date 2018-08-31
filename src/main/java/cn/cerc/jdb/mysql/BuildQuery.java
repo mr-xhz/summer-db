@@ -256,6 +256,13 @@ public class BuildQuery {
         return ds;
     }
 
+    public SqlQuery openReadonly() {
+        SqlQuery ds = getDataSet();
+        ds.emptyCommand().add(this.getSelectCommand());
+        ds.openReadonly();
+        return ds;
+    }
+
     public SqlQuery open(Record head, Record foot) {
         SqlQuery ds = getDataSet();
         if (head.exists("__offset__"))
