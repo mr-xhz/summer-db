@@ -243,7 +243,6 @@ public class SqlOperator implements IDataOperator {
     }
 
     private void initPrimaryKeys(Connection conn, Record record) throws SQLException {
-
         for (String key : record.getFieldDefs().getFields()) {
             if (primaryKey.equalsIgnoreCase(key)) {
                 if (!primaryKey.equals(key))

@@ -112,7 +112,6 @@ public class SqlQuery extends DataQuery {
     }
 
     private DataQuery _open(boolean isSlave) {
-
         String sql = getSelectCommand();
         Statement st = null;
         try {
