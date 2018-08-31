@@ -256,7 +256,7 @@ public class BuildQuery {
         return ds;
     }
 
-    public SqlQuery openReadOnly() {
+    public SqlQuery openReadonly() {
         SqlQuery ds = getDataSet();
         ds.emptyCommand().add(this.getSelectCommand());
         ds.openReadonly();
