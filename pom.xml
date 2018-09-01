@@ -242,9 +242,8 @@
             <version>${org.springframework.version}</version>
             <scope>provided</scope>
         </dependency>
-        
         <!-- 阿里的 source -->
-		<dependency>
+        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>1.0.23</version>
@@ -252,8 +251,8 @@
     </dependencies>
     <repositories>
         <repository>
-            <id>thirdparty</id>
-            <url>http://121.40.194.178:8081/nexus/content/repositories/thirdparty</url>
+            <id>vine</id>
+            <url>http://121.40.194.178:8081/nexus/content/groups/public</url>
         </repository>
     </repositories>
     <distributionManagement>
