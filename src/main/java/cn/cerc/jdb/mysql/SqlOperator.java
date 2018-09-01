@@ -145,7 +145,11 @@ public class SqlOperator implements IDataOperator {
                     i++;
                     bs.append(i == 1 ? " set " : ",");
                     bs.append(field);
-                    bs.append("=?", record.getField(field));
+                    if(field.indexOf("+") >= 0 || field.indexOf("-") >= 0) {
+                        bs.append("?", record.getField(field));
+                    }else {
+                        bs.append("=?", record.getField(field));
+                    }
                 }
             }
             if (i == 0)

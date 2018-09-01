@@ -35,7 +35,7 @@ public class SqlQuery extends DataQuery {
     // 若数据有取完，则为true，否则为false
     private boolean fetchFinish;
     // 数据库保存操作执行对象
-    private IDataOperator operator;
+    private SqlOperator operator;
     // 仅当batchSave为true时，delList才有记录存在
     private List<Record> delList = new ArrayList<>();
 
@@ -270,7 +270,7 @@ public class SqlQuery extends DataQuery {
         }
     }
 
-    protected IDataOperator getDefaultOperator() {
+    public SqlOperator getDefaultOperator() {
         if (operator == null) {
             SqlOperator def = new SqlOperator(this.handle);
             String sql = this.getCommandText();
@@ -294,7 +294,7 @@ public class SqlQuery extends DataQuery {
         return operator;
     }
 
-    public void setOperator(IDataOperator operator) {
+    public void setOperator(SqlOperator operator) {
         this.operator = operator;
     }
 
